@@ -60,7 +60,7 @@ export async function POST(request: Request) {
         pending: `${baseUrl}/checkout/pending`,
       },
       external_reference: orderId.toString(),
-      notification_url: `${baseUrl}/api/webhooks/mercadopago`,
+      notification_url: `${baseUrl}/api/webhooks`,
     };
 
     console.log("🔍 Preferencia a enviar:", JSON.stringify(preferenceBody, null, 2));
