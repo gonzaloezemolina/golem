@@ -1,4 +1,7 @@
 import sql from "./db";
+import dotenv from "dotenv";
+
+dotenv.config({ path: ".env.local" });
 
 async function setupDatabase() {
   try {
@@ -28,7 +31,7 @@ async function setupDatabase() {
       )
     `;
 
-    // Crear tabla orders
+    // Crear tabla orders (con preference_id incluido)
     await sql`
       CREATE TABLE IF NOT EXISTS orders (
         id SERIAL PRIMARY KEY,
@@ -39,6 +42,7 @@ async function setupDatabase() {
         total DECIMAL(10, 2) NOT NULL,
         status VARCHAR(50) DEFAULT 'pending',
         payment_id VARCHAR(255),
+        preference_id VARCHAR(255),
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       )
     `;
@@ -59,17 +63,22 @@ async function setupDatabase() {
     // Seed de productos de ejemplo
     console.log("🌱 Insertando productos de ejemplo...");
 
-    await sql`
+    const result = await sql`
       INSERT INTO products (slug, name, description, price, stock, image_url)
       VALUES 
         ('remera-basica-negra', 'Remera Básica Negra', 'Remera de algodón 100%, corte unisex', 15000, 50, '/products/remera-negra.jpg'),
         ('jean-clasico', 'Jean Clásico', 'Jean azul corte recto, talle alto', 35000, 30, '/products/jean.jpg'),
         ('zapatillas-urban', 'Zapatillas Urban', 'Zapatillas urbanas cómodas para el día a día', 45000, 20, '/products/zapatillas.jpg')
       ON CONFLICT (slug) DO NOTHING
+      RETURNING *
     `;
 
-    console.log("✅ Seed completado");
+    console.log(`✅ Seed completado - ${result.length} productos insertados`);
     console.log("🎉 Base de datos lista!");
+    
+    // Verificar que se insertaron
+    const productos = await sql`SELECT * FROM products`;
+    console.log(`📦 Total productos en DB: ${productos.length}`);
 
   } catch (error) {
     console.error("❌ Error:", error);
