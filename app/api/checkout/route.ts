@@ -61,6 +61,7 @@ export async function POST(request: Request) {
       },
       external_reference: orderId.toString(),
       notification_url: `${baseUrl}/api/webhooks`,
+      sandbox_mode: true,
     };
 
     console.log("🔍 Preferencia a enviar:", JSON.stringify(preferenceBody, null, 2));
@@ -79,7 +80,7 @@ export async function POST(request: Request) {
 
     return NextResponse.json({
       success: true,
-      init_point: preferenceData.init_point,
+      init_point: preferenceData.sandbox_init_point,
       preference_id: preferenceData.id,
     });
 
