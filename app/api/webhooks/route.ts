@@ -12,19 +12,28 @@ export async function POST(request: Request) {
     
     console.log("🔔 Webhook recibido:", JSON.stringify(body, null, 2));
 
-    // MP envía notificaciones de diferentes tipos
-    // Solo procesamos los de tipo "payment"
-    if (body.type !== "payment") {
-      console.log("⏭️ Notificación ignorada (no es payment)");
+    // MP envía diferentes tipos de notificaciones
+    if (body.type !== "payment" && body.action !== "payment.created") {
+      console.log("⏭️ Notificación ignorada");
       return NextResponse.json({ received: true });
     }
 
     const paymentId = body.data.id;
     console.log("💳 Payment ID:", paymentId);
 
-    // Obtener información completa del pago desde MP
+    // Verificar que el paymentId exista
+    if (!paymentId) {
+      console.log("❌ No se recibió payment ID");
+      return NextResponse.json({ error: "No payment ID" }, { status: 400 });
+    }
+
+    // Obtener información del pago desde MP
     const payment = new Payment(client);
-    const paymentData = await payment.get({ id: paymentId });
+    
+    // Convertir a string si es necesario
+    const paymentData = await payment.get({ 
+      id: paymentId.toString() 
+    });
 
     console.log("📦 Datos del pago:", {
       id: paymentData.id,
@@ -32,10 +41,15 @@ export async function POST(request: Request) {
       external_reference: paymentData.external_reference,
     });
 
-    const orderId = paymentData.external_reference; // El ID de nuestra orden
+    const orderId = paymentData.external_reference;
     const paymentStatus = paymentData.status;
 
-    // Mapear estados de MP a nuestros estados
+    if (!orderId) {
+      console.log("❌ No se encontró external_reference");
+      return NextResponse.json({ error: "No order ID" }, { status: 400 });
+    }
+
+    // Mapear estados
     let orderStatus = "pending";
     
     if (paymentStatus === "approved") {
@@ -46,9 +60,9 @@ export async function POST(request: Request) {
       orderStatus = "cancelled";
     }
 
-    console.log(`🔄 Actualizando orden ${orderId} a estado: ${orderStatus}`);
+    console.log(`🔄 Actualizando orden ${orderId} a: ${orderStatus}`);
 
-    // Actualizar orden en la base de datos
+    // Actualizar orden
     await sql`
       UPDATE orders 
       SET 
@@ -59,8 +73,6 @@ export async function POST(request: Request) {
 
     console.log("✅ Orden actualizada correctamente");
 
-    // TODO: Aquí después agregaremos el envío de email de confirmación
-
     return NextResponse.json({ 
       success: true,
       order_id: orderId,
@@ -69,7 +81,12 @@ export async function POST(request: Request) {
 
   } catch (error: any) {
     console.error("❌ Error en webhook:", error);
-    // Siempre devolver 200 para que MP no reintente
-    return NextResponse.json({ error: error.message }, { status: 200 });
+    console.error("❌ Stack:", error.stack);
+    
+    // Devolver 200 para que MP no reintente
+    return NextResponse.json({ 
+      error: error.message,
+      received: true 
+    }, { status: 200 });
   }
 }
