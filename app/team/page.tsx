@@ -1,0 +1,112 @@
+import Image from "next/image"
+
+// Mock team data
+const teamMembers = [
+  {
+    id: 1,
+    name: "Gonzalo Molina",
+    role: "Fundador & Marketing",
+    image: "/professional-man-black-and-white-portrait.jpg",
+  },
+  {
+    id: 2,
+    name: "Marcos Iantosca",
+    role: "Fundador & Finanzas",
+    image: "/professional-woman-black-and-white-portrait.jpg",
+  },
+  {
+    id: 3,
+    name: "Lucas Henderickx",
+    role: "Fundador & Compras",
+    image: "/professional-man-black-and-white-portrait-2.jpg",
+  },
+]
+
+export default function Team() {
+  return (
+    <>
+      {/* Banner Section */}
+      <section className="relative bg-black text-white py-20 md:py-32 overflow-hidden">
+        {/* Background decorative element */}
+        <div className="absolute inset-0 opacity-10">
+          <svg className="w-full h-full" viewBox="0 0 1200 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <line x1="0" y1="0" x2="1200" y2="400" stroke="#d3b05c" strokeWidth="1" opacity="0.3" />
+            <line x1="100" y1="0" x2="1200" y2="300" stroke="#d3b05c" strokeWidth="1" opacity="0.3" />
+            <line x1="200" y1="0" x2="1200" y2="200" stroke="#d3b05c" strokeWidth="1" opacity="0.3" />
+          </svg>
+        </div>
+
+        <div className="container mx-auto px-4 relative z-10 text-center">
+          <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 text-balance">EQUIPO</h1>
+          <div className="flex items-center justify-center gap-3 text-gray-400">
+            <span>GOLEM</span>
+            <span>|</span>
+            <span className="text-highlight">OUR TEAM</span>
+          </div>
+        </div>
+      </section>
+
+      {/* Team Members Grid Section */}
+      <section className="bg-fondo text-white py-16 md:py-24">
+        <div className="container mx-auto px-4">
+          {/* Section Header */}
+          <div className="text-center mb-12 md:mb-16">
+            <p className="text-gray-400 text-sm md:text-base mb-3">Nuestro equipo</p>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-balance">Awesome team members</h2>
+          </div>
+
+          {/* 3-Column Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+            {teamMembers.map((member) => (
+              <div
+                key={member.id}
+                className="group flex flex-col gap-4 cursor-pointer transition-all duration-300 hover:scale-105"
+              >
+                {/* Team Member Image */}
+                <div className="relative h-80 md:h-96 bg-gray-900 rounded-lg overflow-hidden border border-highlight/20 group-hover:border-highlight/60 transition-all duration-300">
+                  <Image src={member.image || "/placeholder.svg"} alt={member.name} fill className="object-cover" />
+                  {/* Overlay on hover */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                </div>
+
+                {/* Team Member Info */}
+                <div className="flex flex-col gap-2">
+                  <h3 className="text-xl md:text-2xl font-bold group-hover:text-highlight transition-colors duration-300">
+                    {member.name}
+                  </h3>
+                  <p className="text-gray-400 text-sm md:text-base">{member.role}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="bg-fondo text-white py-16 md:py-24 border-t border-highlight/20 relative overflow-hidden">
+        {/* Decorative accent elements */}
+        <div className="absolute top-10 right-10 w-3 h-3 bg-highlight/40 transform rotate-45" />
+        <div className="absolute bottom-10 left-1/4 w-3 h-3 bg-highlight/40 transform rotate-45" />
+        <div className="absolute top-1/2 right-1/3 w-3 h-3 bg-highlight/40 transform rotate-45" />
+
+        <div className="container mx-auto px-4 text-center relative z-10">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 text-balance">
+            {"Let's discuss make something"} <span className="text-highlight">cool</span> together
+          </h2>
+
+          <button className="inline-flex items-center gap-3 px-8 py-4 border border-highlight text-highlight font-semibold hover:bg-highlight hover:text-black transition-all duration-300 group">
+            Apply for Meeting
+            <svg
+              className="w-5 h-5 group-hover:translate-x-1 transition-transform"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+            </svg>
+          </button>
+        </div>
+      </section>
+    </>
+  )
+}
