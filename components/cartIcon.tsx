@@ -27,7 +27,7 @@ export default function CartIcon() {
     <Link href="/cart" className="relative text-2xl">
       🛒
       {itemCount > 0 && (
-        <span className="absolute -top-2 -right-2 bg-red-600 text-white rounded-full px-2 py-0.5 text-xs">
+        <span className="absolute -top-2 -right-2 bg-golden text-white rounded-full px-2 py-0.5 text-xs">
           {itemCount}
         </span>
       )}

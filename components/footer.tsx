@@ -1,12 +1,12 @@
 import Link from "next/link"
-import { Facebook, Twitter, Instagram, Linkedin, Youtube } from "lucide-react"
+import { Facebook, Instagram } from "lucide-react"
 
 export default function Footer() {
   const currentYear = new Date().getFullYear()
 
   const footerSections = [
     {
-      title: "PRODUCTS",
+      title: "INFORMACIÓN",
       links: [
         { name: "Shop All", href: "#" },
         { name: "New Arrivals", href: "#" },
@@ -14,15 +14,15 @@ export default function Footer() {
       ],
     },
     {
-      title: "COMPANY",
+      title: "TIENDA",
       links: [
         { name: "About Us", href: "#" },
-        { name: "Our Team", href: "/team" },
-        { name: "Careers", href: "#" },
+        { name: "Equipo", href: "/team" },
+        { name: "Contacto", href: "/contact" },
       ],
     },
     {
-      title: "SUPPORT",
+      title: "NOSOTROS",
       links: [
         { name: "Contact Us", href: "#" },
         { name: "FAQ", href: "#" },
@@ -30,7 +30,7 @@ export default function Footer() {
       ],
     },
     {
-      title: "RESOURCES",
+      title: "RECURSOS",
       links: [
         { name: "Blog", href: "#" },
         { name: "Privacy Policy", href: "#" },
@@ -41,10 +41,7 @@ export default function Footer() {
 
   const socialLinks = [
     { icon: Facebook, href: "#", label: "Facebook" },
-    { icon: Twitter, href: "#", label: "Twitter" },
     { icon: Instagram, href: "#", label: "Instagram" },
-    { icon: Linkedin, href: "#", label: "LinkedIn" },
-    { icon: Youtube, href: "#", label: "YouTube" },
   ]
 
   return (

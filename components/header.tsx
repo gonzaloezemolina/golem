@@ -8,7 +8,7 @@ import CartIcon from "./cartIcon"
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
-  const navItems = ["Tienda", "Equipo", "Contacto"]
+  const navItems = ["TIENDA", "EQUIPO", "CONTACTO"]
 
   return (
     <header className="sticky top-0 z-50 bg-black">
@@ -21,12 +21,12 @@ export default function Header() {
 
           {/* Desktop Search Bar */}
           <div className="hidden md:flex flex-1 max-w-md mx-4">
-            <div className="w-full flex items-center bg-white/10 rounded px-4 py-2 border border-highlight/30 hover:border-highlight/60 transition-colors">
-              <Search size={18} className="text-highlight flex-shrink-0" />
+            <div className="w-full flex items-center  bg-none py-2 border-b border-highlight">
+              {/* <Search size={18} className="text-highlight flex-shrink-0" /> */}
               <input
                 type="text"
-                placeholder="Buscar"
-                className="ml-2 bg-transparent text-white placeholder-white/60 outline-none w-full text-sm"
+                placeholder="BUSCAR"
+                className="ml-2 bg-transparent tracking-widest text-white placeholder-white/60 outline-none w-full text-sm"
               />
             </div>
           </div>
@@ -34,7 +34,7 @@ export default function Header() {
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-8">
             {navItems.map((item) => (
-              <a key={item} href="#" className="text-white text-sm font-medium hover:text-highlight transition-colors">
+              <a key={item} href="/team" className="text-white text-sm font-medium hover:text-highlight transition-colors">
                 {item}
               </a>
             ))}
@@ -62,7 +62,7 @@ export default function Header() {
               <Search size={18} className="text-highlight flex-shrink-0" />
               <input
                 type="text"
-                placeholder="Buscar..."
+                placeholder="BUSCAR"
                 className="ml-2 bg-transparent text-white placeholder-white/60 outline-none w-full text-sm"
               />
             </div>

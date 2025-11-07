@@ -12,12 +12,12 @@ export default async function Home() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center mb-12">
             {/* Left Content */}
             <div className="flex flex-col gap-6">
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-balance">Golem, el gigante del deporte</h1>
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-golem font-bold text-balance">AQUEL QUE VA MÁS ALLÁ</h1>
               <p className="text-gray-300 text-lg leading-relaxed">
                 Equipo de calidad premium para atletas que buscan excelencia. Descubre nuestra colección de productos
                 deportivos de última generación.
               </p>
-              <button className="w-fit px-8 py-3 bg-yellow-300 text-white font-bold hover:bg-highlight/80 transition-colors">
+              <button className="w-fit px-8 py-3 bg-highlight text-white font-bold hover:bg-highlight/80 transition-colors">
                 IR A LA TIENDA
               </button>
             </div>

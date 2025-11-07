@@ -1,6 +1,35 @@
 @import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 @custom-variant dark (&:is(.dark *));
+
+@layer utilities {
+  .bg-highlight {
+    background-color: #d3b05c;
+  }
+  
+  .text-highlight {
+    color: #d3b05c;
+  }
+  
+  .border-highlight {
+    border-color: #d3b05c;
+  }
+}
+
+@font-face {
+  font-family: 'Text';
+  src: url('/font/Gotham-Book.otf') format('otf');
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Titles';
+  src: url('/font/GOTHAM-BOLD.TTF') format('ttf');
+  font-style: normal;
+}
 
 :root {
   /* Custom color tokens for Golem brand */
@@ -46,6 +75,7 @@
 .dark {
   --background: oklch(0.145 0 0);
   --fondo: #191919;
+  --golden: #d3b05c;
   --foreground: oklch(0.985 0 0);
   --card: oklch(0.145 0 0);
   --card-foreground: oklch(0.985 0 0);
@@ -80,8 +110,8 @@
 }
 
 @theme inline {
-  --font-sans: "Geist", "Geist Fallback";
-  --font-mono: "Geist Mono", "Geist Mono Fallback";
+  --font-family-golem: 'Titles', sans-serif;
+  --font-family-text: 'Text', sans-serif;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -140,9 +170,11 @@ body {
   .scrollbar-hide {
     -ms-overflow-style: none;
     scrollbar-width: none;
+    background-color: #d3b05c;
   }
 
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
+    background-color: #d3b05c;
   }
 }

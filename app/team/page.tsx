@@ -5,20 +5,20 @@ const teamMembers = [
   {
     id: 1,
     name: "Gonzalo Molina",
-    role: "Fundador & Marketing",
-    image: "/professional-man-black-and-white-portrait.jpg",
+    role: "Fundador & Marketing"
+    // image: "/professional-man-black-and-white-portrait.jpg",
   },
   {
     id: 2,
     name: "Marcos Iantosca",
-    role: "Fundador & Finanzas",
-    image: "/professional-woman-black-and-white-portrait.jpg",
+    role: "Fundador & Finanzas"
+    // image: "/professional-woman-black-and-white-portrait.jpg",
   },
   {
     id: 3,
     name: "Lucas Henderickx",
-    role: "Fundador & Compras",
-    image: "/professional-man-black-and-white-portrait-2.jpg",
+    role: "Fundador & Compras"
+    // image: "/professional-man-black-and-white-portrait-2.jpg",
   },
 ]
 
@@ -26,7 +26,7 @@ export default function Team() {
   return (
     <>
       {/* Banner Section */}
-      <section className="relative bg-black text-white py-20 md:py-32 overflow-hidden">
+      <section className="relative bg-black text-white py-20 md:py-32 overflow-hidden bg-[url('/team-banner.jpg')] bg-cover bg-center bg-no-repeat">
         {/* Background decorative element */}
         <div className="absolute inset-0 opacity-10">
           <svg className="w-full h-full" viewBox="0 0 1200 400" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -39,9 +39,9 @@ export default function Team() {
         <div className="container mx-auto px-4 relative z-10 text-center">
           <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 text-balance">EQUIPO</h1>
           <div className="flex items-center justify-center gap-3 text-gray-400">
-            <span>GOLEM</span>
+            <span>GRUPO</span>
             <span>|</span>
-            <span className="text-highlight">OUR TEAM</span>
+            <span className="text-highlight">GOLEM</span>
           </div>
         </div>
       </section>
@@ -52,7 +52,7 @@ export default function Team() {
           {/* Section Header */}
           <div className="text-center mb-12 md:mb-16">
             <p className="text-gray-400 text-sm md:text-base mb-3">Nuestro equipo</p>
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-balance">Awesome team members</h2>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-balance">PRINCIPALES JUGADORES</h2>
           </div>
 
           {/* 3-Column Grid */}
@@ -64,7 +64,7 @@ export default function Team() {
               >
                 {/* Team Member Image */}
                 <div className="relative h-80 md:h-96 bg-gray-900 rounded-lg overflow-hidden border border-highlight/20 group-hover:border-highlight/60 transition-all duration-300">
-                  <Image src={member.image || "/placeholder.svg"} alt={member.name} fill className="object-cover" />
+                  {/* <Image src={member.image || "/placeholder.svg"} alt={member.name} fill className="object-cover" /> */}
                   {/* Overlay on hover */}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 </div>
