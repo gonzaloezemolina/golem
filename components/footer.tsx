@@ -45,7 +45,7 @@ export default function Footer() {
   ]
 
   return (
-    <footer className="bg-black text-white border-t border-gray-800">
+    <footer className="bg-black text-white">
       {/* Main footer content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
         {/* Logo and sections grid */}
@@ -96,7 +96,7 @@ export default function Footer() {
           </div>
 
           {/* Copyright text */}
-          <p className="text-gray-500 text-sm text-center">© {currentYear} Golem. All rights reserved.</p>
+          <p className="text-gray-500 text-sm text-center">© {currentYear} Golem. Desarrollado por Grupo Golem.</p>
         </div>
       </div>
     </footer>

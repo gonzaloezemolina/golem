@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { fetchProducts } from "./data/data";
+import Link from "next/link";
 
 export default async function Home() {
   const products = await fetchProducts();
@@ -7,7 +8,7 @@ export default async function Home() {
   return (
     <>
         {/* Hero Section with Video */}
-      <section className="bg-fondo text-white py-12 md:py-20 border-b border-highlight/20">
+      <section className="bg-fondo text-white py-12 md:py-20">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center mb-12">
             {/* Left Content */}
@@ -17,8 +18,10 @@ export default async function Home() {
                 Equipo de calidad premium para atletas que buscan excelencia. Descubre nuestra colección de productos
                 deportivos de última generación.
               </p>
-              <button className="w-fit px-8 py-3 bg-highlight text-white font-bold hover:bg-highlight/80 transition-colors">
-                IR A LA TIENDA
+              
+             
+              <button className="w-fit cursor-pointer px-8 py-3 bg-highlight text-white font-bold hover:bg-highlight/80 transition-colors">
+                 <Link href="/products" className="w-full h-full border-1 border-red-400">IR A LA TIENDA</Link>
               </button>
             </div>
 

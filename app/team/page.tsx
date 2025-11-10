@@ -26,7 +26,7 @@ export default function Team() {
   return (
     <>
       {/* Banner Section */}
-      <section className="relative bg-black text-white py-20 md:py-32 overflow-hidden bg-[url('/team-banner.jpg')] bg-cover bg-center bg-no-repeat">
+      <section className="relative bg-black text-white py-20 md:py-32 overflow-hidden bg-[url('/cesped.png')] bg-cover bg-center bg-no-repeat">
         {/* Background decorative element */}
         <div className="absolute inset-0 opacity-10">
           <svg className="w-full h-full" viewBox="0 0 1200 400" fill="none" xmlns="http://www.w3.org/2000/svg">

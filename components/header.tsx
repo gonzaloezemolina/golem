@@ -3,6 +3,7 @@
 import { useState } from "react"
 import { Menu, X, Search } from "lucide-react"
 import CartIcon from "./cartIcon"
+import Link from "next/link"
 
 
 export default function Header() {
@@ -15,9 +16,12 @@ export default function Header() {
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between gap-4">
           {/* Logo */}
-          <div className="flex-shrink-0">
-            <h2 className="text-2xl md:text-3xl font-bold text-white">Golem</h2>
+          <Link href="/">
+            <div className="w-35 flex justify-center items-center">
+            <img src="/isologov2.png" className="w-full h-full" alt="Golem" />
           </div>
+          </Link>
+          
 
           {/* Desktop Search Bar */}
           <div className="hidden md:flex flex-1 max-w-md mx-4">

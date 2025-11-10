@@ -14,15 +14,10 @@ export default function WhatsAppButton() {
   return (
     <button
       onClick={handleClick}
-      className="fixed bottom-6 right-6 z-50 bg-green-500 hover:bg-green-600 text-white rounded-full p-4 shadow-lg transition-all duration-300 hover:scale-110 flex items-center gap-2 group"
+      className="fixed w-12 h-12 cursor-pointer bottom-6 right-6 z-50 bg-green-500 hover:bg-green-600 text-white rounded-full  shadow-lg transition-all duration-300 hover:scale-110 flex justify-center items-center gap-2 group"
       aria-label="Contactar por WhatsApp"
     >
-      <MessageCircle className="w-6 h-6" />
-      
-      {/* Tooltip que aparece al hover */}
-      <span className="hidden group-hover:inline-block whitespace-nowrap text-sm font-medium">
-        Chateá con nosotros
-      </span>
+      <i className="bi bi-whatsapp p-0 m-0 flex justify-center items-center text-2xl"></i>
     </button>
   );
 }

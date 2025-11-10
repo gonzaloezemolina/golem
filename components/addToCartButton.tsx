@@ -24,7 +24,8 @@ export default function AddToCartButton({ product }: { product: any }) {
 
   return (
     <div>
-      <label htmlFor="quantity">Cantidad:</label>
+      <button onClick={handleAddToCart} className="flex-1 px-6 py-3 bg-black border-2 border-highlight text-highlight font-bold hover:bg-highlight hover:text-black transition-colors" >Agregar al carrito</button>
+      <label htmlFor="quantity" className="ml-8">Cantidad:</label>
       <input
         type="number"
         id="quantity"
@@ -34,7 +35,6 @@ export default function AddToCartButton({ product }: { product: any }) {
         onChange={(e) => setQuantity(parseInt(e.target.value) || 1)}
         style={{ marginLeft: "8px", marginRight: "8px", width: "60px" }}
       />
-      <button onClick={handleAddToCart}>Agregar al carrito</button>
     </div>
   );
 }

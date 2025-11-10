@@ -24,7 +24,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistInter.variable} antialiased`}
+        className={`${geistInter.variable} antialiased bg-[url('/noise1.png')] bg-cover bg-center bg-no-repeat`}
       >
         <Header/>
         {children}

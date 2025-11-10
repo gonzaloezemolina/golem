@@ -18,16 +18,16 @@ export default function CartIcon() {
   if (!mounted) {
     return (
       <Link href="/cart" className="text-2xl">
-        🛒
+       <i className="bi bi-bag"></i>
       </Link>
     );
   }
 
   return (
     <Link href="/cart" className="relative text-2xl">
-      🛒
+      <i className="bi bi-bag"></i>
       {itemCount > 0 && (
-        <span className="absolute -top-2 -right-2 bg-golden text-white rounded-full px-2 py-0.5 text-xs">
+        <span className="absolute -top-2 -right-2 bg-highlight  text-white rounded-full px-2 py-0.5 text-xs">
           {itemCount}
         </span>
       )}
