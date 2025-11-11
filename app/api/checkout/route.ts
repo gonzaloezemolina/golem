@@ -88,7 +88,8 @@ export async function POST(request: Request) {
       if (sellerItem?.seller_mp_id) {
         preferenceBody.marketplace = "GOLEM";
         preferenceBody.marketplace_fee = totalCommission;
-        
+        preferenceBody.collector_id = sellerItem.seller_mp_id;
+
         console.log("🏪 Marketplace configurado:");
         console.log("  - Vendedor MP ID:", sellerItem.seller_mp_id);
         console.log("  - Tu comisión:", totalCommission);
