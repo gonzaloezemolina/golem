@@ -15,6 +15,9 @@ export default function AddToCartButton({ product }: { product: any }) {
         name: product.name,
         price: parseFloat(product.price),
         image_url: product.image_url || undefined,
+        brand: product.brand || 'Golem',
+        seller_mp_id: product.seller_mp_id || null,
+        commission_rate: parseFloat(product.commission_rate) || 0,
       },
       quantity
     );

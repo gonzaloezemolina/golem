@@ -30,26 +30,41 @@ export async function POST(request: Request) {
 
     const orderId = order.id;
 
+    // Calcular comisiones y preparar items para MP
+    let totalCommission = 0;
+    const mpItems = [];
+
     for (const item of items) {
+      // Guardar en order_items
       await sql`
         INSERT INTO order_items (order_id, product_id, quantity, price)
         VALUES (${orderId}, ${item.id}, ${item.quantity}, ${item.price})
       `;
-    }
 
-    console.log("✅ Items guardados");
+      // Calcular comisión
+      const commission = item.brand !== 'Golem' 
+        ? (item.price * item.quantity * (item.commission_rate / 100))
+        : 0;
+      
+      totalCommission += commission;
 
-    const preference = new Preference(client);
-
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
-    
-    const preferenceBody = {
-      items: items.map((item: any) => ({
+      // Preparar item para MP
+      mpItems.push({
         title: item.name,
         quantity: item.quantity,
         unit_price: item.price,
         currency_id: "ARS",
-      })),
+      });
+    }
+
+    console.log("💰 Comisión total:", totalCommission);
+
+    const preference = new Preference(client);
+
+    const baseUrl = (process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000").replace(/\/$/, "");
+    
+    const preferenceBody: any = {
+      items: mpItems,
       payer: {
         name: buyer.name,
         email: buyer.email,
@@ -61,8 +76,24 @@ export async function POST(request: Request) {
       },
       external_reference: orderId.toString(),
       notification_url: `${baseUrl}/api/webhooks`,
-      sandbox_mode: true,
     };
+
+    // ✅ SI HAY PRODUCTOS DE OTRAS MARCAS, AGREGAR SPLIT
+    const hasThirdPartyProducts = items.some((item: any) => item.brand !== 'Golem' && item.seller_mp_id);
+
+    if (hasThirdPartyProducts && totalCommission > 0) {
+      // Obtener el seller_mp_id del primer producto (asumiendo 1 vendedor por orden)
+      const sellerItem = items.find((item: any) => item.brand !== 'Golem');
+      
+      if (sellerItem?.seller_mp_id) {
+        preferenceBody.marketplace = "GOLEM";
+        preferenceBody.marketplace_fee = totalCommission;
+        
+        console.log("🏪 Marketplace configurado:");
+        console.log("  - Vendedor MP ID:", sellerItem.seller_mp_id);
+        console.log("  - Tu comisión:", totalCommission);
+      }
+    }
 
     console.log("🔍 Preferencia a enviar:", JSON.stringify(preferenceBody, null, 2));
 
@@ -80,7 +111,7 @@ export async function POST(request: Request) {
 
     return NextResponse.json({
       success: true,
-      init_point: preferenceData.sandbox_init_point,
+      init_point: preferenceData.init_point,
       preference_id: preferenceData.id,
     });
 
