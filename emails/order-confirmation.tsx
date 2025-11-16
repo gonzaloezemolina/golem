@@ -122,7 +122,7 @@ export const OrderConfirmationEmail = ({
 
       <div className="footer">
         <p>Este es un email automático, por favor no respondas a este mensaje.</p>
-        <p>© 2024 GOLEM. Todos los derechos reservados.</p>
+        <p>© 2025 GOLEM. Todos los derechos reservados.</p>
       </div>
     </body>
   </html>

@@ -1,7 +1,7 @@
 import { Resend } from "resend";
 import { OrderConfirmationEmail } from "@/emails/order-confirmation";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const resend = new Resend(process.env.RESEND);
 
 interface OrderEmailData {
   buyerName: string;
