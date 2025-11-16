@@ -53,7 +53,7 @@ export default function Footer() {
           {/* Logo section */}
           <div className="col-span-1">
             <h3 className="text-lg md:text-xl font-bold mb-2">GOLEM</h3>
-            <p className="text-gray-400 text-sm">El gigante del deporte</p>
+            <p className="text-gray-400 text-sm">Aquel que va más allá</p>
           </div>
 
           {/* Footer links sections */}

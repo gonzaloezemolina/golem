@@ -20,6 +20,24 @@
   }
 }
 
+/* Personalizar scrollbar */
+::-webkit-scrollbar {
+  width: 10px; /* Ancho del scrollbar vertical */
+  height: 10px; /* Alto del scrollbar horizontal */
+}
+
+::-webkit-scrollbar-track {
+  background: #000000; /* Color de fondo del track */
+}
+
+::-webkit-scrollbar-thumb {
+  background: #d3b05c; /* Color de la barra */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a98739; /* Color cuando pasas el mouse */
+}
+
 @font-face {
   font-family: 'Text';
   src: url('/font/Gotham-Book.otf') format('otf');
@@ -77,6 +95,7 @@
   --background: oklch(0.145 0 0);
   --fondo: #191919;
   --golden: #d3b05c;
+  --strong: #bc9740;
   --foreground: oklch(0.985 0 0);
   --card: oklch(0.145 0 0);
   --card-foreground: oklch(0.985 0 0);

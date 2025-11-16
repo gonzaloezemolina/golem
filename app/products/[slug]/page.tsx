@@ -16,13 +16,13 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
   return (
     <main className="bg-black text-white min-h-screen">
       {/* Breadcrumb */}
-      <div className="bg-black border-b border-highlight/20">
+      <div>
         <div className="container mx-auto px-4 py-4">
           <Link
             href="/products"
             className="text-highlight hover:text-highlight/80 transition-colors flex items-center gap-2"
           >
-            ← Volver a productos
+            <i className="bi bi-chevron-left"></i> Volver a productos
           </Link>
         </div>
       </div>
@@ -32,9 +32,9 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
           <div className="flex flex-col gap-4">
             {/* Main Product Image */}
-            <div className="relative w-full aspect-square bg-gray-900 rounded-lg overflow-hidden border border-highlight/20">
+            <div className="relative w-full aspect-square bg-gray-900 rounded-lg overflow-hidden border border-highlight/20 hover:border-1 border-highlight">
               <Image
-                src={product.image || "/placeholder.svg?height=500&width=500&query=sports%20equipment"}
+                src={product.image || '/chelsea.jpg'}
                 alt={product.name}
                 fill
                 className="object-cover"
@@ -72,29 +72,29 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                   <div className="w-8 h-8 bg-highlight rounded-full flex items-center justify-center text-black font-bold text-sm">
                     G
                   </div>
-                  <span className="text-sm font-semibold">Golem</span>
+                  <span className="text-sm font-semibold">{product.brand}</span>
                 </div>
-                <span className="text-xs text-gray-400">SKU123456</span>
+                {/* <span className="text-xs text-gray-400">SKU123456</span> */}
               </div>
               <h1 className="text-3xl md:text-4xl font-bold mb-2">{product.name}</h1>
 
               {/* Rating and Reviews */}
-              <div className="flex items-center gap-3 mb-4">
+              {/* <div className="flex items-center gap-3 mb-4">
                 <div className="flex gap-1">
                   {[...Array(5)].map((_, i) => (
                     <Star key={i} size={16} className="fill-highlight text-highlight" />
                   ))}
                 </div>
                 <span className="text-sm text-gray-400">(47 reviews)</span>
-              </div>
+              </div> */}
             </div>
 
             {/* Price */}
-            <div className="border-b border-highlight/20 pb-6">
-              <p className="text-3xl md:text-4xl font-bold text-highlight">${parseFloat(product.price).toFixed(2)}</p>
+            <div className="border-b border-golden/20 pb-6">
+              <p className="text-3xl md:text-4xl font-bold text-highlight">${parseFloat(product.price)}</p>
             </div>
 
-            <div className="border-b border-highlight/20 pb-6">
+            <div>
               <label className="block text-sm font-semibold mb-4">Color</label>
               <div className="flex gap-3">
                 <button className="w-10 h-10 bg-gray-400 rounded border-2 border-white hover:border-highlight transition-colors"></button>
@@ -133,11 +133,11 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
             </div>
 
             {/* Shipping Info */}
-            <div className="bg-gray-900 rounded-lg p-4 flex items-start gap-3">
+            <div className="border-1 border-highlight rounded-lg p-4 flex items-start gap-3">
               <Truck size={20} className="text-highlight flex-shrink-0 mt-1" />
               <div className="text-sm">
-                <p className="font-semibold">Free delivery on orders over $300</p>
-                <p className="text-gray-400 text-xs mt-1">Estimated delivery in 3-5 business days</p>
+                <p className="font-semibold">Delivery gratis en compras superiores a $100.000</p>
+                <p className="text-gray-400 text-xs mt-1">Tiempo de entrega estimado 3-5 días hábiles</p>
               </div>
             </div>
 

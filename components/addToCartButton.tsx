@@ -27,7 +27,7 @@ export default function AddToCartButton({ product }: { product: any }) {
 
   return (
     <div>
-      <button onClick={handleAddToCart} className="flex-1 px-6 py-3 bg-black border-2 border-highlight text-highlight font-bold hover:bg-highlight hover:text-black transition-colors" >Agregar al carrito</button>
+      <button onClick={handleAddToCart} className="flex-1 px-6 py-3 bg-highlight text-white font-bold hover:bg-highlight cursor-pointer transition-colors" >AGREGAR AL CARRITO</button>
       <label htmlFor="quantity" className="ml-8">Cantidad:</label>
       <input
         type="number"

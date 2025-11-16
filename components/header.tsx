@@ -9,7 +9,7 @@ import Link from "next/link"
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
-  const navItems = ["TIENDA", "EQUIPO", "CONTACTO"]
+  const navItems = [{li:"TIENDA",link:"/products"}, {li:"EQUIPO",link:"/team"}, {li:"CONTACTO",link:"/contact"}];
 
   return (
     <header className="sticky top-0 z-50 bg-black">
@@ -38,8 +38,8 @@ export default function Header() {
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-8">
             {navItems.map((item) => (
-              <a key={item} href="/team" className="text-white text-sm font-medium hover:text-highlight transition-colors">
-                {item}
+              <a key={item.li} href={item.link} className="text-white text-sm font-medium hover:text-highlight transition-colors">
+                {item.li}
               </a>
             ))}
             <CartIcon />
@@ -75,11 +75,11 @@ export default function Header() {
             <nav className="flex flex-col gap-3">
               {navItems.map((item) => (
                 <a
-                  key={item}
-                  href="#"
+                  key={item.li}
+                  href={item.link}
                   className="text-white text-sm font-medium hover:text-highlight transition-colors py-2"
                 >
-                  {item}
+                  {item.li}
                 </a>
               ))}
             </nav>

@@ -114,7 +114,7 @@ export default function ContactPage() {
                     name="email"
                     value={formData.email}
                     onChange={handleInputChange}
-                    placeholder="pelota@futbol.com"
+                    placeholder="michael@jordan.com"
                     required
                     className="w-full bg-black border border-gray-700 rounded px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-highlight transition-colors"
                   />

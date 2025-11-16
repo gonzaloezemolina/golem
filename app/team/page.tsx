@@ -82,6 +82,91 @@ export default function Team() {
         </div>
       </section>
 
+
+       {/* About Us Section */}
+      <section className="text-white py-16 md:py-24">
+        <div className="container mx-auto px-4">
+          {/* About Us Content - Two Column Layout */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-center mb-16 md:mb-24">
+            {/* Left Side - Text Content */}
+            <div className="flex flex-col gap-6">
+              {/* Tag */}
+              <div className="inline-flex">
+                <span className="px-4 py-2 border border-highlight text-sm font-semibold text-white w-fit">
+                  QUIÉNES SOMOS
+                </span>
+              </div>
+
+              {/* Title */}
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-balance">
+                Golem, el gigante del deporte
+              </h2>
+
+              {/* Description */}
+              <p className="text-gray-300 text-base md:text-lg leading-relaxed">
+                Somos una empresa líder en la industria del deporte y el fitness, dedicada a proporcionar equipos de alta calidad y soluciones innovadoras. Con años de experiencia y compromiso con la excelencia, trabajamos para empoderar a atletas y entusiastas del deporte en todo el mundo.
+              </p>
+
+              {/* Buttons */}
+              <div className="flex flex-col sm:flex-row gap-4 pt-4">
+                <button className="px-8 py-4 bg-highlight text-black font-semibold hover:bg-highlight/90 transition-all duration-300 flex items-center justify-center gap-2 group">
+                  NUESTRAS REDES
+                  <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                  </svg>
+                </button>
+                <a
+                  href="/golem-catalog.pdf"
+                  download
+                  className="px-8 py-4 border-2 border-highlight text-highlight hover:bg-highlight hover:text-black transition-all duration-300 font-semibold flex items-center justify-center gap-2 group"
+                >
+                  SABER MÁS
+                  <svg className="w-5 h-5 group-hover:translate-y-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19v-7m0 0V5m0 7H5m7 0h7" />
+                  </svg>
+                </a>
+              </div>
+            </div>
+
+            {/* Right Side - Logo */}
+            <div className="flex justify-center lg:justify-end">
+              <div className="w-48 h-48 md:w-64 md:h-64 lg:w-72 lg:h-72 rounded-2xl overflow-hidden border-2 border-highlight/30 hover:border-highlight/60 transition-all duration-300 flex items-center justify-center bg-gradient-to-br from-gray-900 to-black">
+                <Image
+                  src="/icon.png"
+                  alt="Golem Logo"
+                  width={288}
+                  height={288}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Brands Section */}
+          <div className="border-t border-highlight/20 pt-12 md:pt-16">
+            <h3 className="text-center text-xl md:text-2xl font-text mb-8 md:mb-12">Confían en nosotros</h3>
+
+            {/* Brands Grid - Responsive */}
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 md:gap-8">
+              {[1, 2, 3, 4, 5, 6].map((brand) => (
+                <div
+                  key={brand}
+                  className="flex items-center justify-center h-24 md:h-28 bg-gray-900/50 rounded-lg border border-gray-800 hover:border-highlight/40 hover:bg-gray-900/80 transition-all duration-300"
+                >
+                  <Image
+                    src={`/ ${brand}`}
+                    alt={`Brand ${brand}`}
+                    width={120}
+                    height={80}
+                    className="w-auto h-12 md:h-16 object-contain opacity-70 hover:opacity-100 transition-opacity"
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* CTA Section */}
       <section className="bg-fondo text-white py-16 md:py-24 border-t border-highlight/20 relative overflow-hidden">
         {/* Decorative accent elements */}
@@ -91,19 +176,20 @@ export default function Team() {
 
         <div className="container mx-auto px-4 text-center relative z-10">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 text-balance">
-            {"Let's discuss make something"} <span className="text-highlight">cool</span> together
+            {"Formá parte del"} <span className="text-highlight">equipo</span>
           </h2>
+          <p className="mb-6 font-text">¿Te interesa unirte al proyecto?</p>
 
           <button className="inline-flex items-center gap-3 px-8 py-4 border border-highlight text-highlight font-semibold hover:bg-highlight hover:text-black transition-all duration-300 group">
-            Apply for Meeting
-            <svg
+            Contáctanos <i className="bi bi-chevron-right group-hover:translate-x-1 transition-transform"></i>
+            {/* <svg
               className="w-5 h-5 group-hover:translate-x-1 transition-transform"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
             >
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-            </svg>
+            </svg> */}
           </button>
         </div>
       </section>
