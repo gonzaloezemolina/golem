@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import sql from "@/lib/db";
 import { MercadoPagoConfig, Payment } from "mercadopago";
+import { sendOrderConfirmation, sendInternalNotification } from "@/lib/send-email";
 
 const client = new MercadoPagoConfig({
   accessToken: process.env.MP_ACCESS_TOKEN!,
@@ -12,28 +13,19 @@ export async function POST(request: Request) {
     
     console.log("🔔 Webhook recibido:", JSON.stringify(body, null, 2));
 
-    // MP envía diferentes tipos de notificaciones
-    if (body.type !== "payment" && body.action !== "payment.created") {
-      console.log("⏭️ Notificación ignorada");
+    // MP envía notificaciones de diferentes tipos
+    // Solo procesamos los de tipo "payment"
+    if (body.type !== "payment") {
+      console.log("⏭️ Notificación ignorada (no es payment)");
       return NextResponse.json({ received: true });
     }
 
     const paymentId = body.data.id;
     console.log("💳 Payment ID:", paymentId);
 
-    // Verificar que el paymentId exista
-    if (!paymentId) {
-      console.log("❌ No se recibió payment ID");
-      return NextResponse.json({ error: "No payment ID" }, { status: 400 });
-    }
-
-    // Obtener información del pago desde MP
+    // Obtener información completa del pago desde MP
     const payment = new Payment(client);
-    
-    // Convertir a string si es necesario
-    const paymentData = await payment.get({ 
-      id: paymentId.toString() 
-    });
+    const paymentData = await payment.get({ id: paymentId });
 
     console.log("📦 Datos del pago:", {
       id: paymentData.id,
@@ -44,12 +36,7 @@ export async function POST(request: Request) {
     const orderId = paymentData.external_reference;
     const paymentStatus = paymentData.status;
 
-    if (!orderId) {
-      console.log("❌ No se encontró external_reference");
-      return NextResponse.json({ error: "No order ID" }, { status: 400 });
-    }
-
-    // Mapear estados
+    // Mapear estados de MP a nuestros estados
     let orderStatus = "pending";
     
     if (paymentStatus === "approved") {
@@ -60,9 +47,9 @@ export async function POST(request: Request) {
       orderStatus = "cancelled";
     }
 
-    console.log(`🔄 Actualizando orden ${orderId} a: ${orderStatus}`);
+    console.log(`🔄 Actualizando orden ${orderId} a estado: ${orderStatus}`);
 
-    // Actualizar orden
+    // Actualizar orden en la base de datos
     await sql`
       UPDATE orders 
       SET 
@@ -73,6 +60,54 @@ export async function POST(request: Request) {
 
     console.log("✅ Orden actualizada correctamente");
 
+    // 📧 ENVIAR EMAILS SI EL PAGO FUE APROBADO
+    if (orderStatus === "approved") {
+      console.log("📧 Enviando emails de confirmación...");
+
+      // Obtener datos completos de la orden
+      const [order] = await sql`
+        SELECT * FROM orders WHERE id = ${orderId}
+      `;
+
+      const orderItems = await sql`
+        SELECT oi.*, p.name, p.price
+        FROM order_items oi
+        JOIN products p ON oi.product_id = p.id
+        WHERE oi.order_id = ${orderId}
+      `;
+
+      // Email al cliente
+      const clientEmailResult = await sendOrderConfirmation({
+        buyerName: order.buyer_name,
+        buyerEmail: order.buyer_email,
+        orderId: order.id,
+        items: orderItems.map((item: any) => ({
+          name: item.name,
+          quantity: item.quantity,
+          price: item.price,
+        })),
+        total: order.total,
+      });
+
+      // Email interno (notificación para vos)
+      const internalEmailResult = await sendInternalNotification({
+        buyerName: order.buyer_name,
+        buyerEmail: order.buyer_email,
+        orderId: order.id,
+        items: orderItems.map((item: any) => ({
+          name: item.name,
+          quantity: item.quantity,
+          price: item.price,
+        })),
+        total: order.total,
+      });
+
+      console.log("📧 Resultado emails:", {
+        cliente: clientEmailResult.success ? "✅" : "❌",
+        interno: internalEmailResult.success ? "✅" : "❌",
+      });
+    }
+
     return NextResponse.json({ 
       success: true,
       order_id: orderId,
@@ -81,12 +116,7 @@ export async function POST(request: Request) {
 
   } catch (error: any) {
     console.error("❌ Error en webhook:", error);
-    console.error("❌ Stack:", error.stack);
-    
-    // Devolver 200 para que MP no reintente
-    return NextResponse.json({ 
-      error: error.message,
-      received: true 
-    }, { status: 200 });
+    // Siempre devolver 200 para que MP no reintente
+    return NextResponse.json({ error: error.message }, { status: 200 });
   }
 }

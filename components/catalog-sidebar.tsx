@@ -150,12 +150,12 @@ export default function CatalogSidebar({ onClose }: CatalogSidebarProps) {
 
       {/* Buttons */}
       <div className="space-y-3 pt-4">
-        <button className="w-full px-4 py-3 bg-highlight text-black font-bold hover:bg-highlight/80 transition-colors rounded">
+        <button className="w-full px-4 py-3 bg-highlight text-white font-bold hover:bg-highlight/80 transition-colors">
           Aplicar Filtros
         </button>
         <button
           onClick={handleClearFilters}
-          className="w-full px-4 py-3 text-highlight hover:text-highlight/80 transition-colors font-semibold border border-highlight/20 hover:border-highlight/60 rounded"
+          className="w-full px-4 py-3 text-highlight hover:text-highlight/80 transition-colors font-semibold border border-highlight/20 hover:border-highlight/60"
         >
           Limpiar Filtros
         </button>
