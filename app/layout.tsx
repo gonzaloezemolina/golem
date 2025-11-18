@@ -24,7 +24,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistInter.variable} antialiased bg-[url('/luz.jpg')] bg-cover bg-center bg-no-repeat`}
+        className={`${geistInter.variable} bg-red bg-cover bg-center bg-no-repeat`}
       >
         <Header/>
         {children}

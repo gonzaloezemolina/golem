@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import sql from "@/lib/db";
 import { MercadoPagoConfig, Preference } from "mercadopago";
+import { sendInternalNotification, sendOrderConfirmation } from "@/lib/send-email";
 
 const client = new MercadoPagoConfig({
   accessToken: process.env.MP_ACCESS_TOKEN!,
@@ -85,15 +86,15 @@ export async function POST(request: Request) {
       // Obtener el seller_mp_id del primer producto (asumiendo 1 vendedor por orden)
       const sellerItem = items.find((item: any) => item.brand !== 'Golem');
       
-      if (sellerItem?.seller_mp_id) {
-        preferenceBody.marketplace = "GOLEM";
-        preferenceBody.marketplace_fee = totalCommission;
-        preferenceBody.collector_id = Number(sellerItem.seller_mp_id);
+      // if (sellerItem?.seller_mp_id) {
+      //   preferenceBody.marketplace = "GOLEM";
+      //   preferenceBody.marketplace_fee = totalCommission;
+      //   preferenceBody.collector_id = Number(sellerItem.seller_mp_id);
 
-        console.log("🏪 Marketplace configurado:");
-        console.log("  - Vendedor MP ID:", sellerItem.seller_mp_id);
-        console.log("  - Tu comisión:", totalCommission);
-      }
+      //   console.log("🏪 Marketplace configurado:");
+      //   console.log("  - Vendedor MP ID:", sellerItem.seller_mp_id);
+      //   console.log("  - Tu comisión:", totalCommission);
+      // }
     }
 
     console.log("🔍 Preferencia a enviar:", JSON.stringify(preferenceBody, null, 2));
@@ -109,6 +110,77 @@ export async function POST(request: Request) {
       SET preference_id = ${preferenceData.id}
       WHERE id = ${orderId}
     `;
+
+    // 📧 ENVIAR EMAILS SI EL PAGO FUE APROBADO
+    // if (orderStatus === "approved") {
+    //   console.log("📧 Pago aprobado, enviando emails...");
+
+    //   try {
+    //     // Obtener datos completos de la orden
+    //     const [order] = await sql`
+    //       SELECT * FROM orders WHERE id = ${orderId}
+    //     `;
+
+    //     if (!order) {
+    //       console.error("❌ No se encontró la orden:", orderId);
+    //       return NextResponse.json({ 
+    //         success: true,
+    //         order_id: orderId,
+    //         status: orderStatus,
+    //         email_sent: false,
+    //       });
+    //     }
+
+    //     const orderItems = await sql`
+    //       SELECT oi.*, p.name, p.price
+    //       FROM order_items oi
+    //       JOIN products p ON oi.product_id = p.id
+    //       WHERE oi.order_id = ${orderId}
+    //     `;
+
+    //     console.log("📦 Datos de la orden:", {
+    //       id: order.id,
+    //       buyer: order.buyer_name,
+    //       email: order.buyer_email,
+    //       items: orderItems.length,
+    //     });
+
+    //     // Email al cliente
+    //     const clientEmailResult = await sendOrderConfirmation({
+    //       buyerName: order.buyer_name,
+    //       buyerEmail: order.buyer_email,
+    //       orderId: order.id,
+    //       items: orderItems.map((item: any) => ({
+    //         name: item.name,
+    //         quantity: item.quantity,
+    //         price: item.price,
+    //       })),
+    //       total: order.total,
+    //     });
+
+    //     // Email interno (notificación para vos)
+    //     const internalEmailResult = await sendInternalNotification({
+    //       buyerName: order.buyer_name,
+    //       buyerEmail: order.buyer_email,
+    //       orderId: order.id,
+    //       items: orderItems.map((item: any) => ({
+    //         name: item.name,
+    //         quantity: item.quantity,
+    //         price: item.price,
+    //       })),
+    //       total: order.total,
+    //     });
+
+    //     console.log("📧 Resultado emails:", {
+    //       cliente: clientEmailResult.success ? "✅ Enviado" : `❌ Error: ${clientEmailResult.error}`,
+    //       interno: internalEmailResult.success ? "✅ Enviado" : `❌ Error: ${internalEmailResult.error}`,
+    //     });
+    //   } catch (emailError: any) {
+    //     console.error("❌ Error al enviar emails:", emailError);
+    //     // No fallar el webhook por error de email
+    //   }
+    // }
+
 
     return NextResponse.json({
       success: true,

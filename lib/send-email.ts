@@ -1,7 +1,8 @@
 import { Resend } from "resend";
 import { OrderConfirmationEmail } from "@/emails/order-confirmation";
 
-const resend = new Resend(process.env.RESEND);
+// ✅ CORREGIDO: RESEND_API_KEY en vez de solo RESEND
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 interface OrderEmailData {
   buyerName: string;
@@ -17,8 +18,10 @@ interface OrderEmailData {
 
 export async function sendOrderConfirmation(data: OrderEmailData) {
   try {
+    console.log("📧 Intentando enviar email al cliente:", data.buyerEmail);
+    
     const { data: emailData, error } = await resend.emails.send({
-      from: "GOLEM <onboarding@resend.dev>", // Email de prueba (cambiar después)
+      from: "GOLEM <golem@moreuro.resend.app>", // ✅ CORREGIDO: sin ">" extra
       to: data.buyerEmail,
       subject: `Confirmación de pedido #${data.orderId} - GOLEM`,
       react: OrderConfirmationEmail({
@@ -30,14 +33,14 @@ export async function sendOrderConfirmation(data: OrderEmailData) {
     });
 
     if (error) {
-      console.error("❌ Error al enviar email:", error);
+      console.error("❌ Error al enviar email al cliente:", error);
       return { success: false, error };
     }
 
-    console.log("✅ Email enviado:", emailData?.id);
+    console.log("✅ Email enviado al cliente:", emailData?.id);
     return { success: true, id: emailData?.id };
   } catch (error: any) {
-    console.error("❌ Error al enviar email:", error);
+    console.error("❌ Error al enviar email al cliente:", error);
     return { success: false, error: error.message };
   }
 }
@@ -45,9 +48,11 @@ export async function sendOrderConfirmation(data: OrderEmailData) {
 // Email de notificación interna (para vos)
 export async function sendInternalNotification(data: OrderEmailData) {
   try {
+    console.log("📧 Intentando enviar notificación interna...");
+    
     const { data: emailData, error } = await resend.emails.send({
-      from: "GOLEM Notificaciones <onboarding@resend.dev>",
-      to: "gonzalomolina.cs@gmail.com", // ← Cambiá por tu email real
+      from: "GOLEM Notificaciones <golem@moreuro.resend.app>",
+      to: "gonzalomolina.cs@gmail.com",
       subject: `🛒 Nueva orden #${data.orderId} - GOLEM`,
       html: `
         <div style="font-family: Arial, sans-serif; padding: 20px;">

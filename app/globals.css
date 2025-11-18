@@ -22,8 +22,8 @@
 
 /* Personalizar scrollbar */
 ::-webkit-scrollbar {
-  width: 10px; /* Ancho del scrollbar vertical */
-  height: 10px; /* Alto del scrollbar horizontal */
+  width: 5px; /* Ancho del scrollbar vertical */
+  height: 5px; /* Alto del scrollbar horizontal */
 }
 
 ::-webkit-scrollbar-track {
