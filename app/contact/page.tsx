@@ -1,7 +1,6 @@
 "use client"
 
 import type React from "react"
-
 import { type FormEvent, useState } from "react"
 import { Mail, Phone } from "lucide-react"
 
@@ -39,7 +38,6 @@ export default function ContactPage() {
         {/* Page Header */}
         <div className="mb-12 md:mb-20">
           <h1 className="text-4xl md:text-5xl font-bold mb-3 text-balance">CONTACTO</h1>
-          <p className="text-white text-lg">GOLEM | CONTACTO</p>
         </div>
 
         {/* Main Contact Section */}

@@ -35,8 +35,8 @@ export default function CartPage() {
     return (
       <div className="min-h-screen bg-black px-4 py-12">
         <div className="max-w-6xl mx-auto text-center">
-          <h1 className="text-4xl font-bold text-white mb-4">Mi bolso</h1>
-          <p className="text-gray-400 mb-8">No hay productos en tu bolso.</p>
+          <h1 className="text-4xl font-bold text-white mb-4">Carrito</h1>
+          <p className="text-gray-400 mb-8">No hay productos seleccionados.</p>
           <Link 
             href="/products" 
             className="inline-block bg-[#d3b05c] text-black px-8 py-3 rounded-full font-semibold hover:bg-[#e6c570] transition-colors"
@@ -58,7 +58,7 @@ export default function CartPage() {
       <div className="max-w-7xl mx-auto">
         
         <div className="mb-12">
-          <h1 className="text-3xl font-bold text-white mb-8">MI BOLSO</h1>
+          <h1 className="text-3xl font-bold text-white mb-8">MIS PRODUCTOS</h1>
           {/* <div className="flex items-center justify-between max-w-2xl">
             <div className="flex flex-col items-center">
               <div className="w-8 h-8 rounded-full bg-[#d3b05c] text-black flex items-center justify-center font-bold text-sm">✓</div>

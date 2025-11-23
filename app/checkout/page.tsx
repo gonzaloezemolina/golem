@@ -13,7 +13,7 @@ export default function CheckoutPage() {
     name: "",
     email: "",
     phone: "",
-    details: "",
+    dni: "",
   });
 
   const [loading, setLoading] = useState(false);
@@ -66,12 +66,14 @@ export default function CheckoutPage() {
     }
   };
 
+  const mercadoPago = '../mercadopago.png'
+
   return (
     <div className="min-h-screen bg-black text-white">
       <div className="max-w-7xl mx-auto px-6 md:px-8 py-8 md:py-12">
         {/* Header */}
         <div className="mb-12">
-          <h1 className="text-3xl md:text-5xl font-bold">Checkout</h1>
+          <h1 className="text-3xl md:text-5xl font-bold">CHECKOUT</h1>
         </div>
 
         {/* Main Content - Two Column Layout */}
@@ -88,7 +90,7 @@ export default function CheckoutPage() {
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   className="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-[#d3b05c] transition"
-                  placeholder="Juan Pérez"
+                  placeholder="Roger Federer"
                 />
               </div>
 
@@ -101,7 +103,7 @@ export default function CheckoutPage() {
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   className="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-[#d3b05c] transition"
-                  placeholder="juan@ejemplo.com"
+                  placeholder="roger@federer.com"
                 />
               </div>
 
@@ -109,39 +111,38 @@ export default function CheckoutPage() {
               <div>
                 <label className="block text-sm font-semibold mb-3 text-white">Teléfono</label>
                 <input
-                  type="tel"
+                  type="dni"
                   required
                   value={formData.phone}
                   onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                  className="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-[#d3b05c] transition"
+                  placeholder="45265573"
+                />
+              </div>
+
+                {/* dni */}
+              <div>
+                <label className="block text-sm font-semibold mb-3 text-white">DNI</label>
+                <input
+                  type="tel"
+                  required
+                  value={formData.phone}
+                  onChange={(e) => setFormData({ ...formData, dni: e.target.value })}
                   className="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-[#d3b05c] transition"
                   placeholder="1123456789"
                 />
               </div>
 
-              <div>
-                <label className="block text-sm font-semibold mb-3 text-white">Detalle adicional</label>
-                <textarea
-                  value={formData.details}
-                  onChange={(e) => setFormData({ ...formData, details: e.target.value })}
-                  className="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-[#d3b05c] transition resize-none"
-                  placeholder="Información adicional sobre tu pedido..."
-                  rows={4}
-                />
-              </div>
-
               {/* Payment Method Section */}
               <div className="pt-8">
-                <h3 className="text-lg font-semibold mb-6">Método de pago</h3>
+                <h3 className="text-lg font-semibold mb-6"> Pagar con Mercado Pago</h3>
                 
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full bg-gradient-to-r from-[#d3b05c] to-[#c9a04a] text-black font-bold py-4 px-6 rounded-lg hover:shadow-lg hover:shadow-[#d3b05c]/50 transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3"
+                  className="w-full bg-sky-300 cursor-pointer text-black font-bold rounded-lg hover:shadow-lg hover:bg-sky-400 transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3"
                 >
-                  <svg width="24" height="24" viewBox="0 0 24 24" className="fill-current">
-                    <circle cx="12" cy="12" r="10" />
-                  </svg>
-                  {loading ? "Procesando..." : "Pagar con Mercado Pago"}
+                  {loading ? "Procesando..." : <img src={mercadoPago} className="h-15 w-auto object-contain" alt="Golem" />}
                 </button>
               </div>
             </form>
@@ -152,14 +153,7 @@ export default function CheckoutPage() {
             <div className="sticky top-8">
               <h3 className="text-2xl font-bold mb-6">Resumen de orden</h3>
 
-              {/* Shipping Info */}
-              <div className="mb-8 pb-8 border-b border-gray-700">
-                <h4 className="text-sm font-semibold text-gray-400 mb-4">Envío</h4>
-                <p className="text-sm text-gray-400">Dirección</p>
-              </div>
-
-              {/* Items Table */}
-              <div className="mb-8">
+               <div className="mb-8">
                 <div className="space-y-4">
                   {items.map((item: any) => (
                     <div key={item.id} className="flex justify-between items-start text-sm">
@@ -169,6 +163,12 @@ export default function CheckoutPage() {
                     </div>
                   ))}
                 </div>
+              </div>
+
+              {/* Shipping Info */}
+              <div className="mt-8 pt-8 border-t border-gray-700">
+                <h4 className="text-sm font-semibold text-gray-400 mb-4">Envío</h4>
+                <p className="text-sm text-gray-400">Dirección</p>
               </div>
 
               {/* Total */}

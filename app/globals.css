@@ -38,6 +38,17 @@
   background: #a98739; /* Color cuando pasas el mouse */
 }
 
+::selection {
+  background-color: none; /* Tu color dorado/highlight */
+  color: #74d4ff; /* Color del texto cuando está seleccionado */
+}
+
+/* Para Firefox */
+::-moz-selection {
+  background-color: none;
+  color: #74d4ff;
+}
+
 @font-face {
   font-family: 'Text';
   src: url('/font/Gotham-Book.otf') format('otf');

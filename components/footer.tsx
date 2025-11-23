@@ -1,12 +1,24 @@
 import Link from "next/link"
 import { Facebook, Instagram } from "lucide-react"
 
+const TikTok = ({ size = 18 }: { size?: number }) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="currentColor"
+    xmlns="http://www.w3.org/2000/svg"
+  className="hover:text-sky-300">
+    <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z" />
+  </svg>
+)
+
 export default function Footer() {
   const currentYear = new Date().getFullYear()
 
   const footerSections = [
     {
-      title: "INFORMACIÓN",
+      title: "NOSOTROS",
       links: [
         { name: "Shop All", href: "#" },
         { name: "New Arrivals", href: "#" },
@@ -14,7 +26,7 @@ export default function Footer() {
       ],
     },
     {
-      title: "TIENDA",
+      title: "INFORMACIÓN",
       links: [
         { name: "About Us", href: "#" },
         { name: "Equipo", href: "/team" },
@@ -22,7 +34,7 @@ export default function Footer() {
       ],
     },
     {
-      title: "NOSOTROS",
+      title: "TIENDA",
       links: [
         { name: "Contact Us", href: "#" },
         { name: "FAQ", href: "#" },
@@ -42,6 +54,7 @@ export default function Footer() {
   const socialLinks = [
     { icon: Facebook, href: "#", label: "Facebook" },
     { icon: Instagram, href: "#", label: "Instagram" },
+    { icon: TikTok, href: "#", label: "TikTok" },
   ]
 
   return (
@@ -89,7 +102,7 @@ export default function Footer() {
                   aria-label={social.label}
                   className="w-10 h-10 rounded-full border border-gray-600 flex items-center justify-center hover:border-highlight hover:text-highlight transition-colors duration-300"
                 >
-                  <Icon size={18} />
+                  <Icon size={18} className="hover:text-sky-300" />
                 </Link>
               )
             })}

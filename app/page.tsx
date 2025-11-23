@@ -3,6 +3,43 @@ import { fetchProducts } from "./data/data";
 import Link from "next/link";
 
 export default async function Home() {
+
+  async function fetchFalseProducts() {
+  // Placeholder for your data/data.ts import
+  return [
+    {
+      id: 1,
+      name: "Headphones Pro",
+      price: 299.99,
+      image: "/sports-equipment-headphones.jpg",
+      category: "Audio",
+    },
+    {
+      id: 2,
+      name: "Sports Watch",
+      price: 199.99,
+      image: "/sports-equipment-watch.jpg",
+      category: "Wearables",
+    },
+    {
+      id: 3,
+      name: "Running Shoes",
+      price: 159.99,
+      image: "/sports-shoes-running.jpg",
+      category: "Footwear",
+    },
+    {
+      id: 4,
+      name: "Training Backpack",
+      price: 129.99,
+      image: "/sports-training-backpack.jpg",
+      category: "Bags",
+    },
+  ]
+}
+
+const falseProducts = await fetchFalseProducts()
+
   const products = await fetchProducts();
   console.log(products);
   return (
@@ -37,13 +74,49 @@ export default async function Home() {
           </div>
         </div>
       </section>
-      {/* <a href="https://wa.me/543416549674?text=%C2%A1Hola%20Promar!%20Me%20gustar%C3%ADa%20hablar%20con%20alg%C3%BAn%20representante.%0AMi%20nombre%3A%0ADestino%20que%20me%20interesa%3A"target="_blank">
-        <div className="whatsapp_btn" title="Hablemos por WhatsApp" id="whatsapp_btn">
-          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" className="bi bi-whatsapp" viewBox="0 0 16 16">
-            <path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.9 7.9 0 0 0 13.6 2.326zM7.994 14.521a6.6 6.6 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.56 6.56 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.73.73 0 0 0-.529.247c-.182.198-.691.677-.691 1.654s.71 1.916.81 2.049c.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232"/>
-          </svg>
+
+
+      {/* Featured False Products Section */}
+      <section className="bg-black text-white py-12 md:py-20">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-balance">Productos Destacados</h2>
+          <div className="w-40 h-1 bg-highlight mb-12"></div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+            {falseProducts.map((product) => (
+              <div
+                key={product.id}
+                className="group border border-highlight/20 hover:border-highlight/60 transition-all duration-300 overflow-hidden"
+              >
+                {/* Product Image */}
+                <div className="relative h-64 md:h-72 bg-gray-900 overflow-hidden">
+                  <Image
+                    src={product.image || "/placeholder.svg"}
+                    alt={product.name}
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                </div>
+
+                {/* Product Info */}
+                <div className="p-4 md:p-6">
+                  <p className="text-highlight text-sm font-semibold mb-2">{product.category}</p>
+                  <h3 className="text-lg md:text-xl font-bold mb-3 group-hover:text-highlight transition-colors">
+                    {product.name}
+                  </h3>
+                  <div className="flex items-center justify-between">
+                    <span className="text-2xl font-bold text-highlight">${product.price}</span>
+                    <button className="px-4 py-2 bg-highlight text-black font-semibold hover:bg-highlight/80 transition-colors">
+                      Añadir
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
-      </a> */}
+      </section>
+
     </>
   );
 }

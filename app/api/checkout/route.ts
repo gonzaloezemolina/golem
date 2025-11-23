@@ -86,15 +86,15 @@ export async function POST(request: Request) {
       // Obtener el seller_mp_id del primer producto (asumiendo 1 vendedor por orden)
       const sellerItem = items.find((item: any) => item.brand !== 'Golem');
       
-      // if (sellerItem?.seller_mp_id) {
-      //   preferenceBody.marketplace = "GOLEM";
-      //   preferenceBody.marketplace_fee = totalCommission;
-      //   preferenceBody.collector_id = Number(sellerItem.seller_mp_id);
+      if (sellerItem?.seller_mp_id) {
+        preferenceBody.marketplace = "GOLEM";
+        preferenceBody.marketplace_fee = totalCommission;
+        preferenceBody.collector_id = Number(sellerItem.seller_mp_id);
 
-      //   console.log("🏪 Marketplace configurado:");
-      //   console.log("  - Vendedor MP ID:", sellerItem.seller_mp_id);
-      //   console.log("  - Tu comisión:", totalCommission);
-      // }
+        console.log("🏪 Marketplace configurado:");
+        console.log("  - Vendedor MP ID:", sellerItem.seller_mp_id);
+        console.log("  - Tu comisión:", totalCommission);
+      }
     }
 
     console.log("🔍 Preferencia a enviar:", JSON.stringify(preferenceBody, null, 2));
