@@ -77,7 +77,7 @@ const falseProducts = await fetchFalseProducts()
 
 
       {/* Featured False Products Section */}
-      <section className="bg-black text-white py-12 md:py-20">
+      {/* <section className="bg-black text-white py-12 md:py-20">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl md:text-4xl font-bold mb-4 text-balance">Productos Destacados</h2>
           <div className="w-40 h-1 bg-highlight mb-12"></div>
@@ -89,7 +89,7 @@ const falseProducts = await fetchFalseProducts()
                 className="group border border-highlight/20 hover:border-highlight/60 transition-all duration-300 overflow-hidden"
               >
                 {/* Product Image */}
-                <div className="relative h-64 md:h-72 bg-gray-900 overflow-hidden">
+                {/* <div className="relative h-64 md:h-72 bg-gray-900 overflow-hidden">
                   <Image
                     src={product.image || "/placeholder.svg"}
                     alt={product.name}
@@ -99,7 +99,7 @@ const falseProducts = await fetchFalseProducts()
                 </div>
 
                 {/* Product Info */}
-                <div className="p-4 md:p-6">
+                {/* <div className="p-4 md:p-6">
                   <p className="text-highlight text-sm font-semibold mb-2">{product.category}</p>
                   <h3 className="text-lg md:text-xl font-bold mb-3 group-hover:text-highlight transition-colors">
                     {product.name}
@@ -115,7 +115,7 @@ const falseProducts = await fetchFalseProducts()
             ))}
           </div>
         </div>
-      </section>
+      </section> */} 
 
     </>
   );

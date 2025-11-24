@@ -7,7 +7,7 @@ interface CatalogSidebarProps {
   onClose?: () => void
 }
 
-const categories = ["Footwear", "Apparel", "Equipment"]
+const categories = ["Fútbol", "Gimnasio"]
 const brands = ["Nike", "Adidas", "Puma", "Under Armour", "Golem"]
 const colors = [
   { name: "Black", value: "Black", hex: "#000000" },
@@ -98,7 +98,7 @@ export default function CatalogSidebar({ onClose }: CatalogSidebarProps) {
       </div>
 
       {/* Brand */}
-      <div>
+      {/* <div>
         <h3 className="font-bold text-white mb-4 text-lg">Marca</h3>
         <div className="space-y-3">
           {brands.map((brand) => (
@@ -113,10 +113,10 @@ export default function CatalogSidebar({ onClose }: CatalogSidebarProps) {
             </label>
           ))}
         </div>
-      </div>
+      </div> */}
 
       {/* Color */}
-      <div>
+      {/* <div>
         <h3 className="font-bold text-white mb-4 text-lg">Color</h3>
         <div className="grid grid-cols-5 gap-2">
           {colors.map((color) => (
@@ -133,10 +133,10 @@ export default function CatalogSidebar({ onClose }: CatalogSidebarProps) {
             />
           ))}
         </div>
-      </div>
+      </div> */}
 
       {/* Only in Stock */}
-      <div>
+      {/* <div>
         <label className="flex items-center cursor-pointer group">
           <input
             type="checkbox"
@@ -146,7 +146,7 @@ export default function CatalogSidebar({ onClose }: CatalogSidebarProps) {
           />
           <span className="ml-3 text-gray-300 group-hover:text-highlight transition-colors">Solo en Stock</span>
         </label>
-      </div>
+      </div> */}
 
       {/* Buttons */}
       <div className="space-y-3 pt-4">

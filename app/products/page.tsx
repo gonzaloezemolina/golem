@@ -29,9 +29,9 @@ export default async function productsPage () {
             {/* Product Image */}
                  <Link href={`/products/${product.slug}`}>
               
-            <div className="relative h-64 md:h-72 bg-gray-900 overflow-hidden">
+            <div className="relative border-1 h-64 md:h-72 bg-stone-900 overflow-hidden">
               <Image
-                src={product.image || "/placeholder.svg"}
+                src={product.image_url || "/placeholder.svg"}
                 alt={product.name}
                 fill
                 className="object-cover group-hover:scale-105 transition-transform duration-300"
@@ -42,11 +42,11 @@ export default async function productsPage () {
                 <ShoppingCart size={20} />
               </button>
 
-              {!product.inStock && (
+              {/* {!product.inStock && (
                 <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
                   <span className="text-white font-bold">Sin Stock</span>
                 </div>
-              )}
+              )} */}
             </div>
                     </Link>
             {/* Product Info */}

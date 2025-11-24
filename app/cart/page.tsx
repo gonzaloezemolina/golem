@@ -2,6 +2,7 @@
 
 import { useCartStore } from "@/lib/store/cart-store";
 import Link from "next/link";
+import Image from "next/image";
 import { useState, useEffect } from "react";
 import { Trash2, Plus, Minus, Truck, Shield } from 'lucide-react';
 
@@ -88,8 +89,8 @@ export default function CartPage() {
                 {items.map((item: any) => (
                   <div key={item.id} className="flex gap-4 pb-4 border-b border-[#333] last:border-0">
                     
-                    <div className="w-20 h-20 bg-[#2a2a2a] rounded-lg flex-shrink-0 border border-[#444] flex items-center justify-center">
-                      <div className="text-xs text-gray-500">Imagen</div>
+                    <div className="relative w-20 h-20 bg-[#2a2a2a] rounded-lg flex-shrink-0 border border-[#444] flex items-center justify-center">
+                      <Image className="text-xs object-cover text-gray-500" fill src={item.image_url} alt={item.name} />
                     </div>
 
                     {/* Product info */}

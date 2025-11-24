@@ -32,9 +32,9 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
           <div className="flex flex-col gap-4">
             {/* Main Product Image */}
-            <div className="relative w-full aspect-square bg-gray-900 rounded-lg overflow-hidden border border-highlight/20 hover:border-1 border-highlight">
+            <div className="relative w-full aspect-square bg-stone-900 rounded-lg overflow-hidden border border-highlight/20 hover:border-1 border-highlight">
               <Image
-                src={product.image || '/chelsea.jpg'}
+                src={product.image_url || '/chelsea.jpg'}
                 alt={product.name}
                 fill
                 className="object-cover"
@@ -50,7 +50,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                   className="flex-shrink-0 w-20 h-20 bg-gray-900 rounded border-2 border-highlight/20 hover:border-highlight transition-colors overflow-hidden"
                 >
                   <Image
-                    src={product.image || "/chelsea.jpg"}
+                    src={product.image_url || "/chelsea.jpg"}
                     alt={`${product.name} view ${i}`}
                     width={80}
                     height={80}
@@ -94,14 +94,15 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
               <p className="text-3xl md:text-4xl font-bold text-highlight">${parseFloat(product.price)}</p>
             </div>
 
-            <div>
+                {/* COLORES */}
+            {/* <div>
               <label className="block text-sm font-semibold mb-4">Color</label>
               <div className="flex gap-3">
                 <button className="w-10 h-10 bg-gray-400 rounded border-2 border-white hover:border-highlight transition-colors"></button>
                 <button className="w-10 h-10 bg-gray-600 rounded border-2 border-highlight/20 hover:border-highlight transition-colors"></button>
                 <button className="w-10 h-10 bg-black rounded border-2 border-highlight/20 hover:border-highlight transition-colors"></button>
               </div>
-            </div>
+            </div> */}
 
             <div className="border-b border-highlight/20 pb-6">
               <div className="flex items-center justify-between mb-4">
