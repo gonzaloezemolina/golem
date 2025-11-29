@@ -161,7 +161,7 @@ else {
     <div className="w-full">
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-4xl font-bold mb-2">Catálogo</h1>
+        <h1 className="text-4xl font-bold mb-2">CATÁLOGO</h1>
         <p className="text-gray-400">{products.length} productos disponibles</p>
       </div>
 
@@ -194,7 +194,7 @@ else {
               </h3>
               <div className="flex items-center justify-between">
                 <span className="text-2xl font-bold text-highlight">
-                  ${parseFloat(product.price.toString()).toFixed(2)}
+                  ${parseFloat(product.price.toString())}
                 </span>
               </div>
             </div>

@@ -50,7 +50,7 @@ export default function CatalogSidebar({ onClose, categories }: CatalogSidebarPr
         .catch(err => console.error('Error fetching subcategories:', err))
     } else {
       setSubcategories([])
-      setSelectedSubcategoryId(undefined)
+      // NO limpiar selectedSubcategoryId aquí, lo hacemos manual
     }
   }, [selectedCategoryId])
 
@@ -63,7 +63,6 @@ export default function CatalogSidebar({ onClose, categories }: CatalogSidebarPr
     if (minPrice) params.set('min_price', minPrice)
     if (maxPrice) params.set('max_price', maxPrice)
     
-    // Navegar a la nueva URL (esto hace que Next.js re-renderice la página)
     router.push(`/products?${params.toString()}`)
     
     if (onClose) onClose()
@@ -75,10 +74,16 @@ export default function CatalogSidebar({ onClose, categories }: CatalogSidebarPr
     setMinPrice("")
     setMaxPrice("")
     
-    // Navegar a /products sin params
     router.push('/products')
     
     if (onClose) onClose()
+  }
+
+  const handleCategoryChange = (categoryId: number | undefined) => {
+    setSelectedCategoryId(categoryId)
+    // Limpiar subcategoría cuando cambias de categoría
+    setSelectedSubcategoryId(undefined)
+    setIsCategoryOpen(false)
   }
 
   const selectedCategoryName = categories.find(c => c.id === selectedCategoryId)?.name
@@ -103,10 +108,10 @@ export default function CatalogSidebar({ onClose, categories }: CatalogSidebarPr
         <div className="relative">
           <button
             onClick={() => setIsCategoryOpen(!isCategoryOpen)}
-            className="w-full px-4 py-3 bg-black border border-highlight/20 hover:border-highlight text-white text-left flex items-center justify-between transition-colors"
+            className="w-full px-4 py-3 bg-black border cursor-pointer border-highlight/20 hover:border-highlight text-white text-left flex items-center justify-between transition-colors"
           >
             <span className={selectedCategoryId ? "text-white" : "text-gray-400"}>
-              {selectedCategoryName || "Selecciona un deporte"}
+              {selectedCategoryName || "Seleccionar deporte"}
             </span>
             <ChevronDown
               size={20}
@@ -117,22 +122,16 @@ export default function CatalogSidebar({ onClose, categories }: CatalogSidebarPr
           {isCategoryOpen && (
             <div className="absolute z-10 w-full mt-1 bg-black border border-highlight/20 shadow-lg">
               <button
-                onClick={() => {
-                  setSelectedCategoryId(undefined)
-                  setIsCategoryOpen(false)
-                }}
-                className="w-full px-4 py-2 text-left hover:bg-highlight/10 text-gray-400 transition-colors"
+                onClick={() => handleCategoryChange(undefined)}
+                className="w-full px-4 py-2 text-left hover:text-[#d3b05c] text-gray-400 transition-colors"
               >
                 Todas las categorías
               </button>
               {categories.map((category) => (
                 <button
                   key={category.id}
-                  onClick={() => {
-                    setSelectedCategoryId(category.id)
-                    setIsCategoryOpen(false)
-                  }}
-                  className={`w-full px-4 py-2 text-left hover:bg-highlight/10 transition-colors ${
+                  onClick={() => handleCategoryChange(category.id)}
+                  className={`w-full px-4 py-2 text-left hover:bg-highlight/10 hover:text-[#d3b05c] transition-colors ${
                     selectedCategoryId === category.id
                       ? "bg-highlight/20 text-highlight"
                       : "text-white"
@@ -146,56 +145,68 @@ export default function CatalogSidebar({ onClose, categories }: CatalogSidebarPr
         </div>
       </div>
 
-      {/* Subcategoría */}
-      {selectedCategoryId && subcategories.length > 0 && (
-        <div>
-          <h3 className="font-bold text-white mb-4 text-lg">Subcategoría</h3>
-          <div className="relative">
-            <button
-              onClick={() => setIsSubcategoryOpen(!isSubcategoryOpen)}
-              className="w-full px-4 py-3 bg-black border border-highlight/20 hover:border-highlight text-white text-left flex items-center justify-between transition-colors"
-            >
-              <span className={selectedSubcategoryId ? "text-white" : "text-gray-400"}>
-                {selectedSubcategoryName || "Seleccionar subcategoría"}
-              </span>
-              <ChevronDown
-                size={20}
-                className={`transition-transform ${isSubcategoryOpen ? "rotate-180" : ""}`}
-              />
-            </button>
+      {/* Subcategoría - SIEMPRE VISIBLE */}
+      <div>
+        <h3 className="font-bold text-white mb-4 text-lg">Subcategoría</h3>
+        <div className="relative">
+          <button
+            onClick={() => {
+              if (selectedCategoryId) {
+                setIsSubcategoryOpen(!isSubcategoryOpen)
+              }
+            }}
+            disabled={!selectedCategoryId}
+            className={`w-full px-4 py-3 bg-black border text-white text-left flex items-center justify-between transition-colors ${
+              selectedCategoryId 
+                ? "border-highlight/20 hover:border-highlight cursor-pointer" 
+                : "border-highlight/10 cursor-not-allowed"
+            }`}
+          >
+            <span className={selectedSubcategoryId ? "text-white" : "text-gray-400"}>
+              {!selectedCategoryId 
+                ? "Primero selecciona un deporte"
+                : selectedSubcategoryName || "Seleccionar subcategoría"
+              }
+            </span>
+            <ChevronDown
+              size={20}
+              className={`transition-transform ${isSubcategoryOpen ? "rotate-180" : ""} ${
+                !selectedCategoryId ? "opacity-30" : ""
+              }`}
+            />
+          </button>
 
-            {isSubcategoryOpen && (
-              <div className="absolute z-10 w-full mt-1 bg-black border border-highlight/20 shadow-lg">
+          {isSubcategoryOpen && selectedCategoryId && subcategories.length > 0 && (
+            <div className="absolute z-10 w-full mt-1 bg-black border border-highlight/20 shadow-lg">
+              <button
+                onClick={() => {
+                  setSelectedSubcategoryId(undefined)
+                  setIsSubcategoryOpen(false)
+                }}
+                className="w-full px-4 py-2 text-left hover:bg-highlight/10 text-gray-400 transition-colors"
+              >
+                Todas las subcategorías
+              </button>
+              {subcategories.map((subcategory) => (
                 <button
+                  key={subcategory.id}
                   onClick={() => {
-                    setSelectedSubcategoryId(undefined)
+                    setSelectedSubcategoryId(subcategory.id)
                     setIsSubcategoryOpen(false)
                   }}
-                  className="w-full px-4 py-2 text-left hover:bg-highlight/10 text-gray-400 transition-colors"
+                  className={`w-full px-4 py-2 text-left hover:text-[#d3b05c] hover:bg-highlight/10 transition-colors ${
+                    selectedSubcategoryId === subcategory.id
+                      ? "bg-highlight/20 text-highlight"
+                      : "text-white"
+                  }`}
                 >
-                  Todas las subcategorías
+                  {subcategory.name}
                 </button>
-                {subcategories.map((subcategory) => (
-                  <button
-                    key={subcategory.id}
-                    onClick={() => {
-                      setSelectedSubcategoryId(subcategory.id)
-                      setIsSubcategoryOpen(false)
-                    }}
-                    className={`w-full px-4 py-2 text-left hover:bg-highlight/10 transition-colors ${
-                      selectedSubcategoryId === subcategory.id
-                        ? "bg-highlight/20 text-highlight"
-                        : "text-white"
-                    }`}
-                  >
-                    {subcategory.name}
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
+              ))}
+            </div>
+          )}
         </div>
-      )}
+      </div>
 
       {/* Rango de Precio */}
       <div>
@@ -234,15 +245,15 @@ export default function CatalogSidebar({ onClose, categories }: CatalogSidebarPr
       <div className="space-y-3 pt-4">
         <button 
           onClick={handleApplyFilters}
-          className="w-full px-4 py-3 bg-highlight text-black font-bold hover:bg-highlight/80 transition-colors"
+          className="w-full px-4 py-3 bg-highlight hover:bg-[#bc9740] text-white cursor-pointer font-bold hover:bg-highlight/80 transition-colors"
         >
-          Aplicar Filtros
+          APLICAR FILTROS
         </button>
         <button
           onClick={handleClearFilters}
-          className="w-full px-4 py-3 text-highlight hover:text-highlight/80 transition-colors font-semibold border border-highlight/20 hover:border-highlight/60"
+          className="w-full cursor-pointer px-4 py-3 text-highlight hover:text-highlight/80 transition-colors font-semibold border border-highlight/20 hover:border-[#d3b05c]"
         >
-          Limpiar Filtros
+          LIMPIAR FILTROS
         </button>
       </div>
     </div>

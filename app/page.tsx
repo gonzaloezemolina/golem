@@ -58,7 +58,7 @@ const falseProducts = await fetchFalseProducts()
               
              
               <button className="w-fit cursor-pointer px-8 py-3 bg-highlight text-white font-bold hover:bg-highlight/80 transition-colors">
-                 <Link href="/products" className="w-full h-full border-1 border-red-400">IR A LA TIENDA</Link>
+                 <Link href="/products" className="w-full h-full">IR A LA TIENDA</Link>
               </button>
             </div>
 

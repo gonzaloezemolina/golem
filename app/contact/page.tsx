@@ -33,7 +33,7 @@ export default function ContactPage() {
   }
 
   return (
-    <div className="min-h-screen bg-fondo text-white py-12 md:py-20 px-4">
+    <div className="min-h-screen text-white py-12 md:py-20 px-4">
       <div className="container mx-auto max-w-6xl">
         {/* Page Header */}
         <div className="mb-12 md:mb-20">
@@ -41,13 +41,13 @@ export default function ContactPage() {
         </div>
 
         {/* Main Contact Section */}
-        <div className="bg-highlight rounded-lg overflow-hidden">
+        <div className="bg-stone-950 border-1 border-stone-800 rounded-lg overflow-hidden">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-0 relative">
             {/* Left Side - Contact Information */}
             <div className="p-8 md:p-12">
               <div className="mb-8">
-                <p className="text-black text-sm uppercase tracking-widest mb-3">ESTAMOS PARA AYUDARTE</p>
-                <h2 className="text-3xl text-black md:text-4xl font-bold leading-tight">
+                <p className="text-highlight text-sm uppercase tracking-widest mb-3">ESTAMOS PARA AYUDARTE</p>
+                <h2 className="text-3xl text-white md:text-4xl font-bold leading-tight">
                   Comentanos tus
                   <br />
                   Necesidades
@@ -56,7 +56,7 @@ export default function ContactPage() {
                 </h2>
               </div>
 
-              <p className="text-black mb-12 leading-relaxed">
+              <p className="text-white mb-12 leading-relaxed">
                 ¿Buscas equipamiento de calidad premium para tu entrenamiento? Contáctanos y te ayudaremos a encontrar
                 los productos perfectos para ti.
               </p>
@@ -64,30 +64,30 @@ export default function ContactPage() {
               {/* Contact Details */}
               <div className="space-y-6">
                 <div className="flex gap-4 items-start">
-                  <Mail className="w-5 h-5 text-black flex-shrink-0 mt-1" />
+                  <Mail className="w-5 h-5 text-highlight flex-shrink-0 mt-1" />
                   <div>
-                    <p className="text-sm text-black mb-1">E-mail</p>
-                    <p className="text-black font-medium">grupogolem@gmail.com</p>
+                    <p className="text-sm text-white mb-1">E-mail</p>
+                    <p className="text-white font-medium">grupogolem@gmail.com</p>
                   </div>
                 </div>
 
                 <div className="flex gap-4 items-start">
-                  <Phone className="w-5 h-5 text-black flex-shrink-0 mt-1" />
+                  <Phone className="w-5 h-5 text-highlight flex-shrink-0 mt-1" />
                   <div>
-                    <p className="text-sm text-black mb-1">Teléfono</p>
-                    <p className="text-black font-medium">+341 562-1921</p>
+                    <p className="text-sm text-white mb-1">Teléfono</p>
+                    <p className="text-white font-medium">+341 562-1921</p>
                   </div>
                 </div>
               </div>
             </div>
 
-                <div className="hidden md:block absolute left-1/2 top-8 bottom-8 w-px bg-black -translate-x-1/2"></div>
+                {/* <div className="hidden md:block absolute left-1/2 top-8 bottom-8 w-px bg-stone-800 -translate-x-1/2"></div> */}
 
             {/* Right Side - Contact Form */}
             <div className="p-8 md:p-12">
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
-                  <label htmlFor="name" className="block text-sm font-medium mb-2 text-black">
+                  <label htmlFor="name" className="block text-sm font-medium mb-2 text-highlight">
                     Nombre
                   </label>
                   <input
@@ -103,7 +103,7 @@ export default function ContactPage() {
                 </div>
 
                 <div>
-                  <label htmlFor="email" className="block text-sm font-medium mb-2 text-black">
+                  <label htmlFor="email" className="block text-sm font-medium mb-2 text-highlight">
                     Email
                   </label>
                   <input
@@ -119,7 +119,7 @@ export default function ContactPage() {
                 </div>
 
                 <div>
-                  <label htmlFor="category" className="block text-sm font-medium mb-2 text-black">
+                  <label htmlFor="category" className="block text-sm font-medium mb-2 text-highlight">
                     Categoría
                   </label>
                   <select
@@ -139,7 +139,7 @@ export default function ContactPage() {
                 </div>
 
                 <div>
-                  <label htmlFor="message" className="block text-sm font-medium mb-2 text-black">
+                  <label htmlFor="message" className="block text-sm font-medium mb-2 text-highlight">
                     Mensaje
                   </label>
                   <textarea
@@ -156,9 +156,9 @@ export default function ContactPage() {
 
                 <button
                   type="submit"
-                  className="w-full bg-black text-white font-bold py-3 px-6 rounded hover:bg-highlight/80 transition-all duration-300 flex items-center justify-center gap-2"
+                  className="w-full hover:bg-[#ab8839] bg-highlight text-white font-bold py-3 px-6 rounded cursor-pointer hover:bg-highlight/80 transition-all duration-300 flex items-center justify-center gap-2"
                 >
-                  {submitted ? "¡Mensaje Enviado!" : "Enviar Mensaje"}
+                  {submitted ? "¡ENVIADO!" : "ENVIAR MENSAJE"}
                 </button>
               </form>
 

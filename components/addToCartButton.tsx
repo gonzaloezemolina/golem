@@ -1,13 +1,39 @@
-"use client";
+"use client"
 
-import { useState } from "react";
-import { useCartStore } from "@/lib/store/cart-store";
+import { useCartStore } from "@/lib/store/cart-store"
+import { toast } from 'react-toastify'
 
-export default function AddToCartButton({ product }: { product: any }) {
-  const [quantity, setQuantity] = useState(1);
-  const addItem = useCartStore((state: any) => state.addItem);
+interface ProductVariant {
+  id: number
+  size: string
+  stock: number
+  sku: string
+}
+
+interface AddToCartButtonProps {
+  product: any
+  selectedVariant: ProductVariant | null
+  onAddToCart?: () => void
+}
+
+export default function AddToCartButton({ 
+  product, 
+  selectedVariant,
+  onAddToCart 
+}: AddToCartButtonProps) {
+  const addItem = useCartStore((state: any) => state.addItem)
 
   const handleAddToCart = () => {
+    // Validar que haya talle seleccionado
+    if (!selectedVariant) {
+      toast.error('Por favor, seleccioná un talle primero', {
+        position: "bottom-right",
+        autoClose: 2000,
+      })
+      return
+    }
+
+    // Agregar al carrito
     addItem(
       {
         id: product.id,
@@ -18,26 +44,40 @@ export default function AddToCartButton({ product }: { product: any }) {
         brand: product.brand || 'Golem',
         seller_mp_id: product.seller_mp_id || null,
         commission_rate: parseFloat(product.commission_rate) || 0,
+        // Agregar info de la variante
+        variant_id: selectedVariant.id,
+        size: selectedVariant.size,
+        sku: selectedVariant.sku,
       },
-      quantity
-    );
-    
-    alert(`${quantity} x ${product.name} agregado al carrito!`);
-  };
+      1 // Cantidad fija en 1 (lo podés hacer dinámico después)
+    )
+
+    // Toast de éxito
+    toast.success(
+      `${product.name} - Talle ${selectedVariant.size} agregado al carrito`,
+      {
+        position: "bottom-right",
+        autoClose: 3000,
+      }
+    )
+
+    // Callback opcional
+    if (onAddToCart) onAddToCart()
+  }
 
   return (
-    <div>
-      <button onClick={handleAddToCart} className="flex-1 px-6 py-3 bg-highlight text-white font-bold hover:bg-highlight cursor-pointer transition-colors" >AGREGAR AL CARRITO</button>
-      <label htmlFor="quantity" className="ml-8">Cantidad:</label>
-      <input
-        type="number"
-        id="quantity"
-        min="1"
-        max={product.stock}
-        value={quantity}
-        onChange={(e) => setQuantity(parseInt(e.target.value) || 1)}
-        style={{ marginLeft: "8px", marginRight: "8px", width: "60px" }}
-      />
-    </div>
-  );
+    <button
+      onClick={handleAddToCart}
+      disabled={!selectedVariant}
+      className={`
+        flex-1 px-6 py-3 font-bold transition-all
+        ${selectedVariant
+          ? "bg-highlight text-white hover:bg-[#bc9740] cursor-pointer"
+          : "bg-gray-700 text-gray-400 cursor-not-allowed"
+        }
+      `}
+    >
+      {selectedVariant ? "AGREGAR AL CARRITO" : "Seleccioná un talle"}
+    </button>
+  )
 }

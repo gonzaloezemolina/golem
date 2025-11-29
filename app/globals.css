@@ -61,12 +61,86 @@
   font-style: normal;
 }
 
+
+/* ========== Swiper Customization ========== */
+.product-swiper .swiper-button-next,
+.product-swiper .swiper-button-prev {
+  color: #d3b05c;
+  background: rgba(0, 0, 0, 0.7);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  backdrop-filter: blur(4px);
+  transition: all 0.3s ease;
+}
+
+.product-swiper .swiper-button-next:hover,
+.product-swiper .swiper-button-prev:hover {
+  background: rgba(211, 176, 92, 0.2);
+  transform: scale(1.1);
+}
+
+.product-swiper .swiper-button-next:after,
+.product-swiper .swiper-button-prev:after {
+  font-size: 20px;
+}
+
+.product-swiper .swiper-pagination {
+  bottom: 16px;
+}
+
+.product-swiper .swiper-pagination-bullet {
+  background: #ffffff;
+  opacity: 0.5;
+  width: 8px;
+  height: 8px;
+  transition: all 0.3s ease;
+}
+
+.product-swiper .swiper-pagination-bullet-active {
+  opacity: 1;
+  background: #d3b05c;
+  width: 24px;
+  border-radius: 4px;
+}
+
+.thumbs-swiper .swiper-slide {
+  cursor: pointer;
+  opacity: 0.6;
+  transition: opacity 0.3s ease;
+}
+
+.thumbs-swiper .swiper-slide-thumb-active {
+  opacity: 1;
+}
+
+/* ========== React Medium Image Zoom Customization ========== */
+[data-rmiz-modal-overlay] {
+  background-color: rgba(0, 0, 0, 0.9) !important;
+  backdrop-filter: blur(8px);
+}
+
+[data-rmiz-modal-img] {
+  border-radius: 8px;
+}
+
+/* Ocultar controles de Swiper cuando está en zoom */
+.product-swiper [data-rmiz-modal-overlay="visible"] ~ .swiper-button-next,
+.product-swiper [data-rmiz-modal-overlay="visible"] ~ .swiper-button-prev,
+.product-swiper [data-rmiz-modal-overlay="visible"] ~ .swiper-pagination {
+  display: none;
+}
+
+body[style*="overflow: hidden"] {
+  overflow-y: auto !important;
+}
+
 :root {
   /* Custom color tokens for Golem brand */
-  --color-main: #000000;
+  --color-main: #0b0b0b;
   --color-text: #ffffff;
   --color-highlight: #d3b05c;
-
+  
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
@@ -181,6 +255,30 @@
   --color-sidebar-ring: var(--sidebar-ring);
 }
 
+/* Personalizar Toastify */
+.Toastify__toast {
+  border-radius: 8px;
+  font-family: inherit;
+}
+
+.Toastify__toast--success {
+  background-color: #d3b05c;
+  color: #000;
+}
+
+.Toastify__toast--error {
+  background-color: #ef4444;
+  color: #fff;
+}
+
+.Toastify__progress-bar--success {
+  background-color: #a98739;
+}
+
+.Toastify__progress-bar--error {
+  background-color: #dc2626;
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
@@ -201,11 +299,9 @@ body {
   .scrollbar-hide {
     -ms-overflow-style: none;
     scrollbar-width: none;
-    background-color: #d3b05c;
   }
 
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
-    background-color: #d3b05c;
   }
 }

@@ -24,43 +24,50 @@ export default function CatalogLayoutClient({ children, categories }: CatalogLay
   const isProductDetail = pathname.split("/").length > 2
 
   return (
-    <div className="flex h-screen bg-black text-white">
-      {/* Desktop Sidebar - Solo mostrar si NO es detalle */}
-      {!isProductDetail && (
-        <div className="hidden lg:block w-80 bg-black border-r border-highlight/20 overflow-y-auto">
-          <CatalogSidebar categories={categories} />
-        </div>
-      )}
-
-      {/* Mobile Hamburger & Main Content */}
-      <div className="flex-1 flex flex-col overflow-hidden">
+    <div className="min-h-screen text-white">
+      <div className="flex">
+        {/* Desktop Sidebar - Sticky */}
         {!isProductDetail && (
-          <div className="lg:hidden flex items-center justify-between p-4 border-b border-highlight/20">
-            <h1 className="text-xl font-bold">Catálogo</h1>
-            <button
-              onClick={() => setSidebarOpen(!sidebarOpen)}
-              className="p-2 hover:bg-highlight/10 rounded transition-colors"
-            >
-              {sidebarOpen ? <X size={24} /> : <Menu size={24} />}
-            </button>
-          </div>
-        )}
-
-        {/* Mobile Sidebar Drawer */}
-        {!isProductDetail && sidebarOpen && (
-          <>
-            <div
-              className="fixed inset-0 bg-black/50 z-40 lg:hidden"
-              onClick={() => setSidebarOpen(false)}
-            />
-            <div className="absolute left-0 top-16 w-80 bg-black border-r border-highlight/20 z-50 max-h-[calc(100vh-4rem)] overflow-y-auto">
-              <CatalogSidebar categories={categories} onClose={() => setSidebarOpen(false)} />
+          <aside className="hidden lg:block w-80 flex-shrink-0">
+            <div className="sticky top-0 h-screen overflow-y-auto scrollbar-hide">
+              <CatalogSidebar categories={categories} />
             </div>
-          </>
+          </aside>
         )}
 
         {/* Main Content */}
-        <div className="flex-1 overflow-y-auto p-4 md:p-8">{children}</div>
+        <main className="flex-1 min-w-0">
+          {/* Mobile Header */}
+          {!isProductDetail && (
+            <div className="lg:hidden flex items-center justify-between p-4 border-b border-highlight/20 sticky top-0 bg-black z-30">
+              <h1 className="text-xl font-bold">CATÁLOGO</h1>
+              <button
+                onClick={() => setSidebarOpen(!sidebarOpen)}
+                className="p-2 hover:bg-highlight/10 rounded transition-colors"
+              >
+                {sidebarOpen ? <X size={24} /> : <Menu size={24} />}
+              </button>
+            </div>
+          )}
+
+          {/* Mobile Sidebar Drawer */}
+          {!isProductDetail && sidebarOpen && (
+            <>
+              <div
+                className="fixed inset-0 bg-black/50 z-40 lg:hidden"
+                onClick={() => setSidebarOpen(false)}
+              />
+              <div className="fixed left-0 top-0 w-80 h-full bg-black border-r border-highlight/20 z-50 overflow-y-auto lg:hidden">
+                <CatalogSidebar categories={categories} onClose={() => setSidebarOpen(false)} />
+              </div>
+            </>
+          )}
+
+          {/* Content */}
+          <div className="p-4 md:p-8">
+            {children}
+          </div>
+        </main>
       </div>
     </div>
   )
