@@ -1,10 +1,8 @@
 import { create } from "zustand";
 import Cookies from "js-cookie";
 
-// Clave para la cookie
 const CART_COOKIE_KEY = "golem-cart";
 
-// Cargar carrito desde cookie
 function loadCartFromCookie() {
   try {
     const cartCookie = Cookies.get(CART_COOKIE_KEY);
@@ -15,29 +13,36 @@ function loadCartFromCookie() {
   }
 }
 
-// Guardar carrito en cookie (7 días) - esta funcion setea la cookie y guarda un array en ella
 function saveCartToCookie(items: any[]) {
   Cookies.set(CART_COOKIE_KEY, JSON.stringify(items), { expires: 30 });
 }
 
 export const useCartStore = create((set, get: any) => ({
-  // Estado inicial desde cookie
   items: loadCartFromCookie(),
 
-  // Agregar item
+  // MEJORADO: Agregar item con stock del producto
   addItem: (item: any, quantity: number) => {
     set((state: any) => {
       const existingItem = state.items.find((i: any) => i.id === item.id);
 
       let newItems;
       if (existingItem) {
-        // Si ya existe, sumar cantidad
+        // Validar que no exceda el stock
+        const newQuantity = Math.min(
+          existingItem.quantity + quantity,
+          item.total_stock || existingItem.total_stock || 999
+        );
+        
         newItems = state.items.map((i: any) =>
-          i.id === item.id ? { ...i, quantity: i.quantity + quantity } : i
+          i.id === item.id ? { ...i, quantity: newQuantity } : i
         );
       } else {
-        // Si no existe, agregar nuevo
-        newItems = [...state.items, { ...item, quantity }];
+        // Agregar nuevo con stock guardado
+        newItems = [...state.items, { 
+          ...item, 
+          quantity,
+          total_stock: item.total_stock || 999 // Guardar stock para validar después
+        }];
       }
 
       saveCartToCookie(newItems);
@@ -45,7 +50,6 @@ export const useCartStore = create((set, get: any) => ({
     });
   },
 
-  // Eliminar item
   removeItem: (id: number) => {
     set((state: any) => {
       const newItems = state.items.filter((i: any) => i.id !== id);
@@ -54,38 +58,41 @@ export const useCartStore = create((set, get: any) => ({
     });
   },
 
-  // Actualizar cantidad
+  // MEJORADO: Validar stock al actualizar cantidad
   updateQuantity: (id: number, quantity: number) => {
     set((state: any) => {
       if (quantity <= 0) {
-        // Si la cantidad es 0 o menos, eliminar
         const newItems = state.items.filter((i: any) => i.id !== id);
         saveCartToCookie(newItems);
         return { items: newItems };
       }
 
-      const newItems = state.items.map((i: any) =>
-        i.id === id ? { ...i, quantity } : i
-      );
+      const newItems = state.items.map((i: any) => {
+        if (i.id === id) {
+          // Validar contra stock
+          const maxStock = i.total_stock || 999;
+          const validQuantity = Math.min(quantity, maxStock);
+          return { ...i, quantity: validQuantity };
+        }
+        return i;
+      });
+      
       saveCartToCookie(newItems);
       return { items: newItems };
     });
   },
 
-  // Limpiar carrito
   clearCart: () => {
     Cookies.remove(CART_COOKIE_KEY);
     set({ items: [] });
   },
 
-  // Calcular total
   getTotal: () => {
     return get().items.reduce((total: number, item: any) => {
       return total + item.price * item.quantity;
     }, 0);
   },
 
-  // Contar items
   getItemCount: () => {
     return get().items.reduce((count: number, item: any) => count + item.quantity, 0);
   },

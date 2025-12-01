@@ -48,6 +48,7 @@ export default function AddToCartButton({
         variant_id: selectedVariant.id,
         size: selectedVariant.size,
         sku: selectedVariant.sku,
+        total_stock: selectedVariant.stock, 
       },
       1 // Cantidad fija en 1 (lo podés hacer dinámico después)
     )
@@ -77,7 +78,7 @@ export default function AddToCartButton({
         }
       `}
     >
-      {selectedVariant ? "AGREGAR AL CARRITO" : "Seleccioná un talle"}
+      {selectedVariant ? "AGREGAR AL CARRITO" : "Seleccioná un talle para continuar"}
     </button>
   )
 }

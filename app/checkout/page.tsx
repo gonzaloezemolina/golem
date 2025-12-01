@@ -1,6 +1,7 @@
 "use client";
 
 import { useCartStore } from "@/lib/store/cart-store";
+import { useShippingStore } from "@/lib/store/shipping-store";
 import { useState } from "react";
 import { useRouter } from 'next/navigation';
 

@@ -135,6 +135,35 @@ body[style*="overflow: hidden"] {
   overflow-y: auto !important;
 }
 
+/* En globals.css */
+
+/* Al final del archivo */
+
+/* ========== Personalizar SELECT options ========== */
+select option {
+  background-color: #2a2a2a;
+  color: #fff;
+  padding: 8px;
+}
+
+select option:hover,
+select option:focus {
+  background-color: #d3b05c !important;
+  color: #000 !important;
+}
+
+select option:checked {
+  background: linear-gradient(#d3b05c, #d3b05c);
+  background-color: #d3b05c !important;
+  color: #000 !important;
+}
+
+/* Para mejor contraste en selects */
+select {
+  color: #fff;
+  background-color: #2a2a2a;
+}
+
 :root {
   /* Custom color tokens for Golem brand */
   --color-main: #0b0b0b;

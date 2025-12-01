@@ -160,7 +160,7 @@ La accesibilidad, innovación y el detalle son nuestras bases. Pensado para todo
       </section>
 
       {/* CTA Section */}
-      <section className="bg-fondo text-white py-16 md:py-24 relative overflow-hidden">
+      <section className="bg-[url('/milan.jpg')] bg-cover bg-center bg-no-repeat text-white py-16 md:py-24 relative overflow-hidden">
         {/* Decorative accent elements */}
         <div className="absolute top-10 right-10 w-3 h-3 bg-highlight/40 transform rotate-45" />
         <div className="absolute bottom-10 left-1/4 w-3 h-3 bg-highlight/40 transform rotate-45" />

@@ -45,9 +45,9 @@ export default function SizeSelector({ variants, onSizeSelect }: SizeSelectorPro
     <div className="border-b border-highlight/20 pb-6">
       <div className="flex items-center justify-between mb-4">
         <label className="text-sm font-semibold">Talle</label>
-        <button className="text-xs text-highlight hover:text-highlight/80">
+        {/* <button className="text-xs text-highlight hover:text-highlight/80">
           Guía de talles
-        </button>
+        </button> */}
       </div>
 
       {/* Grid de talles */}
