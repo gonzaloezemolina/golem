@@ -2,7 +2,7 @@ import { Resend } from "resend";
 import { OrderConfirmationEmail } from "@/emails/order-confirmation";
 import { InternalNotificationEmail } from "@/emails/internal-notification";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const resend = new Resend(process.env.RESEND);
 
 // INTERFACE ACTUALIZADA
 interface OrderEmailData {
