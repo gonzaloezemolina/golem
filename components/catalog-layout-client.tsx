@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, Suspense } from "react"
 import { usePathname } from "next/navigation"
 import { Menu, X } from "lucide-react"
 import CatalogSidebar from "@/components/catalog-sidebar"
@@ -16,11 +16,24 @@ interface CatalogLayoutClientProps {
   categories: Category[]
 }
 
+// Fallback para el sidebar
+function SidebarFallback() {
+  return (
+    <div className="p-6">
+      <div className="animate-pulse space-y-4">
+        <div className="h-8 bg-gray-800 rounded w-32"></div>
+        <div className="h-12 bg-gray-800 rounded"></div>
+        <div className="h-12 bg-gray-800 rounded"></div>
+        <div className="h-12 bg-gray-800 rounded"></div>
+      </div>
+    </div>
+  )
+}
+
 export default function CatalogLayoutClient({ children, categories }: CatalogLayoutClientProps) {
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const pathname = usePathname()
 
-  // Ocultar sidebar si estamos en /products/[slug]
   const isProductDetail = pathname.split("/").length > 2
 
   return (
@@ -30,7 +43,9 @@ export default function CatalogLayoutClient({ children, categories }: CatalogLay
         {!isProductDetail && (
           <aside className="hidden lg:block w-80 flex-shrink-0">
             <div className="sticky top-0 h-screen overflow-y-auto scrollbar-hide">
-              <CatalogSidebar categories={categories} />
+              <Suspense fallback={<SidebarFallback />}>
+                <CatalogSidebar categories={categories} />
+              </Suspense>
             </div>
           </aside>
         )}
@@ -58,7 +73,9 @@ export default function CatalogLayoutClient({ children, categories }: CatalogLay
                 onClick={() => setSidebarOpen(false)}
               />
               <div className="fixed left-0 top-0 w-80 h-full bg-black border-r border-highlight/20 z-50 overflow-y-auto lg:hidden">
-                <CatalogSidebar categories={categories} onClose={() => setSidebarOpen(false)} />
+                <Suspense fallback={<SidebarFallback />}>
+                  <CatalogSidebar categories={categories} onClose={() => setSidebarOpen(false)} />
+                </Suspense>
               </div>
             </>
           )}

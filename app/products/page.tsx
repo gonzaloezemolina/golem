@@ -1,6 +1,7 @@
 import Link from "next/link"
 import Image from "next/image"
 import { ShoppingCart } from "lucide-react"
+import { Suspense } from "react"
 import sql from "@/lib/db"
 
 interface Product {
