@@ -13,8 +13,6 @@ export async function POST(request: Request) {
     
     console.log("🔔 Webhook recibido:", JSON.stringify(body, null, 2));
 
-    // MP envía notificaciones de diferentes tipos
-    // Solo procesamos los de tipo "payment"
     if (body.type !== "payment") {
       console.log("⏭️ Notificación ignorada (no es payment)");
       return NextResponse.json({ received: true });
@@ -23,7 +21,6 @@ export async function POST(request: Request) {
     const paymentId = body.data.id;
     console.log("💳 Payment ID:", paymentId);
 
-    // Obtener información completa del pago desde MP
     const payment = new Payment(client);
     const paymentData = await payment.get({ id: paymentId });
 
@@ -36,7 +33,6 @@ export async function POST(request: Request) {
     const orderId = paymentData.external_reference;
     const paymentStatus = paymentData.status;
 
-    // Mapear estados de MP a nuestros estados
     let orderStatus = "pending";
     
     if (paymentStatus === "approved") {
@@ -49,7 +45,6 @@ export async function POST(request: Request) {
 
     console.log(`🔄 Actualizando orden ${orderId} a estado: ${orderStatus}`);
 
-    // Actualizar orden en la base de datos
     await sql`
       UPDATE orders 
       SET 
@@ -64,10 +59,19 @@ export async function POST(request: Request) {
     if (orderStatus === "approved") {
       console.log("📧 Enviando emails de confirmación...");
 
-      // Obtener datos completos de la orden
       const [order] = await sql`
         SELECT * FROM orders WHERE id = ${orderId}
       `;
+
+      if (!order) {
+        console.error("❌ No se encontró la orden:", orderId);
+        return NextResponse.json({ 
+          success: true,
+          order_id: orderId,
+          status: orderStatus,
+          email_sent: false,
+        });
+      }
 
       const orderItems = await sql`
         SELECT oi.*, p.name, p.price
@@ -76,36 +80,65 @@ export async function POST(request: Request) {
         WHERE oi.order_id = ${orderId}
       `;
 
-      // Email al cliente
-      const clientEmailResult = await sendOrderConfirmation({
-        buyerName: order.buyer_name,
-        buyerEmail: order.buyer_email,
-        orderId: order.id,
-        items: orderItems.map((item: any) => ({
-          name: item.name,
-          quantity: item.quantity,
-          price: item.price,
-        })),
+      console.log("📦 Datos completos de la orden:", {
+        id: order.id,
+        buyer: order.buyer_name,
+        email: order.buyer_email,
         total: order.total,
+        shipping_cost: order.shipping_cost,
+        shipping_type: order.shipping_type,
+        items: orderItems.length,
       });
 
-      // Email interno (notificación para vos)
-      const internalEmailResult = await sendInternalNotification({
-        buyerName: order.buyer_name,
-        buyerEmail: order.buyer_email,
-        orderId: order.id,
-        items: orderItems.map((item: any) => ({
-          name: item.name,
-          quantity: item.quantity,
-          price: item.price,
-        })),
-        total: order.total,
-      });
+      // Preparar datos de envío
+      const shippingInfo = {
+        type: order.shipping_type,
+        address: order.shipping_address,
+        city: order.shipping_city,
+        province: order.shipping_province,
+        zip: order.shipping_zip,
+      };
 
-      console.log("📧 Resultado emails:", {
-        cliente: clientEmailResult.success ? "✅" : "❌",
-        interno: internalEmailResult.success ? "✅" : "❌",
-      });
+      try {
+        // Email al cliente
+        const clientEmailResult = await sendOrderConfirmation({
+          buyerName: order.buyer_name,
+          buyerEmail: order.buyer_email,
+          orderId: order.id,
+          items: orderItems.map((item: any) => ({
+            name: item.name,
+            quantity: item.quantity,
+            price: item.price,
+          })),
+          total: parseFloat(order.total),
+          shippingCost: parseFloat(order.shipping_cost || 0),
+          shippingAddress: shippingInfo,
+        });
+
+        // Email interno
+        const internalEmailResult = await sendInternalNotification({
+          buyerName: order.buyer_name,
+          buyerEmail: order.buyer_email,
+          buyerPhone: order.buyer_phone,
+          buyerDni: order.buyer_dni,
+          orderId: order.id,
+          items: orderItems.map((item: any) => ({
+            name: item.name,
+            quantity: item.quantity,
+            price: item.price,
+          })),
+          total: parseFloat(order.total),
+          shippingCost: parseFloat(order.shipping_cost || 0),
+          shippingAddress: shippingInfo,
+        });
+
+        console.log("📧 Resultado emails:", {
+          cliente: clientEmailResult.success ? "✅ Enviado" : `❌ Error: ${clientEmailResult.error}`,
+          interno: internalEmailResult.success ? "✅ Enviado" : `❌ Error: ${internalEmailResult.error}`,
+        });
+      } catch (emailError: any) {
+        console.error("❌ Error al enviar emails:", emailError);
+      }
     }
 
     return NextResponse.json({ 
@@ -116,7 +149,6 @@ export async function POST(request: Request) {
 
   } catch (error: any) {
     console.error("❌ Error en webhook:", error);
-    // Siempre devolver 200 para que MP no reintente
     return NextResponse.json({ error: error.message }, { status: 200 });
   }
 }

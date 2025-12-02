@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 import sql from "@/lib/db";
 import { MercadoPagoConfig, Preference } from "mercadopago";
-import { sendInternalNotification, sendOrderConfirmation } from "@/lib/send-email";
 
 const client = new MercadoPagoConfig({
   accessToken: process.env.MP_ACCESS_TOKEN!,
@@ -10,20 +9,47 @@ const client = new MercadoPagoConfig({
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { buyer, items, total } = body;
+    const { buyer, items, subtotal, shippingCost, shippingAddress, total } = body;
 
-    console.log("📦 Datos recibidos:", { buyer, items, total });
+    console.log("📦 Datos recibidos:", { buyer, items, subtotal, shippingCost, total });
 
-    if (!buyer?.name || !buyer?.email || !items?.length) {
+    if (!buyer?.name || !buyer?.email || !items?.length || !shippingAddress) {
       return NextResponse.json(
         { success: false, error: "Datos incompletos" },
         { status: 400 }
       );
     }
 
+    // Crear orden con datos de envío
     const [order] = await sql`
-      INSERT INTO orders (buyer_name, buyer_email, buyer_phone, total, status)
-      VALUES (${buyer.name}, ${buyer.email}, ${buyer.phone || ""}, ${total}, 'pending')
+      INSERT INTO orders (
+        buyer_name, 
+        buyer_email, 
+        buyer_phone,
+        buyer_dni,
+        total, 
+        shipping_cost,
+        shipping_address,
+        shipping_city,
+        shipping_province,
+        shipping_zip,
+        shipping_type,
+        status
+      )
+      VALUES (
+        ${buyer.name}, 
+        ${buyer.email}, 
+        ${buyer.phone || ""}, 
+        ${buyer.dni || ""},
+        ${total},
+        ${shippingCost},
+        ${shippingAddress.domicilio || "Retiro en punto"},
+        ${shippingAddress.ciudadNombre},
+        ${shippingAddress.provinciaNombre},
+        ${shippingAddress.codigoPostal},
+        ${shippingAddress.tipoEntrega},
+        'pending'
+      )
       RETURNING id
     `;
 
@@ -31,8 +57,7 @@ export async function POST(request: Request) {
 
     const orderId = order.id;
 
-    // Calcular comisiones y preparar items para MP
-    let totalCommission = 0;
+    // Preparar items para MercadoPago
     const mpItems = [];
 
     for (const item of items) {
@@ -42,15 +67,9 @@ export async function POST(request: Request) {
         VALUES (${orderId}, ${item.id}, ${item.quantity}, ${item.price})
       `;
 
-      // Calcular comisión
-      const commission = item.brand !== 'Golem' 
-        ? (item.price * item.quantity * (item.commission_rate / 100))
-        : 0;
-      
-      totalCommission += commission;
-
-      // Preparar item para MP
+      // Agregar a items de MP (CON ID)
       mpItems.push({
+        id: item.id?.toString() || `product-${item.id}`, // ← AGREGAR ID
         title: item.name,
         quantity: item.quantity,
         unit_price: item.price,
@@ -58,44 +77,45 @@ export async function POST(request: Request) {
       });
     }
 
-    console.log("💰 Comisión total:", totalCommission);
+    // AGREGAR ENVÍO COMO ITEM SEPARADO (si no es gratis)
+    if (shippingCost > 0) {
+      mpItems.push({
+        id: "shipping", // ← ID para envío
+        title: `Envío a ${shippingAddress.ciudadNombre}, ${shippingAddress.provinciaNombre}`,
+        quantity: 1,
+        unit_price: shippingCost,
+        currency_id: "ARS",
+      });
+    }
+
+    console.log("📦 Items para MP:", mpItems);
 
     const preference = new Preference(client);
-
     const baseUrl = (process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000").replace(/\/$/, "");
     
-    const preferenceBody: any = {
+    const preferenceBody = {
       items: mpItems,
       payer: {
         name: buyer.name,
         email: buyer.email,
+        phone: {
+          number: buyer.phone || ""
+        },
+        identification: {
+          type: "DNI" as const,
+          number: buyer.dni || ""
+        }
       },
       back_urls: {
-        success: `${baseUrl}/checkout/success`,
-        failure: `${baseUrl}/checkout/failure`,
-        pending: `${baseUrl}/checkout/pending`,
+        success: `${baseUrl}/checkout/success?order_id=${orderId}`,
+        failure: `${baseUrl}/checkout/failure?order_id=${orderId}`,
+        pending: `${baseUrl}/checkout/pending?order_id=${orderId}`,
       },
+      auto_return: "approved" as const,
       external_reference: orderId.toString(),
       notification_url: `${baseUrl}/api/webhooks`,
+      statement_descriptor: "GOLEM",
     };
-
-    // ✅ SI HAY PRODUCTOS DE OTRAS MARCAS, AGREGAR SPLIT
-    const hasThirdPartyProducts = items.some((item: any) => item.brand !== 'Golem' && item.seller_mp_id);
-
-    if (hasThirdPartyProducts && totalCommission > 0) {
-      // Obtener el seller_mp_id del primer producto (asumiendo 1 vendedor por orden)
-      const sellerItem = items.find((item: any) => item.brand !== 'Golem');
-      
-      if (sellerItem?.seller_mp_id) {
-        preferenceBody.marketplace = "GOLEM";
-        preferenceBody.marketplace_fee = totalCommission;
-        preferenceBody.collector_id = Number(sellerItem.seller_mp_id);
-
-        console.log("🏪 Marketplace configurado:");
-        console.log("  - Vendedor MP ID:", sellerItem.seller_mp_id);
-        console.log("  - Tu comisión:", totalCommission);
-      }
-    }
 
     console.log("🔍 Preferencia a enviar:", JSON.stringify(preferenceBody, null, 2));
 
@@ -111,81 +131,11 @@ export async function POST(request: Request) {
       WHERE id = ${orderId}
     `;
 
-    // 📧 ENVIAR EMAILS SI EL PAGO FUE APROBADO
-    // if (orderStatus === "approved") {
-    //   console.log("📧 Pago aprobado, enviando emails...");
-
-    //   try {
-    //     // Obtener datos completos de la orden
-    //     const [order] = await sql`
-    //       SELECT * FROM orders WHERE id = ${orderId}
-    //     `;
-
-    //     if (!order) {
-    //       console.error("❌ No se encontró la orden:", orderId);
-    //       return NextResponse.json({ 
-    //         success: true,
-    //         order_id: orderId,
-    //         status: orderStatus,
-    //         email_sent: false,
-    //       });
-    //     }
-
-    //     const orderItems = await sql`
-    //       SELECT oi.*, p.name, p.price
-    //       FROM order_items oi
-    //       JOIN products p ON oi.product_id = p.id
-    //       WHERE oi.order_id = ${orderId}
-    //     `;
-
-    //     console.log("📦 Datos de la orden:", {
-    //       id: order.id,
-    //       buyer: order.buyer_name,
-    //       email: order.buyer_email,
-    //       items: orderItems.length,
-    //     });
-
-    //     // Email al cliente
-    //     const clientEmailResult = await sendOrderConfirmation({
-    //       buyerName: order.buyer_name,
-    //       buyerEmail: order.buyer_email,
-    //       orderId: order.id,
-    //       items: orderItems.map((item: any) => ({
-    //         name: item.name,
-    //         quantity: item.quantity,
-    //         price: item.price,
-    //       })),
-    //       total: order.total,
-    //     });
-
-    //     // Email interno (notificación para vos)
-    //     const internalEmailResult = await sendInternalNotification({
-    //       buyerName: order.buyer_name,
-    //       buyerEmail: order.buyer_email,
-    //       orderId: order.id,
-    //       items: orderItems.map((item: any) => ({
-    //         name: item.name,
-    //         quantity: item.quantity,
-    //         price: item.price,
-    //       })),
-    //       total: order.total,
-    //     });
-
-    //     console.log("📧 Resultado emails:", {
-    //       cliente: clientEmailResult.success ? "✅ Enviado" : `❌ Error: ${clientEmailResult.error}`,
-    //       interno: internalEmailResult.success ? "✅ Enviado" : `❌ Error: ${internalEmailResult.error}`,
-    //     });
-    //   } catch (emailError: any) {
-    //     console.error("❌ Error al enviar emails:", emailError);
-    //     // No fallar el webhook por error de email
-    //   }
-    // }
-
-
     return NextResponse.json({
       success: true,
       init_point: preferenceData.init_point,
       preference_id: preferenceData.id,
+      order_id: orderId,
     });
 
   } catch (error: any) {

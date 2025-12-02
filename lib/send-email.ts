@@ -1,12 +1,15 @@
 import { Resend } from "resend";
 import { OrderConfirmationEmail } from "@/emails/order-confirmation";
+import { InternalNotificationEmail } from "@/emails/internal-notification";
 
-// ✅ CORREGIDO: RESEND_API_KEY en vez de solo RESEND
 const resend = new Resend(process.env.RESEND_API_KEY);
 
+// INTERFACE ACTUALIZADA
 interface OrderEmailData {
   buyerName: string;
   buyerEmail: string;
+  buyerPhone?: string; // ← AGREGAR
+  buyerDni?: string; // ← AGREGAR
   orderId: number;
   items: Array<{
     name: string;
@@ -14,14 +17,20 @@ interface OrderEmailData {
     price: number;
   }>;
   total: number;
+  shippingCost: number; // ← AGREGAR
+  shippingAddress?: { // ← AGREGAR
+    type: string;
+    address?: string;
+    city: string;
+    province: string;
+    zip: string;
+  };
 }
 
 export async function sendOrderConfirmation(data: OrderEmailData) {
   try {
-    console.log("📧 Intentando enviar email al cliente:", data.buyerEmail);
-    
-    const { data: emailData, error } = await resend.emails.send({
-      from: "GOLEM <golem@moreuro.resend.app>", // ✅ CORREGIDO: sin ">" extra
+    const result = await resend.emails.send({
+      from: "GOLEM <onboarding@resend.dev>", // Cambiar por tu dominio verificado
       to: data.buyerEmail,
       subject: `Confirmación de pedido #${data.orderId} - GOLEM`,
       react: OrderConfirmationEmail({
@@ -29,59 +38,42 @@ export async function sendOrderConfirmation(data: OrderEmailData) {
         orderId: data.orderId,
         items: data.items,
         total: data.total,
+        shippingCost: data.shippingCost,
+        shippingAddress: data.shippingAddress,
       }),
     });
 
-    if (error) {
-      console.error("❌ Error al enviar email al cliente:", error);
-      return { success: false, error };
-    }
-
-    console.log("✅ Email enviado al cliente:", emailData?.id);
-    return { success: true, id: emailData?.id };
+    console.log("✅ Email al cliente enviado:", result);
+    return { success: true, data: result };
   } catch (error: any) {
     console.error("❌ Error al enviar email al cliente:", error);
     return { success: false, error: error.message };
   }
 }
 
-// Email de notificación interna (para vos)
 export async function sendInternalNotification(data: OrderEmailData) {
   try {
-    console.log("📧 Intentando enviar notificación interna...");
-    
-    const { data: emailData, error } = await resend.emails.send({
-      from: "GOLEM Notificaciones <golem@moreuro.resend.app>",
-      to: "gonzalomolina.cs@gmail.com",
-      subject: `🛒 Nueva orden #${data.orderId} - GOLEM`,
-      html: `
-        <div style="font-family: Arial, sans-serif; padding: 20px;">
-          <h2>Nueva orden recibida 🎉</h2>
-          <p><strong>Orden:</strong> #${data.orderId}</p>
-          <p><strong>Cliente:</strong> ${data.buyerName} (${data.buyerEmail})</p>
-          <p><strong>Total:</strong> $${data.total.toLocaleString("es-AR")} ARS</p>
-          
-          <h3>Productos:</h3>
-          <ul>
-            ${data.items.map((item) => `
-              <li>${item.quantity}x ${item.name} - $${(item.price * item.quantity).toLocaleString("es-AR")}</li>
-            `).join("")}
-          </ul>
-          
-          <p>Revisá los detalles completos en tu panel de administración.</p>
-        </div>
-      `,
+    const result = await resend.emails.send({
+      from: "GOLEM <onboarding@resend.dev>", // Cambiar por tu dominio verificado
+      to: "tu-email@golem.com", // ← TU EMAIL AQUÍ
+      subject: `🔔 Nueva orden #${data.orderId}`,
+      react: InternalNotificationEmail({
+        buyerName: data.buyerName,
+        buyerEmail: data.buyerEmail,
+        buyerPhone: data.buyerPhone,
+        buyerDni: data.buyerDni,
+        orderId: data.orderId,
+        items: data.items,
+        total: data.total,
+        shippingCost: data.shippingCost,
+        shippingAddress: data.shippingAddress,
+      }),
     });
 
-    if (error) {
-      console.error("❌ Error al enviar notificación interna:", error);
-      return { success: false, error };
-    }
-
-    console.log("✅ Notificación interna enviada:", emailData?.id);
-    return { success: true, id: emailData?.id };
+    console.log("✅ Email interno enviado:", result);
+    return { success: true, data: result };
   } catch (error: any) {
-    console.error("❌ Error al enviar notificación:", error);
+    console.error("❌ Error al enviar email interno:", error);
     return { success: false, error: error.message };
   }
 }
