@@ -19,14 +19,14 @@ export default function CartIcon() {
     return (
       <Link href="/cart" className="text-2xl">
        {/* <i className="bi bi-bag"></i> */}
-       <i className="bi bi-cart"></i>
+       <i className="bi bi-bag"></i>
       </Link>
     );
   }
 
   return (
     <Link href="/cart" className="relative text-2xl">
-      <i className="bi bi-cart"></i>
+      <i className="bi bi-bag"></i>
       {itemCount > 0 && (
         <span className="absolute -top-2 -right-2 bg-highlight  text-white rounded-full px-2 py-0.5 text-xs">
           {itemCount}
