@@ -167,14 +167,14 @@ else {
       </div>
 
       {/* Product Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
         {products.map((product) => (
           <div
             key={product.id}
-            className="group border border-highlight/20 hover:border-highlight/60 transition-all duration-300 bg-black overflow-hidden relative"
+            className="group  hover:border-highlight/60 transition-all duration-300 overflow-hidden relative"
           >
             <Link href={`/products/${product.slug}`}>
-              <div className="relative border-1 h-64 md:h-72 bg-stone-900 overflow-hidden">
+              <div className="relative h-64 md:h-72 bg-transparent overflow-hidden">
                 <Image
                   src={product.image_url || "/placeholder.svg"}
                   alt={product.name}
@@ -182,11 +182,12 @@ else {
                   className="object-cover group-hover:scale-105 transition-transform duration-300"
                 />
 
-                <button className="absolute bottom-4 right-4 p-3 bg-highlight text-black rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 hover:bg-highlight/80 transform group-hover:translate-y-0 translate-y-2">
+                {/* <button className="absolute bottom-4 right-4 p-3 bg-highlight text-black rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 hover:bg-highlight/80 transform group-hover:translate-y-0 translate-y-2">
                   <ShoppingCart size={20} />
-                </button>
+                </button> */}
               </div>
-            </Link>
+              
+           
 
             <div className="p-4 md:p-6">
               <p className="text-highlight text-sm font-semibold mb-2">{product.category}</p>
@@ -199,6 +200,7 @@ else {
                 </span>
               </div>
             </div>
+            </Link>
           </div>
         ))}
       </div>

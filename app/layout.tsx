@@ -6,6 +6,7 @@ import Footer from "@/components/footer";
 import WhatsAppButton from "@/components/whatsapp";
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import Link from "next/link";
 
 const geistInter = Inter({
   variable: "--font-inter-sans",
@@ -27,18 +28,19 @@ export default function RootLayout({
       <body
         className={`${geistInter.variable} bg-red-300 bg-cover bg-center bg-no-repeat`}
       >
+        <Link href={'/cart'}>
         <ToastContainer
           position="bottom-right"
           autoClose={3000}
           hideProgressBar={false}
           newestOnTop={false}
-          closeOnClick
           rtl={false}
           pauseOnFocusLoss
           draggable
           pauseOnHover
           theme="dark"
-        />
+          />
+          </Link>
         <Header/>
         {children}
         <Footer/>

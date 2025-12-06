@@ -66,7 +66,7 @@ export default function CatalogGrid({ products }: CatalogGridProps) {
             className="group border border-highlight/20 hover:border-highlight/60 transition-all duration-300 bg-black overflow-hidden relative block"
           >
             {/* Product Image */}
-            <div className="relative h-64 md:h-72 bg-gray-900 overflow-hidden">
+            <div className="relative h-64 md:h-72 overflow-hidden">
               <Image
                 src={product.image}
                 alt={product.name}
