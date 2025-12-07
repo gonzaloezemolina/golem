@@ -1,6 +1,6 @@
 import { getServerSession } from "next-auth"
 import { redirect } from "next/navigation"
-import { authOptions } from "@/app/api/auth/[...nextauth]/route"
+import { authOptions } from "@/lib/auth"
 import sql from "@/lib/db"
 import ProductForm from "@/components/admin/product-form"
 import Link from "next/link"

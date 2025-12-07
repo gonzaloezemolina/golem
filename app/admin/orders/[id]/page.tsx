@@ -1,6 +1,6 @@
 import { getServerSession } from "next-auth"
 import { redirect, notFound } from "next/navigation"
-import { authOptions } from "@/app/api/auth/[...nextauth]/route"
+import { authOptions } from "@/lib/auth"
 import sql from "@/lib/db"
 import Link from "next/link"
 import { ArrowLeft, Package, Truck, User, Mail, Phone, MapPin, CreditCard } from "lucide-react"
