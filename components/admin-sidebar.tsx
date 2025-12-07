@@ -26,7 +26,7 @@ export default function AdminSidebar({ userName }: AdminSidebarProps) {
   const menuItems = [
     { icon: LayoutDashboard, label: "Dashboard", href: "/admin" },
     { icon: ShoppingCart, label: "Órdenes", href: "/admin/orders" },
-    { icon: Package, label: "Productos", href: "/products" },
+    { icon: Package, label: "Productos", href: "/admin/products"},
     { icon: Users, label: "Clientes", href: "/admin/customers", disabled: true },
     { icon: Settings, label: "Configuración", href: "/admin/settings", disabled: true },
   ]
