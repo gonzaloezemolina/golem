@@ -85,8 +85,11 @@ export async function fetchProductBySlug(slug: string) {
       ORDER BY size ASC
     ` as ProductVariant[];
 
-    // Calcular stock total y talles disponibles
-    const total_stock = variants.reduce((sum, v) => sum + v.stock, 0);
+    // Si NO hay variantes, usar el stock del producto
+    const total_stock = variants.length > 0
+      ? variants.reduce((sum, v) => sum + v.stock, 0)
+      : product.stock; // ← FIX: usar stock del producto
+
     const available_sizes = variants
       .filter(v => v.stock > 0 && v.is_active)
       .map(v => v.size);

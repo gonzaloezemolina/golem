@@ -12,10 +12,55 @@ export async function POST(request: Request) {
 
     const data = await request.json()
 
-    // Crear producto SIN especificar ID (se autogenera)
+    // VALIDACIÓN: Verificar que category_id no sea 0
+    if (!data.category_id || data.category_id === 0) {
+      return NextResponse.json(
+        { error: "Debe seleccionar una categoría" },
+        { status: 400 }
+      )
+    }
+
+       // ⭐ OBTENER NOMBRE DE LA SUBCATEGORÍA (si existe)
+    let categoryName = null
+    
+    if (data.subcategory_id && data.subcategory_id !== 0) {
+      // Si tiene subcategoría, usar el nombre de la subcategoría
+      const [subcategory] = await sql`
+        SELECT name FROM subcategories WHERE id = ${data.subcategory_id}
+      `
+      if (subcategory) {
+        categoryName = subcategory.name
+      }
+    }
+    
+    // Si no tiene subcategoría, usar el nombre de la categoría padre
+    if (!categoryName) {
+      const [category] = await sql`
+        SELECT name FROM categories WHERE id = ${data.category_id}
+      `
+      if (category) {
+        categoryName = category.name
+      }
+    }
+
+    if (!categoryName) {
+      return NextResponse.json(
+        { error: "Categoría no encontrada" },
+        { status: 400 }
+      )
+    }
+
+    console.log("📦 Category name para guardar:", categoryName)
+
+    // Calcular stock total
+    const totalStock = data.variants && data.variants.length > 0
+      ? data.variants.reduce((sum: number, v: any) => sum + (parseInt(v.stock) || 0), 0)
+      : parseInt(data.stock) || 0
+
+    // Crear producto
     const [product] = await sql`
       INSERT INTO products (
-        name, slug, description, price, stock,
+        name, slug, description, price, stock, category,
         category_id, subcategory_id, brand, color,
         image_url, image_2, image_3, image_4, image_5
       ) VALUES (
@@ -23,7 +68,8 @@ export async function POST(request: Request) {
         ${data.slug}, 
         ${data.description}, 
         ${data.price}, 
-        ${data.variants.length > 0 ? 0 : data.stock},
+        ${totalStock},
+        ${categoryName},
         ${data.category_id}, 
         ${data.subcategory_id || null}, 
         ${data.brand || null}, 

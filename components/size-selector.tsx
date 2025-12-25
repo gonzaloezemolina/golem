@@ -15,24 +15,27 @@ interface SizeSelectorProps {
   onSizeSelect: (variant: ProductVariant | null) => void
 }
 
-// Definir TODOS los talles posibles según tipo de producto
-const ALL_CLOTHING_SIZES = ['S', 'M', 'L', 'XL', 'XXL']
-const ALL_SHOE_SIZES = ['38', '39', '40', '41', '42', '43', '44', '45', '46']
+// Talles predefinidos
+const ALL_CLOTHING_SIZES = ['XS', 'S', 'M', 'L', 'XL', 'XXL']
+const ALL_SHOE_SIZES = ['35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46']
 
 export default function SizeSelector({ variants, onSizeSelect }: SizeSelectorProps) {
   const [selectedVariant, setSelectedVariant] = useState<ProductVariant | null>(null)
 
-  // Detectar si es ropa o calzado basándose en los talles que tiene
-  const isShoe = variants.some(v => !isNaN(Number(v.size)))
+  // Detectar tipo de producto basado en los talles
+  const isShoe = variants.some(v => {
+    const num = parseInt(v.size)
+    return !isNaN(num) && num >= 35 && num <= 50
+  })
+  
   const allSizes = isShoe ? ALL_SHOE_SIZES : ALL_CLOTHING_SIZES
 
-  // Crear mapa de talles disponibles
+  // Crear mapa de variantes
   const variantsMap = new Map(variants.map(v => [v.size, v]))
 
   const handleSizeClick = (size: string) => {
     const variant = variantsMap.get(size)
     
-    // Si el talle no existe o no tiene stock, no hacer nada
     if (!variant || variant.stock === 0 || !variant.is_active) {
       return
     }
@@ -44,10 +47,7 @@ export default function SizeSelector({ variants, onSizeSelect }: SizeSelectorPro
   return (
     <div className="border-b border-highlight/20 pb-6">
       <div className="flex items-center justify-between mb-4">
-        <label className="text-sm font-semibold">Talle</label>
-        {/* <button className="text-xs text-highlight hover:text-highlight/80">
-          Guía de talles
-        </button> */}
+        <label className="text-sm font-semibold">TALLE</label>
       </div>
 
       {/* Grid de talles */}
@@ -75,7 +75,7 @@ export default function SizeSelector({ variants, onSizeSelect }: SizeSelectorPro
             >
               {size}
               
-              {/* Badge de stock bajo (solo si tiene stock y no está seleccionado) */}
+              {/* Badge de stock bajo */}
               {hasStock && variant.stock <= 3 && !isSelected && (
                 <span className="absolute -top-1 -right-1 bg-highlight text-black text-[9px] font-bold px-1 rounded">
                   {variant.stock}
@@ -86,7 +86,7 @@ export default function SizeSelector({ variants, onSizeSelect }: SizeSelectorPro
         })}
       </div>
 
-      {/* Información del talle seleccionado - SIMPLIFICADO */}
+      {/* Info del talle seleccionado */}
       {selectedVariant ? (
         <div className="mt-4 text-center">
           <p className="text-sm text-gray-400">
@@ -108,3 +108,22 @@ export default function SizeSelector({ variants, onSizeSelect }: SizeSelectorPro
     </div>
   )
 }
+
+
+// ## ✅ RESUMEN DE CAMBIOS
+
+// ### **Stock automático:**
+// ```
+// CREAR producto con variantes:
+// - S: 5
+// - M: 7
+// → Stock en BD: 12 ✅
+
+// EDITAR producto:
+// - S: 3
+// - M: 4
+// - L: 5
+// → Stock en BD: 12 ✅
+
+// Producto SIN variantes:
+// → Stock en BD: 10 ✅

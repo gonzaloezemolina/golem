@@ -23,14 +23,31 @@ export default function ContactPage() {
   }
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    console.log("Form submitted:", formData)
-    setSubmitted(true)
-    setTimeout(() => {
-      setSubmitted(false)
-      setFormData({ name: "", email: "", category: "", message: "" })
-    }, 3000)
+  e.preventDefault()
+
+  try {
+    const response = await fetch('/api/contact', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formData),
+    })
+
+    if (response.ok) {
+      setSubmitted(true)
+      setTimeout(() => {
+        setSubmitted(false)
+        setFormData({ name: "", email: "", category: "", message: "" })
+      }, 3000)
+    } else {
+      alert('Error al enviar el mensaje. Por favor intentá de nuevo.')
+    }
+  } catch (error) {
+    console.error('Error:', error)
+    alert('Error al enviar el mensaje. Por favor intentá de nuevo.')
   }
+}
 
   return (
     <div className="min-h-screen text-white py-12 md:py-20 px-4">

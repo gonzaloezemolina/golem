@@ -107,6 +107,7 @@ export default function ProductImageGallery({ images, productName }: ProductImag
                     fill
                     className="object-cover cursor-zoom-in"
                     priority={i === 0}
+                     quality={95}
                   />
                 </ControlledZoom>
               </div>
@@ -119,6 +120,7 @@ export default function ProductImageGallery({ images, productName }: ProductImag
                   fill
                   className="object-cover"
                   priority={i === 0}
+                   quality={95}
                 />
               </div>
             </SwiperSlide>

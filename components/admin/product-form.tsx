@@ -58,7 +58,6 @@ export default function ProductForm({
 }: ProductFormProps) {
   const router = useRouter()
   const [loading, setLoading] = useState(false)
-  const [uploadingImage, setUploadingImage] = useState(false)
 
   // Form data
   const [formData, setFormData] = useState({
@@ -67,7 +66,7 @@ export default function ProductForm({
     description: product?.description || "",
     price: product?.price || "",
     stock: product?.stock || 0,
-    category_id: product?.category_id || 0,
+    category_id: product?.category_id || (categories.length > 0 ? categories[0].id : 0), 
     subcategory_id: product?.subcategory_id || 0,
     brand: product?.brand || "",
     color: product?.color || "",
@@ -111,37 +110,7 @@ export default function ProductForm({
   }
 
   // Upload imagen a Cloudinary
-  const handleImageUpload = async (index: number, file: File) => {
-  setUploadingImage(true)
-  try {
-    const formData = new FormData()
-    formData.append("file", file)
-    formData.append("upload_preset", process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET!) // ← Tu preset
-
-    const response = await fetch(
-      `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload`,
-      {
-        method: "POST",
-        body: formData,
-      }
-    )
-
-    if (!response.ok) {
-      throw new Error("Error al subir imagen")
-    }
-
-    const data = await response.json()
-    
-    const newImages = [...images]
-    newImages[index] = data.secure_url
-    setImages(newImages)
-  } catch (error) {
-    console.error("Error uploading image:", error)
-    alert("Error al subir la imagen. Verificá tu configuración de Cloudinary.")
-  } finally {
-    setUploadingImage(false)
-  }
-}
+ 
 
   const removeImage = (index: number) => {
     const newImages = [...images]
@@ -182,6 +151,9 @@ export default function ProductForm({
         image_5: images[4],
         variants: productVariants,
       }
+
+          console.log("📦 PAYLOAD COMPLETO:", payload) // ← AGREGAR ESTO
+    console.log("📦 category_id:", payload.category_id) // ← Y ESTO
 
       const url = product 
         ? `/api/admin/products/${product.id}`
@@ -349,64 +321,74 @@ export default function ProductForm({
       </div>
 
       {/* Imágenes */}
-      <div className="bg-gray-900 border border-gray-800 rounded-lg p-6">
-        <h2 className="text-xl font-bold mb-6">Imágenes del Producto</h2>
-        
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-          {images.map((image, index) => (
-            <div key={index} className="relative aspect-square">
-              {image ? (
-                <div className="relative w-full h-full group">
-                  <Image
-                    src={image}
-                    alt={`Imagen ${index + 1}`}
-                    fill
-                    className="object-cover rounded-lg border border-gray-700"
-                  />
-                  <button
-                    type="button"
-                    onClick={() => removeImage(index)}
-                    className="absolute top-2 right-2 p-1 bg-red-500 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
-                  >
-                    <X size={16} />
-                  </button>
-                  {index === 0 && (
-                    <span className="absolute bottom-2 left-2 px-2 py-1 bg-[#d3b05c] text-black text-xs font-bold rounded">
-                      Principal
-                    </span>
-                  )}
-                </div>
-              ) : (
-                <label className="w-full h-full border-2 border-dashed border-gray-700 rounded-lg flex flex-col items-center justify-center cursor-pointer hover:border-[#d3b05c] transition-colors">
-                  <input
-                    type="file"
-                    accept="image/*"
-                    onChange={(e) => {
-                      const file = e.target.files?.[0]
-                      if (file) handleImageUpload(index, file)
-                    }}
-                    className="hidden"
-                    disabled={uploadingImage}
-                  />
-                  {uploadingImage ? (
-                    <Loader2 size={24} className="animate-spin text-gray-400" />
-                  ) : (
-                    <>
-                      <Upload size={24} className="text-gray-400 mb-2" />
-                      <span className="text-xs text-gray-400 text-center px-2">
-                        Imagen {index + 1}
-                      </span>
-                    </>
-                  )}
-                </label>
-              )}
-            </div>
-          ))}
+      {/* Imágenes */}
+<div className="bg-gray-900 border border-gray-800 rounded-lg p-6">
+  <h2 className="text-xl font-bold mb-6">Imágenes del Producto</h2>
+  <p className="text-sm text-gray-400 mb-6">
+    📌 Subí tus imágenes a <a href="https://cloudinary.com/console/media_library" target="_blank" rel="noopener noreferrer" className="text-[#d3b05c] hover:underline">Cloudinary Media Library</a> y pegá las URLs acá
+  </p>
+  
+  <div className="space-y-4">
+    {images.map((image, index) => (
+      <div key={index}>
+        <label className="block text-sm font-semibold mb-2">
+          Imagen {index + 1} {index === 0 && <span className="text-[#d3b05c]">(Principal)</span>}
+        </label>
+        <div className="flex gap-3 items-start">
+          <input
+            type="url"
+            value={image || ""}
+            onChange={(e) => {
+              const newImages = [...images]
+              newImages[index] = e.target.value || null
+              setImages(newImages)
+            }}
+            placeholder="https://res.cloudinary.com/..."
+            className="flex-1 px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-[#d3b05c]"
+          />
+          
+          {image && (
+            <>
+              <div className="relative w-20 h-20 flex-shrink-0 border border-gray-700 rounded-lg overflow-hidden">
+                <Image
+                  src={image}
+                  alt={`Preview ${index + 1}`}
+                  fill
+                  className="object-cover"
+                  onError={(e) => {
+                    const target = e.target as HTMLImageElement
+                    target.src = "/placeholder.svg"
+                  }}
+                />
+              </div>
+              
+              <button
+                type="button"
+                onClick={() => removeImage(index)}
+                className="p-3 text-red-500 hover:bg-red-500/10 rounded transition-colors"
+                title="Borrar imagen"
+              >
+                <X size={20} />
+              </button>
+            </>
+          )}
         </div>
-        <p className="text-xs text-gray-400 mt-4">
-          La primera imagen será la principal. Máximo 5 imágenes.
-        </p>
       </div>
+    ))}
+  </div>
+  
+  <div className="mt-6 p-4 bg-blue-500/10 border border-blue-500/20 rounded-lg">
+    <p className="text-sm text-blue-400 mb-2">
+      💡 <strong>Cómo subir imágenes a Cloudinary:</strong>
+    </p>
+    <ol className="text-xs text-blue-300 space-y-1 ml-4 list-decimal">
+      <li>Andá a <a href="https://cloudinary.com/console/media_library" target="_blank" rel="noopener noreferrer" className="underline hover:text-blue-200">Cloudinary Media Library</a></li>
+      <li>Click en "Upload" → Seleccioná tu imagen</li>
+      <li>Click derecho en la imagen → "Copy URL"</li>
+      <li>Pegá la URL acá</li>
+    </ol>
+  </div>
+</div>
 
       {/* Variantes (Talles) */}
       <div className="bg-gray-900 border border-gray-800 rounded-lg p-6">
@@ -481,7 +463,7 @@ export default function ProductForm({
       <div className="flex gap-4">
         <button
           type="submit"
-          disabled={loading || uploadingImage}
+          disabled={loading}
           className="flex-1 px-6 py-3 bg-[#d3b05c] text-black font-bold rounded-lg hover:bg-[#e6c570] transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
         >
           {loading && <Loader2 size={20} className="animate-spin" />}

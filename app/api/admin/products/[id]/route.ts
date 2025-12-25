@@ -16,6 +16,19 @@ export async function PUT(
     const { id } = await params
     const data = await request.json()
 
+    // Después de obtener data
+if (!data.category_id || data.category_id === 0) {
+  return NextResponse.json(
+    { error: "Debe seleccionar una categoría" },
+    { status: 400 }
+  )
+}
+
+    // Calcular stock total
+    const totalStock = data.variants && data.variants.length > 0
+      ? data.variants.reduce((sum: number, v: any) => sum + (parseInt(v.stock) || 0), 0)
+      : parseInt(data.stock) || 0
+
     // Actualizar producto
     await sql`
       UPDATE products SET
@@ -23,7 +36,7 @@ export async function PUT(
         slug = ${data.slug},
         description = ${data.description},
         price = ${data.price},
-        stock = ${data.variants.length > 0 ? 0 : data.stock},
+        stock = ${totalStock},
         category_id = ${data.category_id},
         subcategory_id = ${data.subcategory_id || null},
         brand = ${data.brand || null},

@@ -20,6 +20,7 @@ interface Product {
   image_url: string | null
   brand: string | null
   description: string | null
+  stock: number // ← IMPORTANTE: stock del producto
   variants?: ProductVariant[]
   total_stock?: number
   available_sizes?: string[]
@@ -36,17 +37,22 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
     setSelectedVariant(variant)
   }
 
+  const hasVariants = (product.variants?.length ?? 0) > 0
+
   return (
     <>
-      {/* SIZE SELECTOR */}
-      {product.variants && product.variants.length > 0 ? (
+      {/* SIZE SELECTOR - Solo si hay variantes */}
+      {hasVariants ? (
         <SizeSelector 
-          variants={product.variants}
+          variants={product.variants!}
           onSizeSelect={handleSizeSelect}
         />
       ) : (
+        // Producto SIN variantes - Mostrar solo el stock
         <div className="border-b border-highlight/20 pb-6">
-          <p className="text-gray-400 text-sm">Sin talles disponibles</p>
+          <p className="text-sm text-gray-400">
+            Stock disponible: <strong className="text-white">{product.stock}</strong> unidades
+          </p>
         </div>
       )}
 
@@ -62,6 +68,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
         <AddToCartButton 
           product={product} 
           selectedVariant={selectedVariant}
+          hasVariants={hasVariants} // ← NUEVO
         />
       </div>
     </>

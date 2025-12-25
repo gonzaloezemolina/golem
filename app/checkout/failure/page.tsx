@@ -1,15 +1,27 @@
 "use client"
 
-import { Suspense } from "react"
-import { useRouter } from "next/navigation"
+import { useEffect, useState, Suspense } from "react"
+import { useRouter, useSearchParams } from "next/navigation"
 import Link from "next/link"
 import { XCircle, RefreshCw, Mail, AlertTriangle } from "lucide-react"
 
 function FailureContent() {
   const router = useRouter()
+  const searchParams = useSearchParams()
+  const [order, setOrder] = useState<any>(null)
+  
+  const orderId = searchParams.get("order_id")
+
+  useEffect(() => {
+    if (orderId) {
+      fetch(`/api/orders/${orderId}`)
+        .then(res => res.json())
+        .then(data => setOrder(data))
+        .catch(err => console.error("Error:", err))
+    }
+  }, [orderId])
 
   const handleRetry = () => {
-    // Volver al checkout (datos preservados)
     router.push("/checkout")
   }
 
@@ -30,6 +42,14 @@ function FailureContent() {
           <p className="text-xl text-gray-400">
             No pudimos procesar tu pago
           </p>
+
+          {/* Número de orden si existe */}
+          {order && (
+            <div className="inline-block bg-red-500/10 border border-red-500 rounded-lg px-6 py-3 mt-6">
+              <p className="text-sm text-gray-400">Número de orden</p>
+              <p className="text-2xl font-bold text-red-500">#{order.id}</p>
+            </div>
+          )}
         </div>
 
         {/* Razones posibles */}
