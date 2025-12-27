@@ -63,8 +63,8 @@ export async function POST(request: Request) {
     for (const item of items) {
       // Guardar en order_items
       await sql`
-        INSERT INTO order_items (order_id, product_id, quantity, price)
-        VALUES (${orderId}, ${item.id}, ${item.quantity}, ${item.price})
+        INSERT INTO order_items (order_id, product_id, variant_id quantity, price)
+        VALUES (${orderId}, ${item.id},  ${item.variant_id || null}, ${item.quantity}, ${item.price})
       `;
 
       // Agregar a items de MP (CON ID)
