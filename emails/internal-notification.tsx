@@ -225,6 +225,8 @@ export const InternalNotificationEmail = ({
               <div className="item" key={index}>
                 <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "5px" }}>
                   <strong>{item.name}</strong>
+                  {/* <strong>Variante:{item.}</strong> */}
+                  <br />
                   <strong>${(item.price * item.quantity).toLocaleString("es-AR")}</strong>
                 </div>
                 <div style={{ color: "#666", fontSize: "14px" }}>

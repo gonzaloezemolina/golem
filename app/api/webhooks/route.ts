@@ -55,8 +55,37 @@ export async function POST(request: Request) {
 
     console.log("✅ Orden actualizada correctamente");
 
-    // 📧 ENVIAR EMAILS SI EL PAGO FUE APROBADO
+    // ⭐ REDUCIR STOCK SI EL PAGO FUE APROBADO ⭐
     if (orderStatus === "approved") {
+      console.log("📦 Reduciendo stock de productos...");
+
+      const orderItems = await sql`
+        SELECT * FROM order_items WHERE order_id = ${orderId}
+      `;
+
+      for (const item of orderItems) {
+        // Si tiene variante, reducir stock de la variante
+        if (item.variant_id) {
+          await sql`
+            UPDATE product_variants 
+            SET stock = GREATEST(stock - ${item.quantity}, 0)
+            WHERE id = ${item.variant_id}
+          `;
+          console.log(`  ↓ Variante #${item.variant_id}: -${item.quantity} unidades`);
+        }
+        
+        // SIEMPRE reducir stock del producto (es la suma total)
+        await sql`
+          UPDATE products 
+          SET stock = GREATEST(stock - ${item.quantity}, 0)
+          WHERE id = ${item.product_id}
+        `;
+        console.log(`  ↓ Producto #${item.product_id}: -${item.quantity} unidades`);
+      }
+
+      console.log("✅ Stock actualizado correctamente");
+
+      // 📧 ENVIAR EMAILS
       console.log("📧 Enviando emails de confirmación...");
 
       const [order] = await sql`
@@ -73,7 +102,7 @@ export async function POST(request: Request) {
         });
       }
 
-      const orderItems = await sql`
+      const itemsWithDetails = await sql`
         SELECT oi.*, p.name, p.price
         FROM order_items oi
         JOIN products p ON oi.product_id = p.id
@@ -87,7 +116,7 @@ export async function POST(request: Request) {
         total: order.total,
         shipping_cost: order.shipping_cost,
         shipping_type: order.shipping_type,
-        items: orderItems.length,
+        items: itemsWithDetails.length,
       });
 
       // Preparar datos de envío
@@ -105,7 +134,7 @@ export async function POST(request: Request) {
           buyerName: order.buyer_name,
           buyerEmail: order.buyer_email,
           orderId: order.id,
-          items: orderItems.map((item: any) => ({
+          items: itemsWithDetails.map((item: any) => ({
             name: item.name,
             quantity: item.quantity,
             price: item.price,
@@ -122,7 +151,7 @@ export async function POST(request: Request) {
           buyerPhone: order.buyer_phone,
           buyerDni: order.buyer_dni,
           orderId: order.id,
-          items: orderItems.map((item: any) => ({
+          items: itemsWithDetails.map((item: any) => ({
             name: item.name,
             quantity: item.quantity,
             price: item.price,

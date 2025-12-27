@@ -50,7 +50,7 @@ export default function CartPage() {
     shippingAddress.provinciaId && 
     shippingAddress.ciudadNombre && 
     shippingAddress.codigoPostal && 
-    shippingAddress.domicilio &&
+    // shippingAddress.domicilio &&
     (shippingAddress.tipoEntrega === "retiro" || shippingAddress.domicilio)
 
   // Detectar si es Rosario
@@ -62,11 +62,17 @@ export default function CartPage() {
     setMounted(true)
      if (savedAddress) {
       setShippingAddress(savedAddress)
-    }
+    } else {
+    // ⭐ SI NO HAY ADDRESS GUARDADA, RESETEAR A DOMICILIO
+    setShippingAddress(prev => ({
+      ...prev,
+      tipoEntrega: "domicilio"
+    }))
+  }
     if (savedCost) {
       setShippingCost(savedCost)
     }
-  }, [])
+  }, [savedAddress, savedCost])
 
   // Cargar localidades
 useEffect(() => {
@@ -105,6 +111,16 @@ useEffect(() => {
       })
     }
   }, [shippingAddress.provinciaNombre, shippingAddress.ciudadNombre])
+
+  // NUEVO: Forzar "domicilio" cuando NO es Rosario
+useEffect(() => {
+  if (!isRosario && shippingAddress.tipoEntrega === "retiro") {
+    setShippingAddress(prev => ({
+      ...prev,
+      tipoEntrega: "domicilio"
+    }))
+  }
+}, [isRosario, shippingAddress.tipoEntrega])
 
   useEffect(() => {
   if (isFormValid) {
