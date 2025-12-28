@@ -160,7 +160,7 @@ La accesibilidad, innovación y el detalle son nuestras bases. Pensado para todo
       </section>
 
       {/* CTA Section */}
-      <section className="bg-[url('/milan.jpg')] bg-cover bg-center bg-no-repeat text-white py-16 md:py-24 relative overflow-hidden">
+      <section className="bg-cover bg-center bg-no-repeat text-white py-16 md:py-24 relative overflow-hidden">
         {/* Decorative accent elements */}
         <div className="absolute top-10 right-10 w-3 h-3 bg-highlight/40 transform rotate-45" />
         <div className="absolute bottom-10 left-1/4 w-3 h-3 bg-highlight/40 transform rotate-45" />
@@ -172,7 +172,7 @@ La accesibilidad, innovación y el detalle son nuestras bases. Pensado para todo
           </h2>
           <p className="mb-6 font-text">¿Te interesa unirte al proyecto?</p>
 
-          <button className="inline-flex items-center gap-3 px-8 py-4 border border-highlight text-highlight font-semibold hover:bg-highlight hover:text-black transition-all duration-300 group">
+          <button className="inline-flex items-center cursor-pointer gap-3 px-8 py-4 border border-highlight text-highlight font-semibold hover:bg-highlight hover:text-black transition-all duration-300 group">
             Contáctanos <i className="bi bi-chevron-right group-hover:translate-x-1 transition-transform"></i>
             {/* <svg
               className="w-5 h-5 group-hover:translate-x-1 transition-transform"
