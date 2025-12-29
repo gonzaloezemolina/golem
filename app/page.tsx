@@ -45,15 +45,15 @@ const falseProducts = await fetchFalseProducts()
   return (
     <>
         {/* Hero Section with Video */}
-      <section className="bg-fondo text-white py-12 md:py-20">
+      <section className="bg-black text-white py-12 md:py-20">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center mb-12">
             {/* Left Content */}
             <div className="flex flex-col gap-6">
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-golem font-bold text-balance">AQUEL QUE VA MÁS ALLÁ</h1>
               <p className="text-gray-300 text-lg leading-relaxed">
-                Equipo de calidad premium para atletas que buscan excelencia. Descubre nuestra colección de productos
-                deportivos de última generación.
+                Deporte y fitness en una sola tienda. <br />
+                Encontrá todo lo que necesitás para aumentar tu rendimiento al máximo.
               </p>
               
              
@@ -65,7 +65,7 @@ const falseProducts = await fetchFalseProducts()
             <div className="relative h-64 md:h-96 bg-gray-900 rounded overflow-hidden">
               <video autoPlay muted loop playsInline className="w-full h-full object-cover">
                 <source
-                  src="https://videos.pexels.com/video-files/3571562/3571562-sd_640_360_25fps.mp4"
+                  src="https://res.cloudinary.com/dmfkhycen/video/upload/v1766974929/VIDEO_DE_PRUEBA_HERO_r6pvpj.mp4"
                   type="video/mp4"
                 />
                 Your browser does not support the video tag.

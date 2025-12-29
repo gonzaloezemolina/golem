@@ -98,7 +98,7 @@ export default function Header() {
           {/* Logo */}
           <Link href="/">
             <div className="w-35 flex justify-center items-center">
-              <img src="/isologov2.png" className="w-full h-full" alt="Golem" />
+              <img src="https://res.cloudinary.com/dmfkhycen/image/upload/v1766975162/Isologov2_abhfoq.png" className="w-full h-full" alt="Golem" />
             </div>
           </Link>
 

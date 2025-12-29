@@ -36,7 +36,7 @@ export const metadata: Metadata = {
     description: "Tienda online de deportes y fitness. Envío gratis a Rosario.",
     images: [
       {
-        url: "/og-image.jpg", // ⚠️ Necesitás crear esta imagen (1200x630px)
+        url: "/Logo-seo.png", // ⚠️ Necesitás crear esta imagen (1200x630px)
         width: 1200,
         height: 630,
         alt: "GOLEM Deportes y Fitness",
@@ -49,7 +49,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "GOLEM - Deportes y Fitness",
     description: "Tienda online de deportes y fitness. Envío gratis a Rosario.",
-    images: ["/og-image.jpg"],
+    images: ["/Logo-seo.png"],
   },
 
   // Otros
