@@ -106,7 +106,7 @@ export default function CatalogGrid({ products }: CatalogGridProps) {
             {/* Product Info */}
             <div className="p-4 md:p-6">
               <p className="text-highlight text-sm font-semibold mb-2">{product.category}</p>
-              <h3 className="text-lg md:text-xl font-bold mb-3 group-hover:text-highlight transition-colors line-clamp-2 text-white">
+              <h3 className="text-lg md:text-xl font-bold mb-3 group-hover:text-highlight transition-colors">
                 {product.name}
               </h3>
               <span className="text-2xl font-bold text-highlight">${product.price.toFixed(2)}</span>

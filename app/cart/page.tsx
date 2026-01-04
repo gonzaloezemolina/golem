@@ -230,7 +230,7 @@ useEffect(() => {
 
                     <div className="flex-1">
                       <h3 className="text-white font-semibold mb-1">{item.name}</h3>
-                      <p className="text-sm text-gray-400 mb-1">${item.price.toFixed(2)}</p>
+                      <p className="text-sm text-gray-400 mb-1">${item.price}</p>
                       {item.size && (
                         <p className="text-xs text-gray-500">Talle: {item.size}</p>
                       )}
@@ -261,7 +261,7 @@ useEffect(() => {
                     </div>
 
                     <div className="flex flex-col items-end justify-between">
-                      <p className="text-white font-semibold">${(item.price * item.quantity).toFixed(2)}</p>
+                      <p className="text-white font-semibold">${(item.price * item.quantity)}</p>
                       <button
                         onClick={() => removeItem(item.id)}
                         className="text-gray-400 hover:text-red-500 transition-colors"
@@ -439,7 +439,7 @@ useEffect(() => {
           <p className="text-sm text-gray-400">{shippingCost.zona}</p>
         </div>
         <p className="text-2xl text-[#d3b05c] font-bold">
-          ${shippingCost.costo.toFixed(2)}
+          ${shippingCost.costo}
         </p>
       </div>
     </div>
@@ -457,7 +457,7 @@ useEffect(() => {
               <div className="space-y-4 mb-6 pb-6 border-b border-[#333]">
                 <div className="flex justify-between text-gray-300">
                   <span>Subtotal</span>
-                  <span>${subtotal.toFixed(2)}</span>
+                  <span>${subtotal}</span>
                 </div>
                 <div className="flex justify-between text-gray-300">
                   <span>Envío</span>
@@ -466,12 +466,12 @@ useEffect(() => {
                       ? 'A calcular' 
                       : shippingCost.esGratis 
                         ? 'GRATIS' 
-                        : `$${shippingCost.costo.toFixed(2)}`}
+                        : `$${shippingCost.costo}`}
                   </span>
                 </div>
                 <div className="flex justify-between text-xl pt-4 border-t border-[#444]">
                   <span className="text-white font-bold">Total</span>
-                  <span className="text-[#d3b05c] font-bold">${total.toFixed(2)}</span>
+                  <span className="text-[#d3b05c] font-bold">${total}</span>
                 </div>
               </div>
 

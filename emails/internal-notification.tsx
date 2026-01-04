@@ -209,7 +209,7 @@ export const InternalNotificationEmail = ({
                       {shippingCost === 0 ? (
                         <span style={{ color: "#d3b05c" }}>GRATIS</span>
                       ) : (
-                        `$${shippingCost.toLocaleString("es-AR")}`
+                        `$${shippingCost}`
                       )}
                     </span>
                   </div>
@@ -227,10 +227,10 @@ export const InternalNotificationEmail = ({
                   <strong>{item.name}</strong>
                   {/* <strong>Variante:{item.}</strong> */}
                   <br />
-                  <strong>${(item.price * item.quantity).toLocaleString("es-AR")}</strong>
+                  <strong>${(item.price * item.quantity)}</strong>
                 </div>
                 <div style={{ color: "#666", fontSize: "14px" }}>
-                  Cantidad: {item.quantity} × ${item.price.toLocaleString("es-AR")}
+                  Cantidad: {item.quantity} × ${item.price}
                 </div>
               </div>
             ))}
@@ -240,15 +240,15 @@ export const InternalNotificationEmail = ({
           <div className="total-section">
             <div className="total-row">
               <span>Subtotal:</span>
-              <span>${(total - shippingCost).toLocaleString("es-AR")}</span>
+              <span>${(total - shippingCost)}</span>
             </div>
             <div className="total-row">
               <span>Envío:</span>
-              <span>{shippingCost === 0 ? "GRATIS" : `$${shippingCost.toLocaleString("es-AR")}`}</span>
+              <span>{shippingCost === 0 ? "GRATIS" : `$${shippingCost}`}</span>
             </div>
             <div className="total-row final">
               <span>TOTAL:</span>
-              <span>${total.toLocaleString("es-AR")} ARS</span>
+              <span>${total} ARS</span>
             </div>
           </div>
 

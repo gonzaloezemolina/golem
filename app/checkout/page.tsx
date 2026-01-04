@@ -120,7 +120,7 @@ export default function CheckoutPage() {
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   className="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-[#d3b05c] transition"
-                  placeholder="Roger Federer"
+                  placeholder="Ingresa tu nombre completo"
                 />
               </div>
 
@@ -132,7 +132,7 @@ export default function CheckoutPage() {
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   className="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-[#d3b05c] transition"
-                  placeholder="roger@federer.com"
+                  placeholder="Ingresa tu correo electronico"
                 />
               </div>
 
@@ -176,7 +176,7 @@ export default function CheckoutPage() {
 
           {/* Resumen */}
           <div className="lg:col-span-1">
-            <div className="sticky top-8 bg-gray-900 rounded-lg p-6 border border-gray-700">
+            <div className="sticky top-8 bg-stone-950 rounded-lg p-6 border border-gray-700">
               <h3 className="text-2xl font-bold mb-6">Resumen de orden</h3>
 
               <div className="mb-6">

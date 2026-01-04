@@ -41,6 +41,8 @@ interface Product {
   image_3: string | null
   image_4: string | null
   image_5: string | null
+  destacado: boolean
+  new: boolean
 }
 
 interface ProductFormProps {
@@ -70,6 +72,8 @@ export default function ProductForm({
     subcategory_id: product?.subcategory_id || 0,
     brand: product?.brand || "",
     color: product?.color || "",
+      destacado: product?.destacado || false, // ← NUEVO
+  new: product?.new || false, // ← NUEVO
   })
 
   // Images
@@ -257,6 +261,36 @@ export default function ProductForm({
               disabled={productVariants.length > 0}
             />
           </div>
+
+          <div className="grid grid-cols-2 gap-4">
+  <div className="flex items-center gap-3 bg-gray-900 border border-gray-700 rounded-lg px-4 py-3">
+    <input
+      type="checkbox"
+      id="destacado"
+      name="destacado"
+      checked={formData.destacado || false}
+      onChange={(e) => setFormData(prev => ({ ...prev, destacado: e.target.checked }))}
+      className="w-5 h-5 text-[#d3b05c] bg-gray-800 border-gray-600 rounded focus:ring-[#d3b05c] focus:ring-2"
+    />
+    <label htmlFor="destacado" className="text-sm font-medium text-gray-300 cursor-pointer">
+      ⭐ Producto Destacado
+    </label>
+  </div>
+
+  <div className="flex items-center gap-3 bg-gray-900 border border-gray-700 rounded-lg px-4 py-3">
+    <input
+      type="checkbox"
+      id="new"
+      name="new"
+      checked={formData.new || false}
+      onChange={(e) => setFormData(prev => ({ ...prev, new: e.target.checked }))}
+      className="w-5 h-5 text-[#d3b05c] bg-gray-800 border-gray-600 rounded focus:ring-[#d3b05c] focus:ring-2"
+    />
+    <label htmlFor="new" className="text-sm font-medium text-gray-300 cursor-pointer">
+      🆕 Nuevo Ingreso
+    </label>
+  </div>
+</div>
 
           <div>
             <label className="block text-sm font-semibold mb-2">Categoría *</label>

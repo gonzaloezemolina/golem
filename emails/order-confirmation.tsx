@@ -193,7 +193,7 @@ export const OrderConfirmationEmail = ({
                   <div className="item-quantity">Cantidad: {item.quantity}</div>
                 </div>
                 <div className="item-price">
-                  ${(item.price * item.quantity).toLocaleString("es-AR")}
+                  ${(item.price * item.quantity)}
                 </div>
               </div>
             ))}
@@ -201,17 +201,17 @@ export const OrderConfirmationEmail = ({
             <div className="totals">
               <div className="total-row">
                 <span>Subtotal:</span>
-                <span>${(total - shippingCost).toLocaleString("es-AR")}</span>
+                <span>${(total - shippingCost)}</span>
               </div>
               <div className="total-row">
                 <span>Envío:</span>
                 <span className={shippingCost === 0 ? "highlight" : ""}>
-                  {shippingCost === 0 ? "GRATIS" : `$${shippingCost.toLocaleString("es-AR")}`}
+                  {shippingCost === 0 ? "GRATIS" : `$${shippingCost}`}
                 </span>
               </div>
               <div className="total-row final">
                 <span>TOTAL:</span>
-                <span>${total.toLocaleString("es-AR")} ARS</span>
+                <span>${total} ARS</span>
               </div>
             </div>
           </div>

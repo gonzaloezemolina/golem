@@ -48,7 +48,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
           onSizeSelect={handleSizeSelect}
         />
       ) : (
-        // Producto SIN variantes - Mostrar solo el stock
+        // Producto SIN variantes - Mostrar solo el stock ACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         <div className="border-b border-highlight/20 pb-6">
           <p className="text-sm text-gray-400">
             Stock disponible: <strong className="text-white">{product.stock}</strong> unidades

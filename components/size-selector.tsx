@@ -76,11 +76,11 @@ export default function SizeSelector({ variants, onSizeSelect }: SizeSelectorPro
               {size}
               
               {/* Badge de stock bajo */}
-              {hasStock && variant.stock <= 3 && !isSelected && (
+              {/* {hasStock && variant.stock <= 3 && !isSelected && (
                 <span className="absolute -top-1 -right-1 bg-highlight text-black text-[9px] font-bold px-1 rounded">
                   {variant.stock}
                 </span>
-              )}
+              )} */}
             </button>
           )
         })}

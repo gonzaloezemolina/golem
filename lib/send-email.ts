@@ -29,7 +29,7 @@ export async function sendOrderConfirmation(data: OrderEmailData) {
     const result = await resend.emails.send({
       from: "GOLEM <equipo@send.golem.com.ar>",
       // to: data.buyerEmail,
-      to: 'golemgrupo@gmail.com',
+      to: data.buyerEmail,
       subject: `Confirmación de pedido #${data.orderId} - GOLEM`,
       html: `
         <!DOCTYPE html>
@@ -143,8 +143,8 @@ export async function sendOrderConfirmation(data: OrderEmailData) {
 export async function sendInternalNotification(data: OrderEmailData) {
   try {
     const result = await resend.emails.send({
-      from: "GOLEM <onboarding@resend.dev>",
-      to: "gonzaloezemolina@gmail.com",
+      from: "GOLEM <equipo@send.golem.com.ar>",
+      to: "golemgrupo@gmail.com",
       subject: `🔔 Nueva orden #${data.orderId}`,
       html: `
         <!DOCTYPE html>

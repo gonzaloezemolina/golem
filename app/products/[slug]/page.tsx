@@ -5,6 +5,7 @@ import Image from "next/image"
 import { Truck } from "lucide-react"
 import ProductDetailClient from "@/components/product-detail-client"
 import ProductImageGallery from "@/components/product-image-gallery"
+import Features from "@/components/features"
 
 export default async function ProductPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
@@ -29,7 +30,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
   ].filter(Boolean) as string[]
 
   return (
-    <main className="bg-black text-white min-h-screen">
+    <main className="text-white min-h-screen">
       {/* Breadcrumb */}
       <div>
         <div className="container mx-auto px-4 py-4">
@@ -84,17 +85,20 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
 
             {/* Stock Info */}
             <div className="text-sm text-gray-400">
-              <p>
-                Stock total disponible:{" "}
-                <span className="text-highlight font-semibold">
-                  {product.total_stock} unidades
-                </span>
-              </p>
-              {product.available_sizes && product.available_sizes.length > 0 && (
-                <p className="text-xs mt-1">
-                  Talles disponibles: {product.available_sizes.join(', ')}
-                </p>
-              )}
+              {product.stock <= 3 && (
+    <p>
+      Stock total disponible:{" "}
+      <span className="text-highlight font-semibold">
+        {product.total_stock} unidades
+      </span>
+    </p>
+  )}
+  
+  {product.available_sizes && product.available_sizes.length > 0 && (
+    <p className="text-xs mt-1">
+      Talles disponibles: {product.available_sizes.join(', ')}
+    </p>
+  )}
             </div>
           </div>
         </div>
@@ -136,6 +140,8 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
           </div>
         </section>
       )}
+          <Features/>
     </main>
+
   )
 }

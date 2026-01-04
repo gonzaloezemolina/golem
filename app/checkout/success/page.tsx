@@ -103,7 +103,7 @@ function SuccessContent() {
                   <p className="font-semibold">{item.name}</p>
                   <p className="text-sm text-gray-400">Cantidad: {item.quantity}</p>
                 </div>
-                <p className="font-bold">${(item.price * item.quantity).toLocaleString('es-AR')}</p>
+                <p className="font-bold">${(item.price * item.quantity)}</p>
               </div>
             ))}
           </div>
@@ -111,17 +111,17 @@ function SuccessContent() {
           <div className="pt-4 border-t border-gray-800 space-y-2">
             <div className="flex justify-between text-gray-400">
               <span>Subtotal:</span>
-              <span>${(parseFloat(order.total) - parseFloat(order.shipping_cost || 0)).toLocaleString('es-AR')}</span>
+              <span>${(parseFloat(order.total) - parseFloat(order.shipping_cost || 0))}</span>
             </div>
             <div className="flex justify-between text-gray-400">
               <span>Envío:</span>
               <span className={parseFloat(order.shipping_cost) === 0 ? 'text-[#d3b05c] font-semibold' : ''}>
-                {parseFloat(order.shipping_cost) === 0 ? 'GRATIS' : `$${parseFloat(order.shipping_cost).toLocaleString('es-AR')}`}
+                {parseFloat(order.shipping_cost) === 0 ? 'GRATIS' : `$${parseFloat(order.shipping_cost)}`}
               </span>
             </div>
             <div className="flex justify-between text-xl font-bold pt-2 border-t border-gray-700">
               <span>Total:</span>
-              <span className="text-[#d3b05c]">${parseFloat(order.total).toLocaleString('es-AR')}</span>
+              <span className="text-[#d3b05c]">${parseFloat(order.total)}</span>
             </div>
           </div>
         </div>

@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
-import { X, ChevronDown } from "lucide-react"
+import { X, ChevronDown, Loader2 } from "lucide-react"
 
 interface Category {
   id: number
@@ -26,7 +26,6 @@ export default function CatalogSidebar({ onClose, categories }: CatalogSidebarPr
   const router = useRouter()
   const searchParams = useSearchParams()
   
-  // Leer filtros actuales de la URL
   const [selectedCategoryId, setSelectedCategoryId] = useState<number | undefined>(
     searchParams.get('category_id') ? parseInt(searchParams.get('category_id')!) : undefined
   )
@@ -40,22 +39,23 @@ export default function CatalogSidebar({ onClose, categories }: CatalogSidebarPr
   const [isSubcategoryOpen, setIsSubcategoryOpen] = useState(false)
   
   const [subcategories, setSubcategories] = useState<Subcategory[]>([])
+  const [loadingSubcategories, setLoadingSubcategories] = useState(false)
 
   // Cargar subcategorías cuando cambia la categoría
   useEffect(() => {
     if (selectedCategoryId) {
+      setLoadingSubcategories(true)
       fetch(`/api/subcategories?category_id=${selectedCategoryId}`)
         .then(res => res.json())
         .then(data => setSubcategories(data))
         .catch(err => console.error('Error fetching subcategories:', err))
+        .finally(() => setLoadingSubcategories(false))
     } else {
       setSubcategories([])
-      // NO limpiar selectedSubcategoryId aquí, lo hacemos manual
     }
   }, [selectedCategoryId])
 
   const handleApplyFilters = () => {
-    // Construir nueva URL con filtros
     const params = new URLSearchParams()
     
     if (selectedCategoryId) params.set('category_id', selectedCategoryId.toString())
@@ -81,7 +81,6 @@ export default function CatalogSidebar({ onClose, categories }: CatalogSidebarPr
 
   const handleCategoryChange = (categoryId: number | undefined) => {
     setSelectedCategoryId(categoryId)
-    // Limpiar subcategoría cuando cambias de categoría
     setSelectedSubcategoryId(undefined)
     setIsCategoryOpen(false)
   }
@@ -90,7 +89,7 @@ export default function CatalogSidebar({ onClose, categories }: CatalogSidebarPr
   const selectedSubcategoryName = subcategories.find(s => s.id === selectedSubcategoryId)?.name
 
   return (
-    <div className="p-6 space-y-8">
+    <div className="p-4 lg:p-6 space-y-6">
       {onClose && (
         <button
           onClick={onClose}
@@ -100,30 +99,30 @@ export default function CatalogSidebar({ onClose, categories }: CatalogSidebarPr
         </button>
       )}
 
-      <h2 className="text-2xl font-bold text-white">Filtros</h2>
+      <h2 className="text-xl lg:text-2xl font-bold text-white">Filtros</h2>
 
-      {/* Categoría */}
+      {/* ⭐ CATEGORÍA - INPUTS MÁS CHICOS */}
       <div>
-        <h3 className="font-bold text-white mb-4 text-lg">Deporte</h3>
+        <h3 className="font-semibold text-white mb-3 text-sm lg:text-base">Deporte</h3>
         <div className="relative">
           <button
             onClick={() => setIsCategoryOpen(!isCategoryOpen)}
-            className="w-full px-4 py-3 bg-black border cursor-pointer border-highlight/20 hover:border-highlight text-white text-left flex items-center justify-between transition-colors"
+            className="w-full px-3 py-2 text-sm bg-black border cursor-pointer border-highlight/20 hover:border-highlight text-white text-left flex items-center justify-between transition-colors"
           >
             <span className={selectedCategoryId ? "text-white" : "text-gray-400"}>
               {selectedCategoryName || "Seleccionar deporte"}
             </span>
             <ChevronDown
-              size={20}
+              size={16}
               className={`transition-transform ${isCategoryOpen ? "rotate-180" : ""}`}
             />
           </button>
 
           {isCategoryOpen && (
-            <div className="absolute z-10 w-full mt-1 bg-black border border-highlight/20 shadow-lg">
+            <div className="absolute z-10 w-full mt-1 bg-black border border-highlight/20 shadow-lg max-h-60 overflow-y-auto">
               <button
                 onClick={() => handleCategoryChange(undefined)}
-                className="w-full px-4 py-2 text-left hover:text-[#d3b05c] text-gray-400 transition-colors"
+                className="w-full px-3 py-2 text-sm text-left hover:text-[#d3b05c] text-gray-400 transition-colors"
               >
                 Todas las categorías
               </button>
@@ -131,7 +130,7 @@ export default function CatalogSidebar({ onClose, categories }: CatalogSidebarPr
                 <button
                   key={category.id}
                   onClick={() => handleCategoryChange(category.id)}
-                  className={`w-full px-4 py-2 text-left hover:bg-highlight/10 hover:text-[#d3b05c] transition-colors ${
+                  className={`w-full px-3 py-2 text-sm text-left hover:bg-highlight/10 hover:text-[#d3b05c] transition-colors ${
                     selectedCategoryId === category.id
                       ? "bg-highlight/20 text-highlight"
                       : "text-white"
@@ -145,45 +144,48 @@ export default function CatalogSidebar({ onClose, categories }: CatalogSidebarPr
         </div>
       </div>
 
-      {/* Subcategoría - SIEMPRE VISIBLE */}
+      {/* ⭐ SUBCATEGORÍA - CON LOADER */}
       <div>
-        <h3 className="font-bold text-white mb-4 text-lg">Subcategoría</h3>
+        <h3 className="font-semibold text-white mb-3 text-sm lg:text-base flex items-center gap-2">
+          Subcategoría
+          {loadingSubcategories && <Loader2 className="animate-spin text-highlight" size={14} />}
+        </h3>
         <div className="relative">
           <button
             onClick={() => {
-              if (selectedCategoryId) {
+              if (selectedCategoryId && !loadingSubcategories) {
                 setIsSubcategoryOpen(!isSubcategoryOpen)
               }
             }}
-            disabled={!selectedCategoryId}
-            className={`w-full px-4 py-3 bg-black border text-white text-left flex items-center justify-between transition-colors ${
-              selectedCategoryId 
+            disabled={!selectedCategoryId || loadingSubcategories}
+            className={`w-full px-3 py-2 text-sm bg-black border text-white text-left flex items-center justify-between transition-colors ${
+              selectedCategoryId && !loadingSubcategories
                 ? "border-highlight/20 hover:border-highlight cursor-pointer" 
-                : "border-highlight/10 cursor-not-allowed"
+                : "border-highlight/10 cursor-not-allowed opacity-50"
             }`}
           >
             <span className={selectedSubcategoryId ? "text-white" : "text-gray-400"}>
-              {!selectedCategoryId 
-                ? "Primero selecciona un deporte"
-                : selectedSubcategoryName || "Seleccionar subcategoría"
+              {loadingSubcategories
+                ? "Cargando..."
+                : !selectedCategoryId 
+                  ? "Primero selecciona un deporte"
+                  : selectedSubcategoryName || "Seleccionar subcategoría"
               }
             </span>
             <ChevronDown
-              size={20}
-              className={`transition-transform ${isSubcategoryOpen ? "rotate-180" : ""} ${
-                !selectedCategoryId ? "opacity-30" : ""
-              }`}
+              size={16}
+              className={`transition-transform ${isSubcategoryOpen ? "rotate-180" : ""}`}
             />
           </button>
 
           {isSubcategoryOpen && selectedCategoryId && subcategories.length > 0 && (
-            <div className="absolute z-10 w-full mt-1 bg-black border border-highlight/20 shadow-lg">
+            <div className="absolute z-10 w-full mt-1 bg-black border border-highlight/20 shadow-lg max-h-60 overflow-y-auto">
               <button
                 onClick={() => {
                   setSelectedSubcategoryId(undefined)
                   setIsSubcategoryOpen(false)
                 }}
-                className="w-full px-4 py-2 text-left hover:bg-highlight/10 text-gray-400 transition-colors"
+                className="w-full px-3 py-2 text-sm text-left hover:bg-highlight/10 text-gray-400 transition-colors"
               >
                 Todas las subcategorías
               </button>
@@ -194,7 +196,7 @@ export default function CatalogSidebar({ onClose, categories }: CatalogSidebarPr
                     setSelectedSubcategoryId(subcategory.id)
                     setIsSubcategoryOpen(false)
                   }}
-                  className={`w-full px-4 py-2 text-left hover:text-[#d3b05c] hover:bg-highlight/10 transition-colors ${
+                  className={`w-full px-3 py-2 text-sm text-left hover:text-[#d3b05c] hover:bg-highlight/10 transition-colors ${
                     selectedSubcategoryId === subcategory.id
                       ? "bg-highlight/20 text-highlight"
                       : "text-white"
@@ -208,50 +210,50 @@ export default function CatalogSidebar({ onClose, categories }: CatalogSidebarPr
         </div>
       </div>
 
-      {/* Rango de Precio */}
+      {/* ⭐ RANGO DE PRECIO - INPUTS MÁS CHICOS */}
       <div>
-        <h3 className="font-bold text-white mb-4 text-lg">Rango de Precio</h3>
-        <div className="grid grid-cols-2 gap-3">
+        <h3 className="font-semibold text-white mb-3 text-sm lg:text-base">Rango de Precio</h3>
+        <div className="grid grid-cols-2 gap-2">
           <div>
             <label className="text-xs text-gray-400 mb-1 block">Mínimo</label>
             <div className="relative">
-              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">$</span>
+              <span className="absolute left-2 top-1/2 -translate-y-1/2 text-gray-400 text-sm">$</span>
               <input
                 type="number"
                 value={minPrice}
                 onChange={(e) => setMinPrice(e.target.value)}
                 placeholder="0"
-                className="w-full pl-7 pr-3 py-2 bg-black border border-highlight/20 text-white focus:border-highlight focus:outline-none"
+                className="w-full pl-6 pr-2 py-2 text-sm bg-black border border-highlight/20 text-white focus:border-highlight focus:outline-none"
               />
             </div>
           </div>
           <div>
             <label className="text-xs text-gray-400 mb-1 block">Máximo</label>
             <div className="relative">
-              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">$</span>
+              <span className="absolute left-2 top-1/2 -translate-y-1/2 text-gray-400 text-sm">$</span>
               <input
                 type="number"
                 value={maxPrice}
                 onChange={(e) => setMaxPrice(e.target.value)}
                 placeholder="100000"
-                className="w-full pl-7 pr-3 py-2 bg-black border border-highlight/20 text-white focus:border-highlight focus:outline-none"
+                className="w-full pl-6 pr-2 py-2 text-sm bg-black border border-highlight/20 text-white focus:border-highlight focus:outline-none"
               />
             </div>
           </div>
         </div>
       </div>
 
-      {/* Buttons */}
-      <div className="space-y-3 pt-4">
+      {/* ⭐ BOTONES - CON LOADER */}
+      <div className="space-y-2 pt-4">
         <button 
           onClick={handleApplyFilters}
-          className="w-full px-4 py-3 bg-highlight hover:bg-[#bc9740] text-white cursor-pointer font-bold hover:bg-highlight/80 transition-colors"
+          className="w-full px-4 py-2.5 text-sm bg-highlight hover:bg-[#bc9740] text-black cursor-pointer font-bold transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
         >
           APLICAR FILTROS
         </button>
         <button
           onClick={handleClearFilters}
-          className="w-full cursor-pointer px-4 py-3 text-highlight hover:text-highlight/80 transition-colors font-semibold border border-highlight/20 hover:border-[#d3b05c]"
+          className="w-full cursor-pointer px-4 py-2.5 text-sm text-highlight hover:text-highlight/80 transition-colors font-semibold border border-highlight/20 hover:border-[#d3b05c] disabled:opacity-50"
         >
           LIMPIAR FILTROS
         </button>

@@ -45,7 +45,9 @@ if (!data.category_id || data.category_id === 0) {
         image_2 = ${data.image_2 || null},
         image_3 = ${data.image_3 || null},
         image_4 = ${data.image_4 || null},
-        image_5 = ${data.image_5 || null}
+        image_5 = ${data.image_5 || null},
+            destacado = ${data.destacado || false},
+    new = ${data.new || false}
       WHERE id = ${id}
     `
 

@@ -62,7 +62,7 @@ export async function POST(request: Request) {
       INSERT INTO products (
         name, slug, description, price, stock, category,
         category_id, subcategory_id, brand, color,
-        image_url, image_2, image_3, image_4, image_5
+        image_url, image_2, image_3, image_4, image_5, destacado, new
       ) VALUES (
         ${data.name}, 
         ${data.slug}, 
@@ -78,7 +78,9 @@ export async function POST(request: Request) {
         ${data.image_2 || null}, 
         ${data.image_3 || null}, 
         ${data.image_4 || null}, 
-        ${data.image_5 || null}
+        ${data.image_5 || null},
+            ${data.destacado || false},
+    ${data.new || false}
       )
       RETURNING id
     `
