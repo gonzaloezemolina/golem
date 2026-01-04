@@ -152,7 +152,7 @@ export default function Header() {
                       </p>
                     </div>
                     <p className="text-highlight font-bold text-sm">
-                      ${Number(result.price).toLocaleString()}
+                      ${Number(result.price)}
                     </p>
                   </button>
                 ))}

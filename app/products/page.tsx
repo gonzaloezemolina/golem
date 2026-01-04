@@ -254,7 +254,7 @@ export default async function ProductsPage({
                 </h3>
                 <div className="flex items-center justify-between">
                   <span className="text-2xl font-bold text-highlight">
-                    ${parseFloat(product.price.toString()).toLocaleString('es-AR')}
+                    ${parseFloat(product.price.toString())}
                   </span>
                 </div>
               </div>

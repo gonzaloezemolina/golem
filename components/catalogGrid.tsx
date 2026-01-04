@@ -109,7 +109,7 @@ export default function CatalogGrid({ products }: CatalogGridProps) {
               <h3 className="text-lg md:text-xl font-bold mb-3 group-hover:text-highlight transition-colors">
                 {product.name}
               </h3>
-              <span className="text-2xl font-bold text-highlight">${product.price.toFixed(2)}</span>
+              <span className="text-2xl font-bold text-highlight">${product.price}</span>
             </div>
           </Link>
         ))}

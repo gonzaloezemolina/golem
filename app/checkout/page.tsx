@@ -119,7 +119,7 @@ export default function CheckoutPage() {
                   required
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  className="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-[#d3b05c] transition"
+                  className="w-full bg-stone-950 border border-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-[#d3b05c] transition"
                   placeholder="Ingresa tu nombre completo"
                 />
               </div>
@@ -131,7 +131,7 @@ export default function CheckoutPage() {
                   required
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  className="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-[#d3b05c] transition"
+                  className="w-full bg-stone-950 border border-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-[#d3b05c] transition"
                   placeholder="Ingresa tu correo electronico"
                 />
               </div>
@@ -143,7 +143,7 @@ export default function CheckoutPage() {
                   required
                   value={formData.phone}
                   onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                  className="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-[#d3b05c] transition"
+                  className="w-full bg-stone-950 border border-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-[#d3b05c] transition"
                   placeholder="3415551234"
                 />
               </div>
@@ -155,7 +155,7 @@ export default function CheckoutPage() {
                   required
                   value={formData.dni}
                   onChange={(e) => setFormData({ ...formData, dni: e.target.value })}
-                  className="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-[#d3b05c] transition"
+                  className="w-full bg-stone-950 border border-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-[#d3b05c] transition"
                   placeholder="12345678"
                 />
               </div>
