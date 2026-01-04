@@ -56,7 +56,7 @@ export default function LoginPage() {
           <div className="text-left max-w-md">
             <h1 className="text-5xl font-bold text-white mb-4">BIENVENIDO</h1>
             <p className="text-gray-300 text-base leading-relaxed">
-              Acceso exclusivo para administradores. Gestiona órdenes, productos y más.
+              Acceso exclusivo para administradores del staff de Golem. Gestion de órdenes, productos y más.
             </p>
           </div>
         </div>
@@ -91,7 +91,7 @@ export default function LoginPage() {
                   id="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="admin@golem.com"
+                  placeholder="Ingresa tu correo"
                   required
                   className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded text-white placeholder-gray-500 focus:outline-none focus:border-highlight focus:ring-1 focus:ring-highlight transition-colors"
                 />

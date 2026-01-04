@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server"
 import { Resend } from "resend"
 
-const resend = new Resend(process.env.RESEND)
+const resend = new Resend(process.env.NEW_RESEND)
 
 export async function POST(request: Request) {
   try {
@@ -17,8 +17,8 @@ export async function POST(request: Request) {
 
     // Enviar email
     const { data, error } = await resend.emails.send({
-      from: "GOLEM Contacto <onboarding@resend.dev>", // Cambiar cuando verifiques dominio
-      to: "gonzaloezemolina@gmail.com", // Tu email para recibir consultas
+      from: "GOLEM Contacto <equipo@golem.com.ar>", // Cambiar cuando verifiques dominio
+      to: "golemgrupo@gmail.com", // Tu email para recibir consultas
       replyTo: email, // Para responder directo al cliente
       subject: `Contacto - ${category || 'Consulta'} - ${name}`,
       html: `

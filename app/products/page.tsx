@@ -3,6 +3,7 @@ import Image from "next/image"
 import { ShoppingCart } from "lucide-react"
 import { Suspense } from "react"
 import sql from "@/lib/db"
+import Features from "@/components/features"
 
 interface Product {
   id: number

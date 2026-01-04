@@ -1,6 +1,6 @@
 import { Resend } from "resend";
 
-const resend = new Resend(process.env.RESEND);
+const resend = new Resend(process.env.NEW_RESEND);
 
 interface OrderEmailData {
   buyerName: string;
@@ -27,9 +27,9 @@ interface OrderEmailData {
 export async function sendOrderConfirmation(data: OrderEmailData) {
   try {
     const result = await resend.emails.send({
-      from: "GOLEM <onboarding@resend.dev>",
+      from: "GOLEM <equipo@golem.com.ar>",
       // to: data.buyerEmail,
-      to: 'gonzaloezemolina@gmail.com',
+      to: 'golemgrupo@gmail.com',
       subject: `Confirmación de pedido #${data.orderId} - GOLEM`,
       html: `
         <!DOCTYPE html>

@@ -26,27 +26,19 @@ export default function Footer() {
       ],
     },
     {
-      title: "INFORMACIÓN",
+      title: "TIENDA",
       links: [
-        { name: "About Us", href: "#" },
+        { name: "Catálogo", href: "/products" },
         { name: "Equipo", href: "/team" },
         { name: "Contacto", href: "/contact" },
       ],
     },
     {
-      title: "TIENDA",
+      title: "INFORMACIÓN",
       links: [
-        { name: "Contact Us", href: "#" },
-        { name: "FAQ", href: "#" },
-        { name: "Shipping Info", href: "#" },
-      ],
-    },
-    {
-      title: "RECURSOS",
-      links: [
-        { name: "Blog", href: "#" },
-        { name: "Privacy Policy", href: "#" },
-        { name: "Terms of Service", href: "#" },
+        { name: "Rosario, Bv. Oroño 3614", href: "#" },
+        { name: "+54 9 341-562-1921", href: "#" },
+        { name: "Terminos y condiciones", href: "terminos-y-condiciones" },
       ],
     },
   ]

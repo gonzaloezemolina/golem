@@ -8,6 +8,7 @@ import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import Link from "next/link";
 import Script from "next/script";
+import ConditionalLayout from "@/components/conditional-layout";
 
 const geistInter = Inter({
   variable: "--font-inter-sans",
@@ -113,10 +114,9 @@ export default function RootLayout({
             theme="dark"
           />
         </Link>
-        <Header/>
-        {children}
-        <Footer/>
-        <WhatsAppButton/>
+        <ConditionalLayout>
+          {children}
+        </ConditionalLayout>
       </body>
     </html>
   );

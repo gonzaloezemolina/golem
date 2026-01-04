@@ -69,13 +69,12 @@ export default function ContactPage() {
                   <br />
                   Necesidades
                   <br />
-                  Deportivas
                 </h2>
               </div>
 
               <p className="text-white mb-12 leading-relaxed">
-                ¿Buscas equipamiento de calidad premium para tu entrenamiento? Contáctanos y te ayudaremos a encontrar
-                los productos perfectos para ti.
+                Acompañamos en cada jugada.
+Consultas, productos o seguimiento de pedidos, estamos para ayudarte. Mandanos tu mensaje y responderemos a la brevedad.
               </p>
 
               {/* Contact Details */}
@@ -84,7 +83,7 @@ export default function ContactPage() {
                   <Mail className="w-5 h-5 text-highlight flex-shrink-0 mt-1" />
                   <div>
                     <p className="text-sm text-white mb-1">E-mail</p>
-                    <p className="text-white font-medium">grupogolem@gmail.com</p>
+                    <p className="text-white font-medium">equipo@golem.com.ar</p>
                   </div>
                 </div>
 
@@ -113,7 +112,7 @@ export default function ContactPage() {
                     name="name"
                     value={formData.name}
                     onChange={handleInputChange}
-                    placeholder="Michael Jordan"
+                    placeholder="Lionel Messi"
                     required
                     className="w-full bg-black border border-gray-700 rounded px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-highlight transition-colors"
                   />
@@ -129,7 +128,7 @@ export default function ContactPage() {
                     name="email"
                     value={formData.email}
                     onChange={handleInputChange}
-                    placeholder="michael@jordan.com"
+                    placeholder="lionel@messi.com"
                     required
                     className="w-full bg-black border border-gray-700 rounded px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-highlight transition-colors"
                   />

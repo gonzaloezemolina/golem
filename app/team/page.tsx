@@ -1,4 +1,5 @@
 import Image from "next/image"
+import Link from "next/link"
 
 // Mock team data
 const teamMembers = [
@@ -105,14 +106,18 @@ La accesibilidad, innovación y el detalle son nuestras bases. Pensado para todo
 
               {/* Buttons */}
               <div className="flex flex-col sm:flex-row gap-4 pt-4">
-                <button className="px-8 py-4 bg-highlight text-black font-semibold hover:bg-highlight/90 transition-all duration-300 flex items-center justify-center gap-2 group">
+                <Link href={'https://www.instagram.com/golem.rosario/'} target="blank">
+                
+               
+                <button className="px-8 cursor-pointer py-4 bg-highlight text-black font-semibold hover:bg-highlight/90 transition-all duration-300 flex items-center justify-center gap-2 group">
                   NUESTRAS REDES
                   <i className="bi bi-chevron-right"></i>
                 </button>
+                 </Link>
                 <a
                   href="/golem-catalog.pdf"
                   download
-                  className="px-8 py-4 border-2 border-highlight text-highlight hover:bg-highlight hover:text-black transition-all duration-300 font-semibold flex items-center justify-center gap-2 group"
+                  className="px-8 py-4 border-2 border-highlight text-highlight hover:bg-highlight hover:text-[#74d4ff] transition-all duration-300 font-semibold flex items-center justify-center gap-2 group"
                 >
                   SABER MÁS
                   <i className="bi bi-download"></i>
@@ -172,17 +177,20 @@ La accesibilidad, innovación y el detalle son nuestras bases. Pensado para todo
           </h2>
           <p className="mb-6 font-text">¿Te interesa unirte al proyecto?</p>
 
-          <button className="inline-flex items-center cursor-pointer gap-3 px-8 py-4 border border-highlight text-highlight font-semibold hover:bg-highlight hover:text-black transition-all duration-300 group">
+              <Link href="/contact">
+              
+          <button className="inline-flex items-center cursor-pointer gap-3 px-8 py-4 border border-highlight text-highlight font-semibold hover:bg-highlight hover:text-[#74d4ff] transition-all duration-300 group">
             Contáctanos <i className="bi bi-chevron-right group-hover:translate-x-1 transition-transform"></i>
             {/* <svg
               className="w-5 h-5 group-hover:translate-x-1 transition-transform"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
-            >
+              >
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-            </svg> */}
+              </svg> */}
           </button>
+              </Link>
         </div>
       </section>
     </>
