@@ -27,7 +27,7 @@ interface OrderEmailData {
 export async function sendOrderConfirmation(data: OrderEmailData) {
   try {
     const result = await resend.emails.send({
-      from: "GOLEM <equipo@golem.com.ar>",
+      from: "GOLEM <equipo@send.golem.com.ar>",
       // to: data.buyerEmail,
       to: 'golemgrupo@gmail.com',
       subject: `Confirmación de pedido #${data.orderId} - GOLEM`,

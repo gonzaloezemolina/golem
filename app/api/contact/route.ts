@@ -17,7 +17,7 @@ export async function POST(request: Request) {
 
     // Enviar email
     const { data, error } = await resend.emails.send({
-      from: "GOLEM Contacto <equipo@golem.com.ar>", // Cambiar cuando verifiques dominio
+      from: "GOLEM Contacto <equipo@send.golem.com.ar>", // Cambiar cuando verifiques dominio
       to: "golemgrupo@gmail.com", // Tu email para recibir consultas
       replyTo: email, // Para responder directo al cliente
       subject: `Contacto - ${category || 'Consulta'} - ${name}`,

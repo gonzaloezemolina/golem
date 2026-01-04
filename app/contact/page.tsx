@@ -83,7 +83,7 @@ Consultas, productos o seguimiento de pedidos, estamos para ayudarte. Mandanos t
                   <Mail className="w-5 h-5 text-highlight flex-shrink-0 mt-1" />
                   <div>
                     <p className="text-sm text-white mb-1">E-mail</p>
-                    <p className="text-white font-medium">equipo@golem.com.ar</p>
+                    <p className="text-white font-medium">equipo@send.golem.com.ar</p>
                   </div>
                 </div>
 
