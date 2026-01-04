@@ -51,7 +51,7 @@ export default async function Home() {
             </h2>
             <div className="w-40 h-1 bg-highlight mb-12"></div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8">
               {featuredProducts.map((product: any) => (
                 <Link key={product.id} href={`/products/${product.slug}`}>
                   <div className="group transition-all duration-300 overflow-hidden cursor-pointer">
@@ -94,7 +94,7 @@ export default async function Home() {
             </h2>
             <div className="w-40 h-1 bg-highlight mb-12"></div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8">
               {newProducts.map((product: any) => (
                 <Link key={product.id} href={`/products/${product.slug}`}>
                   <div className="group transition-all duration-300 overflow-hidden cursor-pointer">

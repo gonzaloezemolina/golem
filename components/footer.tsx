@@ -18,7 +18,7 @@ export default function Footer() {
 
   const socialLinks = [
     { icon: Facebook, href: "https://facebook.com/profile.php?id=61580113263169", label: "Facebook" },
-    { icon: Instagram, href: "https://instagram.com/@golem.rosario", label: "Instagram" },
+    { icon: Instagram, href: "https://instagram.com/golem.rosario", label: "Instagram" },
     { icon: TikTok, href: "https://tiktok.com/@golemrosario", label: "TikTok" },
   ]
 
