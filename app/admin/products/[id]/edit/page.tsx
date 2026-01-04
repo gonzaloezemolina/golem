@@ -35,6 +35,8 @@ interface Product {
   image_3: string | null
   image_4: string | null
   image_5: string | null
+  destacado: boolean
+  new: boolean
 }
 
 interface Variant {
