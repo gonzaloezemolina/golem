@@ -139,13 +139,13 @@ export default async function Home() {
             <div className="relative">
               <div className="grid grid-cols-2 gap-4 max-w-md mx-auto lg:mx-0">
                 <div className="relative h-48 md:h-64 rounded-2xl overflow-hidden shadow-2xl">
-                  <Image src="/gym.jpg" alt="Running Equipment" fill className="object-cover" />
+                  <Image src="/gym.jpg" alt="Running Equipment" fill className="object-cover hover:scale-105 transition-transform duration-300" />
                 </div>
                 <div className="relative h-48 md:h-64 rounded-2xl overflow-hidden shadow-2xl">
-                  <Image src="/padel.jpg" alt="Sports Watch" fill className="object-cover" />
+                  <Image src="/padel.jpg" alt="Sports Watch" fill className="object-cover hover:scale-105 transition-transform duration-300" />
                 </div>
                 <div className="relative col-span-2 h-40 md:h-48 rounded-2xl overflow-hidden shadow-2xl">
-                  <Image src="/botines.jpg" alt="Sports Headphones" fill className="object-cover" />
+                  <Image src="/botines.jpg" alt="Sports Headphones" fill className="object-cover hover:scale-105 transition-transform duration-300" />
                 </div>
               </div>
               <div className="absolute -z-10 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-highlight/5 rounded-full blur-3xl"></div>

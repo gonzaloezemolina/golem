@@ -55,7 +55,7 @@ export default function CatalogLayoutClient({ children, categories }: CatalogLay
           {/* Mobile Header */}
           {!isProductDetail && (
             <div className="lg:hidden flex items-center justify-between p-4 sticky top-0 bg-black z-30">
-              <h1 className="text-xl">Filtros</h1>
+              <h1 className="text-xl font-bold">FILTRAR</h1>
               <button
                 onClick={() => setSidebarOpen(!sidebarOpen)}
                 className="p-2 hover:bg-highlight/10 rounded transition-colors"

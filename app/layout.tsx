@@ -101,19 +101,6 @@ export default function RootLayout({
       <body
         className={`${geistInter.variable} bg-red-300 bg-cover bg-center bg-no-repeat`}
       >
-        <Link href={'/cart'}>
-          <ToastContainer
-            position="bottom-right"
-            autoClose={3000}
-            hideProgressBar={false}
-            newestOnTop={false}
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-            theme="dark"
-          />
-        </Link>
         <ConditionalLayout>
           {children}
         </ConditionalLayout>

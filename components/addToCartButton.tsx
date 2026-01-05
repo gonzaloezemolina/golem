@@ -1,7 +1,8 @@
 "use client"
 
+import { useState } from "react"
 import { useCartStore } from "@/lib/store/cart-store"
-import { toast } from 'react-toastify'
+import CartNotification from "./cart-notification"
 
 interface ProductVariant {
   id: number
@@ -13,26 +14,25 @@ interface ProductVariant {
 interface AddToCartButtonProps {
   product: any
   selectedVariant: ProductVariant | null
-  hasVariants: boolean // ← NUEVO
+  hasVariants: boolean
   onAddToCart?: () => void
 }
 
 export default function AddToCartButton({ 
   product, 
   selectedVariant,
-  hasVariants, // ← NUEVO
+  hasVariants,
   onAddToCart 
 }: AddToCartButtonProps) {
   const addItem = useCartStore((state: any) => state.addItem)
+  const [showNotification, setShowNotification] = useState(false)
+  const [notificationData, setNotificationData] = useState<any>(null)
 
   const handleAddToCart = () => {
     // CASO 1: Producto SIN variantes
     if (!hasVariants) {
       if (product.stock === 0) {
-        toast.error('Producto sin stock', {
-          position: "bottom-right",
-          autoClose: 2000,
-        })
+        alert('Producto sin stock')
         return
       }
 
@@ -54,21 +54,22 @@ export default function AddToCartButton({
         1
       )
 
-      toast.success(`${product.name} agregado al carrito`, {
-        position: "bottom-right",
-        autoClose: 3000,
+      // Mostrar notificación custom
+      setNotificationData({
+        name: product.name,
+        image: product.image_url,
+        price: parseFloat(product.price),
+        size: null,
       })
+      setShowNotification(true)
 
       if (onAddToCart) onAddToCart()
       return
     }
 
-    // CASO 2: Producto CON variantes - validar que haya talle seleccionado
+    // CASO 2: Producto CON variantes
     if (!selectedVariant) {
-      toast.error('Por favor, seleccioná un talle primero', {
-        position: "bottom-right",
-        autoClose: 2000,
-      })
+      alert('Por favor, seleccioná un talle primero')
       return
     }
 
@@ -90,23 +91,22 @@ export default function AddToCartButton({
       1
     )
 
-    toast.success(
-      `${product.name} - Talle ${selectedVariant.size} agregado al carrito`,
-      {
-        position: "bottom-right",
-        autoClose: 3000,
-      }
-    )
+    // Mostrar notificación custom
+    setNotificationData({
+      name: product.name,
+      image: product.image_url,
+      price: parseFloat(product.price),
+      size: selectedVariant.size,
+    })
+    setShowNotification(true)
 
     if (onAddToCart) onAddToCart()
   }
 
-  // Determinar si está deshabilitado
   const isDisabled = hasVariants 
-    ? !selectedVariant // Con variantes: requiere talle seleccionado
-    : product.stock === 0 // Sin variantes: requiere stock
+    ? !selectedVariant
+    : product.stock === 0
 
-  // Texto del botón
   const getButtonText = () => {
     if (!hasVariants && product.stock === 0) return "SIN STOCK"
     if (hasVariants && !selectedVariant) return "SELECCIONÁ UN TALLE"
@@ -114,18 +114,35 @@ export default function AddToCartButton({
   }
 
   return (
-    <button
-      onClick={handleAddToCart}
-      disabled={isDisabled}
-      className={`
-        flex-1 px-6 py-3 font-bold transition-all
-        ${!isDisabled
-          ? "bg-highlight text-white hover:bg-[#bc9740] cursor-pointer"
-          : "bg-gray-700 text-gray-400 cursor-not-allowed"
-        }
-      `}
-    >
-      {getButtonText()}
-    </button>
+    <>
+      <button
+        onClick={handleAddToCart}
+        disabled={isDisabled}
+        className={`
+          flex-1 px-6 py-3 font-bold transition-all
+          ${!isDisabled
+            ? "bg-highlight text-white hover:bg-[#bc9740] cursor-pointer"
+            : "bg-gray-700 text-gray-400 cursor-not-allowed"
+          }
+        `}
+      >
+        {getButtonText()}
+      </button>
+
+      {/* Notificación Custom */}
+      {notificationData && (
+        <CartNotification
+          show={showNotification}
+          productName={notificationData.name}
+          productImage={notificationData.image}
+          productPrice={notificationData.price}
+          size={notificationData.size}
+          onClose={() => {
+            setShowNotification(false)
+            setNotificationData(null)
+          }}
+        />
+      )}
+    </>
   )
 }
