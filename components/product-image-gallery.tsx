@@ -83,8 +83,8 @@ export default function ProductImageGallery({ images, productName }: ProductImag
 
   return (
     <div className="flex flex-col gap-4">
-      {/* Carrusel Principal */}
-      <div className="relative w-full aspect-square bg-transparent rounded-lg overflow-hidden border border-highlight/20">
+      {/* Carrusel Principal - CAMBIO AQUÍ ⬇️ */}
+      <div className="relative w-full aspect-square bg-transparent overflow-hidden md:rounded-lg md:border md:border-highlight/20">
         <Swiper
           modules={[Navigation, Pagination, Thumbs]}
           navigation

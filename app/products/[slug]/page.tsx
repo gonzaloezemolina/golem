@@ -15,7 +15,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
     notFound()
   }
 
-    // Obtener productos relacionados
+  // Obtener productos relacionados
   const relatedProducts = product.subcategory_id 
     ? await fetchRelatedProducts(product.id, product.subcategory_id, 4)
     : []
@@ -31,8 +31,8 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
 
   return (
     <main className="text-white min-h-screen">
-      {/* Breadcrumb */}
-      <div>
+      {/* Breadcrumb - OCULTO EN MOBILE */}
+      <div className="hidden md:block">
         <div className="container mx-auto px-4 py-4">
           <Link
             href="/products"
@@ -44,13 +44,15 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
       </div>
 
       {/* Product Details Section */}
-      <div className="container mx-auto px-4 py-8 md:py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
+      <div className="container mx-auto md:px-4 py-8 md:py-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-0 md:gap-12">
           {/* COLUMNA IZQUIERDA - IMÁGENES */}
-        <ProductImageGallery images={images} productName={product.name} />
+          <div className="w-full">
+            <ProductImageGallery images={images} productName={product.name} />
+          </div>
 
           {/* COLUMNA DERECHA - INFO */}
-          <div className="flex flex-col gap-6">
+          <div className="flex flex-col gap-6 px-4 md:px-0 mt-6 md:mt-0">
             {/* Brand and Product Title */}
             <div>
               <div className="flex items-center justify-between mb-3">
@@ -86,19 +88,19 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
             {/* Stock Info */}
             <div className="text-sm text-gray-400">
               {product.stock <= 3 && (
-    <p>
-      Stock total disponible:{" "}
-      <span className="text-highlight font-semibold">
-        {product.total_stock} unidades
-      </span>
-    </p>
-  )}
-  
-  {product.available_sizes && product.available_sizes.length > 0 && (
-    <p className="text-xs mt-1">
-      Talles disponibles: {product.available_sizes.join(', ')}
-    </p>
-  )}
+                <p>
+                  Stock total disponible:{" "}
+                  <span className="text-highlight font-semibold">
+                    {product.total_stock} unidades
+                  </span>
+                </p>
+              )}
+              
+              {product.available_sizes && product.available_sizes.length > 0 && (
+                <p className="text-xs mt-1">
+                  Talles disponibles: {product.available_sizes.join(', ')}
+                </p>
+              )}
             </div>
           </div>
         </div>
@@ -140,8 +142,8 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
           </div>
         </section>
       )}
-          <Features/>
+      
+      <Features/>
     </main>
-
   )
 }
