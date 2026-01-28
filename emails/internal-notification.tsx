@@ -222,24 +222,24 @@ export const InternalNotificationEmail = ({
           {/* Productos */}
           <div className="section">
             <div className="section-title">📦 Productos</div>
-            {items.map((item, index) => (
-              <div className="item" key={index}>
-                <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "5px" }}>
-                  <strong>{item.name}</strong>
-                    {item.size && (
-        <div style={{ color: "#d3b05c", fontSize: "13px", marginTop: "2px" }}>
-          Talle: {item.size}
-        </div>
-      )}
-                  {/* <strong>Variante:{item.}</strong> */}
-                  <br />
-                  <strong>${(item.price * item.quantity)}</strong>
-                </div>
-                <div style={{ color: "#666", fontSize: "14px" }}>
-                  Cantidad: {item.quantity} × ${item.price}
-                </div>
-              </div>
-            ))}
+           {items.map((item, index) => (
+  <div className="item" key={index}>
+    <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "5px" }}>
+      <div>
+        <strong>{item.name}</strong>
+        {item.size && (
+          <div style={{ color: "#d3b05c", fontSize: "13px", marginTop: "4px" }}>
+            Talle: {item.size}
+          </div>
+        )}
+      </div>
+      <strong>${(item.price * item.quantity).toLocaleString('es-AR')}</strong>
+    </div>
+    <div style={{ color: "#666", fontSize: "14px" }}>
+      Cantidad: {item.quantity} × ${item.price.toLocaleString('es-AR')}
+    </div>
+  </div>
+))}
           </div>
 
           {/* Total */}

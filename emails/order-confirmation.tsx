@@ -187,22 +187,22 @@ export const OrderConfirmationEmail = ({
 
           <h3 className="section-title">📦 Resumen del pedido</h3>
           <div className="order-summary">
-            {items.map((item, index) => (
-              <div className="item" key={index}>
-                <div>
-                  <div className="item-name">{item.name}</div>
-                  {item.size && (
+           {items.map((item, index) => (
+  <div className="item" key={index}>
+    <div>
+      <div className="item-name">{item.name}</div>
+      {item.size && (
         <div style={{ color: "#d3b05c", fontSize: "13px", marginTop: "2px" }}>
           Talle: {item.size}
         </div>
       )}
-                  <div className="item-quantity">Cantidad: {item.quantity}</div>
-                </div>
-                <div className="item-price">
-                  ${(item.price * item.quantity)}
-                </div>
-              </div>
-            ))}
+      <div className="item-quantity">Cantidad: {item.quantity}</div>
+    </div>
+    <div className="item-price">
+      ${(item.price * item.quantity).toLocaleString('es-AR')}
+    </div>
+  </div>
+))}
 
             <div className="totals">
               <div className="total-row">
