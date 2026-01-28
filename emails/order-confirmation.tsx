@@ -199,7 +199,7 @@ export const OrderConfirmationEmail = ({
       <div className="item-quantity">Cantidad: {item.quantity}</div>
     </div>
     <div className="item-price">
-      ${(item.price * item.quantity).toLocaleString('es-AR')}
+      ${(item.price * item.quantity)}
     </div>
   </div>
 ))}

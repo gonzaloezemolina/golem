@@ -236,7 +236,7 @@ export const InternalNotificationEmail = ({
       <strong>${(item.price * item.quantity).toLocaleString('es-AR')}</strong>
     </div>
     <div style={{ color: "#666", fontSize: "14px" }}>
-      Cantidad: {item.quantity} × ${item.price.toLocaleString('es-AR')}
+      Cantidad: {item.quantity} × ${item.price}
     </div>
   </div>
 ))}
