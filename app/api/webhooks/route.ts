@@ -7,6 +7,16 @@ const client = new MercadoPagoConfig({
   accessToken: process.env.MP_ACCESS_TOKEN!,
 });
 
+// ⭐ AGREGAR MÉTODO GET PARA VERIFICACIÓN
+export async function GET(request: Request) {
+  console.log("✅ Webhook verificado por MercadoPago (GET request)");
+  return NextResponse.json({ 
+    status: "ok",
+    message: "Webhook endpoint is active" 
+  });
+}
+
+// ⭐ MÉTODO POST EXISTENTE
 export async function POST(request: Request) {
   try {
     const body = await request.json();
@@ -55,7 +65,7 @@ export async function POST(request: Request) {
 
     console.log("✅ Orden actualizada correctamente");
 
-    // ⭐ REDUCIR STOCK SI EL PAGO FUE APROBADO ⭐
+    // ⭐ REDUCIR STOCK SI EL PAGO FUE APROBADO
     if (orderStatus === "approved") {
       console.log("📦 Reduciendo stock de productos...");
 
@@ -64,7 +74,6 @@ export async function POST(request: Request) {
       `;
 
       for (const item of orderItems) {
-        // Si tiene variante, reducir stock de la variante
         if (item.variant_id) {
           await sql`
             UPDATE product_variants 
@@ -74,7 +83,6 @@ export async function POST(request: Request) {
           console.log(`  ↓ Variante #${item.variant_id}: -${item.quantity} unidades`);
         }
         
-        // SIEMPRE reducir stock del producto (es la suma total)
         await sql`
           UPDATE products 
           SET stock = GREATEST(stock - ${item.quantity}, 0)
@@ -103,7 +111,7 @@ export async function POST(request: Request) {
       }
 
       const itemsWithDetails = await sql`
-        SELECT oi.*, p.name, p.price
+        SELECT oi.*, p.name, oi.size
         FROM order_items oi
         JOIN products p ON oi.product_id = p.id
         WHERE oi.order_id = ${orderId}
@@ -119,7 +127,6 @@ export async function POST(request: Request) {
         items: itemsWithDetails.length,
       });
 
-      // Preparar datos de envío
       const shippingInfo = {
         type: order.shipping_type,
         address: order.shipping_address,
@@ -130,14 +137,15 @@ export async function POST(request: Request) {
 
       try {
         // Email al cliente
-        const clientEmailResult = await sendOrderConfirmation({
+        await sendOrderConfirmation({
           buyerName: order.buyer_name,
           buyerEmail: order.buyer_email,
           orderId: order.id,
           items: itemsWithDetails.map((item: any) => ({
             name: item.name,
             quantity: item.quantity,
-            price: item.price,
+            price: parseFloat(item.price),
+            size: item.size || null, // ← AGREGAR SIZE
           })),
           total: parseFloat(order.total),
           shippingCost: parseFloat(order.shipping_cost || 0),
@@ -145,7 +153,7 @@ export async function POST(request: Request) {
         });
 
         // Email interno
-        const internalEmailResult = await sendInternalNotification({
+        await sendInternalNotification({
           buyerName: order.buyer_name,
           buyerEmail: order.buyer_email,
           buyerPhone: order.buyer_phone,
@@ -154,17 +162,15 @@ export async function POST(request: Request) {
           items: itemsWithDetails.map((item: any) => ({
             name: item.name,
             quantity: item.quantity,
-            price: item.price,
+            price: parseFloat(item.price),
+            size: item.size || null, // ← AGREGAR SIZE
           })),
           total: parseFloat(order.total),
           shippingCost: parseFloat(order.shipping_cost || 0),
           shippingAddress: shippingInfo,
         });
 
-        console.log("📧 Resultado emails:", {
-          cliente: clientEmailResult.success ? "✅ Enviado" : `❌ Error: ${clientEmailResult.error}`,
-          interno: internalEmailResult.success ? "✅ Enviado" : `❌ Error: ${internalEmailResult.error}`,
-        });
+        console.log("✅ Emails enviados correctamente");
       } catch (emailError: any) {
         console.error("❌ Error al enviar emails:", emailError);
       }
