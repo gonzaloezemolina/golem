@@ -64,13 +64,13 @@ export async function POST(request: Request) {
       // Guardar en order_items
       await sql`
         INSERT INTO order_items (order_id, product_id, variant_id, quantity, price)
-        VALUES (${orderId}, ${item.id},  ${item.variant_id || null}, ${item.quantity}, ${item.price})
+        VALUES (${orderId}, ${item.id},  ${item.variant_id || null}, ${item.quantity}, ${item.price}, ${item.size || null})
       `;
 
       // Agregar a items de MP (CON ID)
       mpItems.push({
         id: item.id?.toString() || `product-${item.id}`, // ← AGREGAR ID
-        title: item.name,
+        title: item.size ? `${item.name} - Talle ${item.size}` : item.name, 
         quantity: item.quantity,
         unit_price: item.price,
         currency_id: "ARS",

@@ -182,8 +182,13 @@ export default function CheckoutPage() {
               <div className="mb-6">
                 <div className="space-y-3">
                   {items.map((item: any) => (
-                    <div key={item.id} className="flex justify-between items-start text-sm">
-                      <span className="text-gray-300 flex-1">{item.name}</span>
+                       <div key={`${item.id}-${item.variant_id || 'no-variant'}`} className="flex justify-between items-start text-sm">
+        <div className="flex-1">
+          <span className="text-gray-300 block">{item.name}</span>
+          {item.size && (
+            <span className="text-xs text-gray-500">Talle: {item.size}</span>
+          )}
+        </div>
                       <span className="text-gray-400 w-16 text-center">x{item.quantity}</span>
                       <span className="text-white font-semibold w-20 text-right">
                         ${(item.price * item.quantity)}

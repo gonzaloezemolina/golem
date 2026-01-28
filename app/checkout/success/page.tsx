@@ -98,9 +98,15 @@ function SuccessContent() {
           
           <div className="space-y-4 mb-6">
             {order.items?.map((item: any) => (
-              <div key={item.id} className="flex justify-between items-center pb-4 border-b border-gray-800 last:border-0">
+              <div 
+      key={`${item.id}-${item.variant_id || 'no-variant'}`} 
+      className="flex justify-between items-start pb-4 border-b border-gray-800 last:border-0"
+    >
                 <div>
-                  <p className="font-semibold">{item.name}</p>
+                   <p className="font-semibold">{item.name}</p>
+        {item.size && (
+          <p className="text-sm text-[#d3b05c]">Talle: {item.size}</p>
+        )}
                   <p className="text-sm text-gray-400">Cantidad: {item.quantity}</p>
                 </div>
                 <p className="font-bold">${(item.price * item.quantity)}</p>

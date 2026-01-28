@@ -5,6 +5,7 @@ interface OrderConfirmationEmailProps {
     name: string;
     quantity: number;
     price: number;
+    size?: string;
   }>;
   total: number;
   shippingCost: number;
@@ -190,6 +191,11 @@ export const OrderConfirmationEmail = ({
               <div className="item" key={index}>
                 <div>
                   <div className="item-name">{item.name}</div>
+                  {item.size && (
+        <div style={{ color: "#d3b05c", fontSize: "13px", marginTop: "2px" }}>
+          Talle: {item.size}
+        </div>
+      )}
                   <div className="item-quantity">Cantidad: {item.quantity}</div>
                 </div>
                 <div className="item-price">

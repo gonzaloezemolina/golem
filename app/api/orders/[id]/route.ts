@@ -20,7 +20,7 @@ export async function GET(
     }
 
     const items = await sql`
-      SELECT oi.*, p.name 
+      SELECT oi.*, p.name , oi.size
       FROM order_items oi
       JOIN products p ON oi.product_id = p.id
       WHERE oi.order_id = ${id}
