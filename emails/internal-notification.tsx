@@ -8,6 +8,7 @@ interface InternalNotificationEmailProps {
     name: string;
     quantity: number;
     price: number;
+    size?: string;
   }>;
   total: number;
   shippingCost: number;
@@ -225,6 +226,11 @@ export const InternalNotificationEmail = ({
               <div className="item" key={index}>
                 <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "5px" }}>
                   <strong>{item.name}</strong>
+                    {item.size && (
+        <div style={{ color: "#d3b05c", fontSize: "13px", marginTop: "2px" }}>
+          Talle: {item.size}
+        </div>
+      )}
                   {/* <strong>Variante:{item.}</strong> */}
                   <br />
                   <strong>${(item.price * item.quantity)}</strong>
