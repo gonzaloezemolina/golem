@@ -6,8 +6,8 @@ const teamMembers = [
   {
     id: 1,
     name: "Gonzalo Molina",
-    role: "Fundador"
-    // image: "/professional-man-black-and-white-portrait.jpg",
+    role: "Fundador",
+    image: "/Gonza.jpeg",
   },
   {
     id: 2,
