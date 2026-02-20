@@ -3,7 +3,7 @@
 import { MessageCircle } from "lucide-react";
 
 export default function WhatsAppButton() {
-  const phoneNumber = "5493415621921"; // Formato: código país + área + número (sin espacios ni guiones)
+  const phoneNumber = "5493416831218"; // Formato: código país + área + número (sin espacios ni guiones)
   const message = "Hola, estoy interesado en los productos de Golem"; // Mensaje predefinido
 
   const handleClick = () => {
