@@ -3,6 +3,8 @@ import Link from "next/link";
 import Features from "@/components/features";
 import { getFeaturedProducts, getNewProducts } from "./data/featured-products";
 
+export const revalidate = 60
+
 export default async function Home() {
   const featuredProducts = await getFeaturedProducts()
   const newProducts = await getNewProducts()
