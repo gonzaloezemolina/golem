@@ -20,10 +20,12 @@ interface Product {
   image_url: string | null
   brand: string | null
   description: string | null
-  stock: number // ← IMPORTANTE: stock del producto
+  stock: number
   variants?: ProductVariant[]
   total_stock?: number
   available_sizes?: string[]
+  on_sale?: boolean
+  sale_price?: number | null
 }
 
 interface ProductDetailClientProps {

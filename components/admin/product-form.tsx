@@ -43,6 +43,8 @@ interface Product {
   image_5: string | null
   destacado: boolean
   new: boolean
+  on_sale: boolean
+  sale_price: string | null
 }
 
 interface ProductFormProps {
@@ -72,8 +74,10 @@ export default function ProductForm({
     subcategory_id: product?.subcategory_id || 0,
     brand: product?.brand || "",
     color: product?.color || "",
-      destacado: product?.destacado || false, // ← NUEVO
-  new: product?.new || false, // ← NUEVO
+    destacado: product?.destacado || false,
+    new: product?.new || false,
+    on_sale: product?.on_sale || false,
+    sale_price: product?.sale_price || "",
   })
 
   // Images
@@ -262,35 +266,75 @@ export default function ProductForm({
             />
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
-  <div className="flex items-center gap-3 bg-gray-900 border border-gray-700 rounded-lg px-4 py-3">
-    <input
-      type="checkbox"
-      id="destacado"
-      name="destacado"
-      checked={formData.destacado || false}
-      onChange={(e) => setFormData(prev => ({ ...prev, destacado: e.target.checked }))}
-      className="w-5 h-5 text-[#d3b05c] bg-gray-800 border-gray-600 rounded focus:ring-[#d3b05c] focus:ring-2"
-    />
-    <label htmlFor="destacado" className="text-sm font-medium text-gray-300 cursor-pointer">
-      ⭐ Producto Destacado
-    </label>
-  </div>
+          <div className="md:col-span-2 grid grid-cols-2 md:grid-cols-3 gap-4">
+            <div className="flex items-center gap-3 bg-gray-900 border border-gray-700 rounded-lg px-4 py-3">
+              <input
+                type="checkbox"
+                id="destacado"
+                name="destacado"
+                checked={formData.destacado || false}
+                onChange={(e) => setFormData(prev => ({ ...prev, destacado: e.target.checked }))}
+                className="w-5 h-5 text-[#d3b05c] bg-gray-800 border-gray-600 rounded focus:ring-[#d3b05c] focus:ring-2"
+              />
+              <label htmlFor="destacado" className="text-sm font-medium text-gray-300 cursor-pointer">
+                ⭐ Producto Destacado
+              </label>
+            </div>
 
-  <div className="flex items-center gap-3 bg-gray-900 border border-gray-700 rounded-lg px-4 py-3">
-    <input
-      type="checkbox"
-      id="new"
-      name="new"
-      checked={formData.new || false}
-      onChange={(e) => setFormData(prev => ({ ...prev, new: e.target.checked }))}
-      className="w-5 h-5 text-[#d3b05c] bg-gray-800 border-gray-600 rounded focus:ring-[#d3b05c] focus:ring-2"
-    />
-    <label htmlFor="new" className="text-sm font-medium text-gray-300 cursor-pointer">
-      🆕 Nuevo Ingreso
-    </label>
-  </div>
-</div>
+            <div className="flex items-center gap-3 bg-gray-900 border border-gray-700 rounded-lg px-4 py-3">
+              <input
+                type="checkbox"
+                id="new"
+                name="new"
+                checked={formData.new || false}
+                onChange={(e) => setFormData(prev => ({ ...prev, new: e.target.checked }))}
+                className="w-5 h-5 text-[#d3b05c] bg-gray-800 border-gray-600 rounded focus:ring-[#d3b05c] focus:ring-2"
+              />
+              <label htmlFor="new" className="text-sm font-medium text-gray-300 cursor-pointer">
+                🆕 Nuevo Ingreso
+              </label>
+            </div>
+
+            <div className="flex items-center gap-3 bg-gray-900 border border-red-800 rounded-lg px-4 py-3">
+              <input
+                type="checkbox"
+                id="on_sale"
+                name="on_sale"
+                checked={formData.on_sale || false}
+                onChange={(e) => setFormData(prev => ({ ...prev, on_sale: e.target.checked, sale_price: e.target.checked ? prev.sale_price : "" }))}
+                className="w-5 h-5 text-red-500 bg-gray-800 border-gray-600 rounded focus:ring-red-500 focus:ring-2"
+              />
+              <label htmlFor="on_sale" className="text-sm font-medium text-gray-300 cursor-pointer">
+                🏷️ Precio Especial
+              </label>
+            </div>
+          </div>
+
+          {formData.on_sale && (
+            <div className="md:col-span-2">
+              <label className="block text-sm font-semibold mb-2 text-red-400">
+                Precio Especial (con descuento) *
+              </label>
+              <div className="relative">
+                <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">$</span>
+                <input
+                  type="number"
+                  required={formData.on_sale}
+                  min="1"
+                  step="0.01"
+                  value={formData.sale_price || ""}
+                  onChange={(e) => setFormData({ ...formData, sale_price: e.target.value })}
+                  className="w-full pl-8 pr-4 py-3 bg-gray-800 border border-red-700 rounded-lg text-white focus:outline-none focus:border-red-500"
+                  placeholder="Ej: 14500"
+                />
+              </div>
+              {formData.sale_price && formData.price && parseFloat(formData.sale_price) > 0 && parseFloat(formData.price) > 0 && (
+                <p className="text-xs text-red-400 mt-1">
+                  Descuento: {Math.round((1 - parseFloat(formData.sale_price) / parseFloat(formData.price)) * 100)}% — Precio original tachado en la tienda
+                </p>
+              )}
+            </div>
+          )}
 
           <div>
             <label className="block text-sm font-semibold mb-2">Categoría *</label>

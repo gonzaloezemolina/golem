@@ -6,6 +6,7 @@ import CartIcon from "./cartIcon"
 import Link from "next/link"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
+import PreHeader from "./pre-header"
 
 interface SearchResult {
   id: number
@@ -30,7 +31,8 @@ export default function Header() {
   const searchRef = useRef<HTMLDivElement>(null)
 
   const navItems = [
-    { li: "TIENDA", link: "/products" },
+    { li: "FÚTBOL", link: "/products?category_id=1" },
+    { li: "FITNESS", link: "/products?category_id=2" },
     { li: "EQUIPO", link: "/team" },
     { li: "CONTACTO", link: "/contact" }
   ]
@@ -93,6 +95,7 @@ export default function Header() {
 
   return (
     <header className="sticky top-0 z-50 bg-black">
+      <PreHeader />
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between gap-4">
           {/* Logo */}

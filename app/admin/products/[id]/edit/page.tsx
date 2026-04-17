@@ -37,6 +37,8 @@ interface Product {
   image_5: string | null
   destacado: boolean
   new: boolean
+  on_sale: boolean
+  sale_price: string | null
 }
 
 interface Variant {

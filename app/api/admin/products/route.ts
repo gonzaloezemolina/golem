@@ -62,25 +62,28 @@ export async function POST(request: Request) {
       INSERT INTO products (
         name, slug, description, price, stock, category,
         category_id, subcategory_id, brand, color,
-        image_url, image_2, image_3, image_4, image_5, destacado, new
+        image_url, image_2, image_3, image_4, image_5,
+        destacado, new, on_sale, sale_price
       ) VALUES (
-        ${data.name}, 
-        ${data.slug}, 
-        ${data.description}, 
-        ${data.price}, 
+        ${data.name},
+        ${data.slug},
+        ${data.description},
+        ${data.price},
         ${totalStock},
         ${categoryName},
-        ${data.category_id}, 
-        ${data.subcategory_id || null}, 
-        ${data.brand || null}, 
+        ${data.category_id},
+        ${data.subcategory_id || null},
+        ${data.brand || null},
         ${data.color || null},
-        ${data.image_url || null}, 
-        ${data.image_2 || null}, 
-        ${data.image_3 || null}, 
-        ${data.image_4 || null}, 
+        ${data.image_url || null},
+        ${data.image_2 || null},
+        ${data.image_3 || null},
+        ${data.image_4 || null},
         ${data.image_5 || null},
-            ${data.destacado || false},
-    ${data.new || false}
+        ${data.destacado || false},
+        ${data.new || false},
+        ${data.on_sale || false},
+        ${data.on_sale && data.sale_price ? parseFloat(data.sale_price) : null}
       )
       RETURNING id
     `

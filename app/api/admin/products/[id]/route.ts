@@ -46,8 +46,10 @@ if (!data.category_id || data.category_id === 0) {
         image_3 = ${data.image_3 || null},
         image_4 = ${data.image_4 || null},
         image_5 = ${data.image_5 || null},
-            destacado = ${data.destacado || false},
-    new = ${data.new || false}
+        destacado = ${data.destacado || false},
+        new = ${data.new || false},
+        on_sale = ${data.on_sale || false},
+        sale_price = ${data.on_sale && data.sale_price ? parseFloat(data.sale_price) : null}
       WHERE id = ${id}
     `
 

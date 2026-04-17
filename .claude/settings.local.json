@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find /c/Users/NSX/Desktop/golem-ecommerce/golem -type f \\\\\\( -name \"*.ts\" -o -name \"*.tsx\" \\\\\\) -exec grep -l \"CREATE TABLE.*product\\\\|ALTER TABLE.*product\\\\|category_id\\\\|subcategory_id\\\\|destacado\" {} \\\\;)",
+      "Bash(xargs grep *)",
+      "Bash(find /c/Users/NSX/Desktop/golem-ecommerce/golem -type f \\\\\\( -name \"*.ts\" -o -name \"*.tsx\" \\\\\\) ! -path \"*/node_modules/*\" -exec grep -l \"categories\\\\|subcategories\\\\|product_variants\\\\|image_2\\\\|image_3\" {} \\\\;)"
+    ]
+  }
+}
