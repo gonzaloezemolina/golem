@@ -6,6 +6,7 @@ import { Truck } from "lucide-react"
 import ProductDetailClient from "@/components/product-detail-client"
 import ProductImageGallery from "@/components/product-image-gallery"
 import Features from "@/components/features"
+import PriceDisplay from "@/components/price-display"
 
 export default async function ProductPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
@@ -68,9 +69,17 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
 
             {/* Price */}
             <div className="border-b border-highlight/20 pb-6">
-              <p className="text-3xl md:text-4xl font-bold text-highlight">
-                ${Number(product.price)}
-              </p>
+              {product.on_sale && (
+                <span className="inline-block bg-red-600 text-white text-xs font-bold px-3 py-1 rounded mb-3">
+                  PRECIO ESPECIAL
+                </span>
+              )}
+              <PriceDisplay
+                price={product.price}
+                salePrice={product.sale_price}
+                onSale={product.on_sale}
+                size="lg"
+              />
             </div>
 
             {/* COMPONENTE CLIENTE - Selector de talle y botones */}
@@ -124,6 +133,11 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                       fill
                       className="object-cover group-hover:scale-105 transition-transform duration-300"
                     />
+                    {relatedProduct.on_sale && (
+                      <div className="absolute top-2 left-2 bg-red-600 text-white px-2 py-0.5 text-xs font-bold rounded">
+                        PRECIO ESPECIAL
+                      </div>
+                    )}
                   </div>
                   <div className="p-4">
                     <p className="text-highlight text-sm font-semibold mb-1">
@@ -132,9 +146,12 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                     <h3 className="font-bold mb-3 line-clamp-2 group-hover:text-highlight transition-colors">
                       {relatedProduct.name}
                     </h3>
-                    <p className="text-highlight font-bold">
-                      ${Number(relatedProduct.price)}
-                    </p>
+                    <PriceDisplay
+                      price={relatedProduct.price}
+                      salePrice={relatedProduct.sale_price}
+                      onSale={relatedProduct.on_sale}
+                      size="sm"
+                    />
                   </div>
                 </Link>
               ))}

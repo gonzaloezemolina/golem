@@ -36,6 +36,8 @@ interface Product {
   commission_rate: number | null
   category_id: number | null
   subcategory_id: number | null
+  on_sale: boolean
+  sale_price: number | null
 }
 
 // NUEVA: Interface para variantes

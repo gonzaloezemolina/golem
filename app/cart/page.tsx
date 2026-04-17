@@ -395,7 +395,7 @@ useEffect(() => {
                           <p className="text-white font-semibold">Envío a domicilio</p>
                           <p className="text-sm text-gray-400">Recibilo en tu casa, estimado de 1-2 días hábiles</p>
                         </div>
-                        <p className="text-[#d3b05c] font-bold">GRATIS</p>
+                        <p className="text-[#d3b05c] font-bold">$0</p>
                       </label>
 
                       {/* Retiro en punto */}
@@ -416,7 +416,7 @@ useEffect(() => {
                           <p className="text-white font-semibold">Retiro en punto</p>
                           <p className="text-sm text-gray-400">Bv. Oroño 3614, Rosario</p>
                         </div>
-                        <p className="text-[#d3b05c] font-bold">GRATIS</p>
+                        <p className="text-[#d3b05c] font-bold">$0</p>
                       </label>
                     </div>
                   </div>
@@ -465,7 +465,7 @@ useEffect(() => {
                     {shippingCost.costo === 0 && !shippingCost.esGratis 
                       ? 'A calcular' 
                       : shippingCost.esGratis 
-                        ? 'GRATIS' 
+                        ? '$0' 
                         : `$${shippingCost.costo}`}
                   </span>
                 </div>

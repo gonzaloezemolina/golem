@@ -1,10 +1,10 @@
 import Link from "next/link"
 import Image from "next/image"
-import { ShoppingCart } from "lucide-react"
 import { Suspense } from "react"
 import sql from "@/lib/db"
 import { Loader2 } from "lucide-react"
 import Features from "@/components/features"
+import PriceDisplay from "@/components/price-display"
 
 interface Product {
   id: number
@@ -14,6 +14,8 @@ interface Product {
   image_url: string | null
   category: string | null
   stock: number
+  on_sale: boolean
+  sale_price: number | null
 }
 
 interface SearchParams {
@@ -245,6 +247,11 @@ export default async function ProductsPage({
                   fill
                   className="object-cover group-hover:scale-105 transition-transform duration-300"
                 />
+                {product.on_sale && (
+                  <div className="absolute top-2 left-2 bg-red-600 text-white px-3 py-1 text-xs font-bold rounded">
+                    PRECIO ESPECIAL
+                  </div>
+                )}
               </div>
 
               <div className="p-4 md:p-6">
@@ -252,11 +259,12 @@ export default async function ProductsPage({
                 <h3 className="text-lg md:text-xl font-bold mb-3 group-hover:text-highlight transition-colors line-clamp-2">
                   {product.name}
                 </h3>
-                <div className="flex items-center justify-between">
-                  <span className="text-2xl font-bold text-highlight">
-                    ${parseFloat(product.price.toString())}
-                  </span>
-                </div>
+                <PriceDisplay
+                  price={product.price}
+                  salePrice={product.sale_price}
+                  onSale={product.on_sale}
+                  size="md"
+                />
               </div>
             </Link>
           </div>

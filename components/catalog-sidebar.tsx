@@ -99,7 +99,7 @@ export default function CatalogSidebar({ onClose, categories }: CatalogSidebarPr
         </button>
       )}
 
-      <h2 className="text-xl lg:text-2xl font-bold text-white">Filtros</h2>
+      <h2 className="text-xl lg:text-2xl font-bold text-white">FILTRAR</h2>
 
       {/* ⭐ CATEGORÍA - INPUTS MÁS CHICOS */}
       <div>
@@ -247,7 +247,7 @@ export default function CatalogSidebar({ onClose, categories }: CatalogSidebarPr
       <div className="space-y-2 pt-4">
         <button 
           onClick={handleApplyFilters}
-          className="w-full px-4 py-2.5 text-sm bg-highlight hover:bg-[#bc9740] text-black cursor-pointer font-bold transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+          className="w-full px-4 py-2.5 text-sm bg-highlight hover:bg-[#bc9740] text-white cursor-pointer font-bold transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
         >
           APLICAR FILTROS
         </button>

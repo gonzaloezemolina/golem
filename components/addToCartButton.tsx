@@ -29,6 +29,11 @@ export default function AddToCartButton({
   const [notificationData, setNotificationData] = useState<any>(null)
 
   const handleAddToCart = () => {
+    // Precio efectivo: sale_price si on_sale=true, de lo contrario price
+    const effectivePrice = product.on_sale && product.sale_price
+      ? parseFloat(product.sale_price)
+      : parseFloat(product.price)
+
     // CASO 1: Producto SIN variantes
     if (!hasVariants) {
       if (product.stock === 0) {
@@ -41,7 +46,7 @@ export default function AddToCartButton({
           id: product.id,
           slug: product.slug,
           name: product.name,
-          price: parseFloat(product.price),
+          price: effectivePrice,
           image_url: product.image_url || undefined,
           brand: product.brand || 'Golem',
           seller_mp_id: product.seller_mp_id || null,
@@ -54,11 +59,10 @@ export default function AddToCartButton({
         1
       )
 
-      // Mostrar notificación custom
       setNotificationData({
         name: product.name,
         image: product.image_url,
-        price: parseFloat(product.price),
+        price: effectivePrice,
         size: null,
       })
       setShowNotification(true)
@@ -78,7 +82,7 @@ export default function AddToCartButton({
         id: product.id,
         slug: product.slug,
         name: product.name,
-        price: parseFloat(product.price),
+        price: effectivePrice,
         image_url: product.image_url || undefined,
         brand: product.brand || 'Golem',
         seller_mp_id: product.seller_mp_id || null,
@@ -86,16 +90,15 @@ export default function AddToCartButton({
         variant_id: selectedVariant.id,
         size: selectedVariant.size,
         sku: selectedVariant.sku,
-        total_stock: selectedVariant.stock, 
+        total_stock: selectedVariant.stock,
       },
       1
     )
 
-    // Mostrar notificación custom
     setNotificationData({
       name: product.name,
       image: product.image_url,
-      price: parseFloat(product.price),
+      price: effectivePrice,
       size: selectedVariant.size,
     })
     setShowNotification(true)
