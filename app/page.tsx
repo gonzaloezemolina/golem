@@ -4,7 +4,7 @@ import Features from "@/components/features";
 import FeaturedProductsCarousel from "@/components/featured-products-carousel";
 import AnimateOnScroll from "@/components/animate-on-scroll";
 import PriceDisplay from "@/components/price-display";
-import { getFeaturedProducts, getNewProducts } from "./data/featured-products";
+import { getFeaturedProducts, getNewProducts, type Product } from "./data/featured-products";
 
 export const revalidate = 60
 
@@ -81,7 +81,7 @@ export default async function Home() {
             </AnimateOnScroll>
 
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8">
-              {newProducts.map((product: any, index: number) => (
+              {newProducts.map((product: Product, index: number) => (
                 <AnimateOnScroll
                   key={product.id}
                   animation="fade-up"
