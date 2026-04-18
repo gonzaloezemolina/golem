@@ -21,7 +21,7 @@ export default async function Home() {
             <AnimateOnScroll animation="fade-right" duration={700}>
               <div className="flex flex-col gap-6">
                 <h1 className="text-4xl md:text-5xl lg:text-6xl font-golem font-bold text-balance">
-                  AQUEL QUE VA MÁS ALLÁ
+                  CAMISETAS DE FÚTBOL MUNDIAL 2026
                 </h1>
                 <p className="text-gray-300 text-lg leading-relaxed">
                   Deporte y fitness en un mismo lugar. <br />
