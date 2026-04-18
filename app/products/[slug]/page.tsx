@@ -31,6 +31,35 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
   ].filter(Boolean) as string[]
 
   return (
+    <>
+       <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{
+        __html: JSON.stringify({
+          "@context": "https://schema.org/",
+          "@type": "Product",
+          name: product.name,
+          image: images.length > 0 ? images : [],
+          description: product.description,
+          brand: product.brand
+            ? {
+                "@type": "Brand",
+                name: product.brand,
+              }
+            : undefined,
+          offers: {
+            "@type": "Offer",
+            price: product.sale_price || product.price,
+            priceCurrency: "ARS",
+            availability:
+              (product.total_stock ?? product.stock) > 0
+                ? "https://schema.org/InStock"
+                : "https://schema.org/OutOfStock",
+            url: `https://www.golem.com.ar/products/${product.slug}`,
+          },
+        }),
+      }}
+    />
     <main className="text-white min-h-screen">
       {/* Breadcrumb - OCULTO EN MOBILE */}
       <div className="hidden md:block">
@@ -162,5 +191,6 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
       
       <Features/>
     </main>
+    </>
   )
 }

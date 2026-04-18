@@ -25,7 +25,7 @@ export default function PreHeader() {
   }, [])
 
   return (
-    <div className="w-full py-1 px-4 text-center text-white text-xs sm:text-sm font-medium tracking-widest uppercase overflow-hidden" style={{ backgroundColor: "#d3b05c" }}>
+    <div className="w-full px-4 text-center text-white text-xs sm:text-sm font-medium tracking-widest uppercase overflow-hidden" style={{ backgroundColor: "#d3b05c" }}>
       <span
         className="inline-block transition-opacity duration-400"
         style={{ opacity: visible ? 1 : 0, transition: "opacity 0.4s ease" }}
