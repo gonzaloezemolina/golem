@@ -52,7 +52,7 @@ export default function ProductImageGallery({ images, productName }: ProductImag
 
   if (!images || images.length === 0) {
     return (
-      <div className="relative w-full aspect-square bg-stone-900 rounded-lg flex items-center justify-center border border-highlight/20">
+      <div className="relative w-full aspect-square bg-stone-900 rounded-tr-lg rounded-bl-lg flex items-center justify-center border border-highlight/20">
         <p className="text-gray-500">Sin imágenes</p>
       </div>
     )
@@ -61,7 +61,7 @@ export default function ProductImageGallery({ images, productName }: ProductImag
   // No renderizar hasta que esté montado (evita duplicación)
   if (!isMounted) {
     return (
-      <div className="relative w-full aspect-square bg-stone-900 rounded-lg overflow-hidden border border-highlight/20 animate-pulse">
+      <div className="relative w-full aspect-square bg-stone-900 rounded-tr-lg rounded-bl-lg overflow-hidden border border-highlight/20 animate-pulse">
         <div className="h-full w-full bg-gray-800" />
       </div>
     )
@@ -84,7 +84,7 @@ export default function ProductImageGallery({ images, productName }: ProductImag
   return (
     <div className="flex flex-col gap-4">
       {/* Carrusel Principal - CAMBIO AQUÍ ⬇️ */}
-      <div className="relative w-full aspect-square bg-transparent overflow-hidden md:rounded-lg md:border md:border-highlight/20">
+      <div className="relative w-full aspect-square bg-transparent overflow-hidden md:rounded-tr-lg md:rounded-bl-lg md:border md:border-highlight/20">
         <Swiper
           modules={[Navigation, Pagination, Thumbs]}
           navigation

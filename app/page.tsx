@@ -15,12 +15,12 @@ export default async function Home() {
   return (
     <>
       {/* Hero Section with Video */}
-      <section className="bg-black text-white py-12 md:py-20 overflow-hidden">
+      <section className="bg-black bg-[url(/fondo-hero.png)] bg-no-repeat bg-cover text-white py-12 md:py-20 overflow-hidden">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center mb-12">
             <AnimateOnScroll animation="fade-right" duration={700}>
               <div className="flex flex-col gap-6">
-                <h1 className="text-4xl md:text-5xl lg:text-6xl font-golem font-bold text-balance">
+                <h1 className="text-5xl md:text-6xl lg:text-7xl font-golem font-bold text-balance">
                   CAMISETAS DE FÚTBOL MUNDIAL 2026
                 </h1>
                 <p className="text-gray-300 text-lg leading-relaxed">
@@ -36,7 +36,7 @@ export default async function Home() {
               </div>
             </AnimateOnScroll>
 
-            <AnimateOnScroll animation="fade-left" duration={700} delay={150}>
+            {/* <AnimateOnScroll animation="fade-left" duration={700} delay={150}>
               <div className="relative h-64 md:h-96 bg-gray-900 rounded overflow-hidden">
                 <video autoPlay muted loop playsInline className="w-full h-full object-cover">
                   <source
@@ -46,7 +46,7 @@ export default async function Home() {
                   Tu navegador/dispositivo no soporta el video.
                 </video>
               </div>
-            </AnimateOnScroll>
+            </AnimateOnScroll> */}
           </div>
         </div>
       </section>
@@ -56,7 +56,7 @@ export default async function Home() {
         <section className="bg-black text-white py-12 md:py-20">
           <div className="container mx-auto px-4">
             <AnimateOnScroll animation="fade-up" duration={600}>
-              <h2 className="text-3xl md:text-4xl font-bold mb-4 text-balance">
+              <h2 className="text-3xl md:text-6xl font-bold mb-4 text-balance">
                 PRODUCTOS DESTACADOS
               </h2>
               <div className="w-40 h-1 bg-highlight mb-12"></div>
@@ -74,7 +74,7 @@ export default async function Home() {
         <section className="bg-fondo text-white py-12 md:py-20">
           <div className="container mx-auto px-4">
             <AnimateOnScroll animation="fade-up" duration={600}>
-              <h2 className="text-3xl md:text-4xl font-bold mb-4 text-balance">
+              <h2 className="text-3xl md:text-6xl font-bold mb-4 text-balance">
                 NUEVOS INGRESOS
               </h2>
               <div className="w-40 h-1 bg-highlight mb-12"></div>
@@ -99,12 +99,12 @@ export default async function Home() {
                           className="object-cover group-hover:scale-105 transition-transform duration-300"
                         />
                         {/* Badge "NUEVO" */}
-                        <div className="absolute top-2 right-2 bg-highlight text-white px-3 py-1 text-xs font-bold rounded">
+                        <div className="absolute top-2 right-2 bg-highlight text-white px-3 py-1 text-xs font-bold rounded-tr rounded-bl">
                           NEW
                         </div>
                         {/* Badge "PRECIO ESPECIAL" */}
                         {product.on_sale && (
-                          <div className="absolute top-2 left-2 bg-red-600 text-white px-3 py-1 text-xs font-bold rounded">
+                          <div className="absolute top-2 left-2 bg-red-600 text-white px-3 py-1 text-xs font-bold rounded-tr rounded-bl">
                             PRECIO ESPECIAL
                           </div>
                         )}
@@ -140,13 +140,13 @@ export default async function Home() {
             <AnimateOnScroll animation="fade-right" duration={700} threshold={0.1}>
               <div className="relative">
                 <div className="grid grid-cols-2 gap-4 max-w-md mx-auto lg:mx-0">
-                  <div className="relative h-48 md:h-64 rounded-2xl overflow-hidden shadow-2xl">
+                  <div className="relative h-48 md:h-64 rounded-tr-2xl rounded-bl-2xl overflow-hidden shadow-2xl">
                     <Image src="/gym.jpg" alt="Running Equipment" fill className="object-cover hover:scale-105 transition-transform duration-300" />
                   </div>
-                  <div className="relative h-48 md:h-64 rounded-2xl overflow-hidden shadow-2xl">
+                  <div className="relative h-48 md:h-64 rounded-tr-2xl rounded-bl-2xl overflow-hidden shadow-2xl">
                     <Image src="/padel.jpg" alt="Sports Watch" fill className="object-cover hover:scale-105 transition-transform duration-300" />
                   </div>
-                  <div className="relative col-span-2 h-40 md:h-48 rounded-2xl overflow-hidden shadow-2xl">
+                  <div className="relative col-span-2 h-40 md:h-48 rounded-tr-2xl rounded-bl-2xl overflow-hidden shadow-2xl">
                     <Image src="/botines.jpg" alt="Sports Headphones" fill className="object-cover hover:scale-105 transition-transform duration-300" />
                   </div>
                 </div>
@@ -160,7 +160,7 @@ export default async function Home() {
                   <p className="text-highlight text-sm font-semibold mb-3 uppercase tracking-wider">
                     Nuestro equipo
                   </p>
-                  <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-balance">
+                  <h2 className="text-3xl md:text-6xl lg:text-7xl font-bold mb-4 text-balance">
                     PENSADO PARA TODOS
                   </h2>
                   <p className="text-gray-400 text-base md:text-lg leading-relaxed">

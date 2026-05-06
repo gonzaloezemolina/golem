@@ -99,7 +99,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
             {/* Price */}
             <div className="border-b border-highlight/20 pb-6">
               {product.on_sale && (
-                <span className="inline-block bg-red-600 text-white text-xs font-bold px-3 py-1 rounded mb-3">
+                <span className="inline-block bg-red-600 text-white text-xs font-bold px-3 py-1 rounded-tr rounded-bl mb-3">
                   PRECIO ESPECIAL
                 </span>
               )}
@@ -163,7 +163,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                       className="object-cover group-hover:scale-105 transition-transform duration-300"
                     />
                     {relatedProduct.on_sale && (
-                      <div className="absolute top-2 left-2 bg-red-600 text-white px-2 py-0.5 text-xs font-bold rounded">
+                      <div className="absolute top-2 left-2 bg-red-600 text-white px-2 py-0.5 text-xs font-bold rounded-tr rounded-bl">
                         PRECIO ESPECIAL
                       </div>
                     )}

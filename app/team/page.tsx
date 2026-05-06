@@ -70,7 +70,7 @@ export default function Team() {
                   className="group flex flex-col gap-4 cursor-pointer transition-all duration-300 hover:scale-105"
                 >
                   {/* Team Member Image */}
-                  <div className="relative h-80 md:h-96 bg-gray-900 rounded-lg overflow-hidden border border-highlight/20 group-hover:border-highlight/60 transition-all duration-300">
+                  <div className="relative h-80 md:h-96 bg-gray-900 rounded-tr-2xl rounded-bl-2xl overflow-hidden transition-all duration-300">
                     <Image src={member.image || "/placeholder.svg"} alt={member.name} fill className="object-cover" />
                     {/* Overlay on hover */}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />

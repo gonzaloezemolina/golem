@@ -109,75 +109,10 @@ export default function CheckoutPage() {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
-          {/* Formulario */}
-          <div className="lg:col-span-2">
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div>
-                <label className="block text-sm font-semibold mb-3 text-white">Nombre y Apellido</label>
-                <input
-                  type="text"
-                  required
-                  value={formData.name}
-                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  className="w-full bg-stone-950 border border-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-[#d3b05c] transition"
-                  placeholder="Ingresa tu nombre completo"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-semibold mb-3 text-white">Correo electrónico</label>
-                <input
-                  type="email"
-                  required
-                  value={formData.email}
-                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  className="w-full bg-stone-950 border border-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-[#d3b05c] transition"
-                  placeholder="Ingresa tu correo electronico"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-semibold mb-3 text-white">Teléfono</label>
-                <input
-                  type="tel"
-                  required
-                  value={formData.phone}
-                  onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                  className="w-full bg-stone-950 border border-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-[#d3b05c] transition"
-                  placeholder="3415551234"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-semibold mb-3 text-white">DNI</label>
-                <input
-                  type="text"
-                  required
-                  value={formData.dni}
-                  onChange={(e) => setFormData({ ...formData, dni: e.target.value })}
-                  className="w-full bg-stone-950 border border-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-[#d3b05c] transition"
-                  placeholder="12345678"
-                />
-              </div>
-
-              <div className="pt-8">
-                <h3 className="text-lg font-semibold mb-6">Pagar con Mercado Pago</h3>
-                
-                <button
-                  type="submit"
-                  disabled={loading}
-                  className="w-full bg-sky-300 cursor-pointer text-black font-bold rounded-lg hover:shadow-lg hover:bg-sky-400 transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3"
-                >
-                  {loading ? "Procesando..." : <img src={mercadoPago} className="h-15 w-auto object-contain" alt="Golem" />}
-                </button>
-              </div>
-            </form>
-          </div>
-
-          {/* Resumen */}
+                {/* Resumen */}
           <div className="lg:col-span-1">
-            <div className="sticky top-8 bg-stone-950 rounded-lg p-6 border border-gray-700">
-              <h3 className="text-2xl font-bold mb-6">Resumen de orden</h3>
+            <div className="sticky top-8 bg-stone-950 p-6 border border-gray-700">
+              <h3 className="text-2xl font-bold mb-6">RESUMEN DE ORDEN</h3>
 
               <div className="mb-6">
                 <div className="space-y-3">
@@ -257,6 +192,72 @@ export default function CheckoutPage() {
               </div>
             </div>
           </div>
+          
+          {/* Formulario */}
+          <div className="lg:col-span-2">
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <div>
+                <label className="block text-sm font-semibold mb-3 text-white">Nombre y Apellido</label>
+                <input
+                  type="text"
+                  required
+                  value={formData.name}
+                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  className="w-full bg-stone-950 border border-[#a4783a] px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-[#d3b05c] transition"
+                  placeholder="Ingresa tu nombre completo"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-semibold mb-3 text-white">Correo electrónico</label>
+                <input
+                  type="email"
+                  required
+                  value={formData.email}
+                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                  className="w-full bg-stone-950 border border-[#a4783a] px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-[#d3b05c] transition"
+                  placeholder="Ingresa tu correo electronico"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-semibold mb-3 text-white">Teléfono</label>
+                <input
+                  type="tel"
+                  required
+                  value={formData.phone}
+                  onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                  className="w-full bg-stone-950 border border-[#a4783a] px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-[#d3b05c] transition"
+                  placeholder="3415551234"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-semibold mb-3 text-white">DNI</label>
+                <input
+                  type="text"
+                  required
+                  value={formData.dni}
+                  onChange={(e) => setFormData({ ...formData, dni: e.target.value })}
+                  className="w-full bg-stone-950 border border-[#a4783a] px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-[#d3b05c] transition"
+                  placeholder="12345678"
+                />
+              </div>
+
+              <div className="pt-8">
+                <h3 className="text-lg font-semibold mb-6">Pagar con Mercado Pago</h3>
+                
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className="w-full bg-sky-300 cursor-pointer text-black font-bold rounded-lg hover:shadow-lg hover:bg-sky-400 transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3"
+                >
+                  {loading ? "Procesando..." : <img src={mercadoPago} className="h-15 w-auto object-contain" alt="Golem" />}
+                </button>
+              </div>
+            </form>
+          </div>
+
         </div>
       </div>
     </div>

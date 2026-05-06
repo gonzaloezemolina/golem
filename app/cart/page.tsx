@@ -177,7 +177,7 @@ useEffect(() => {
       <div className="min-h-screen bg-black flex items-center justify-center">
         <div className="text-center">
           <div className="animate-pulse">
-            <h1 className="text-2xl font-bold text-white mb-2">Cargando carrito...</h1>
+            <h1 className="text-2xl font-bold text-white mb-2">CARGANDO CARRITO...</h1>
           </div>
         </div>
       </div>
@@ -188,13 +188,13 @@ useEffect(() => {
     return (
       <div className="min-h-screen bg-black px-4 py-12">
         <div className="max-w-6xl mx-auto text-center">
-          <h1 className="text-4xl font-bold text-white mb-4">Carrito</h1>
+          <h1 className="text-4xl font-bold text-white mb-4">CARRITO</h1>
           <p className="text-gray-400 mb-8">No hay productos seleccionados.</p>
           <Link 
             href="/products" 
-            className="inline-block bg-[#d3b05c] text-black px-8 py-3 rounded-full font-semibold hover:bg-[#e6c570] transition-colors"
+            className="inline-block bg-[#d29a4c] text-white px-8 py-3 font-semibold hover:bg-[#e6c570] transition-colors"
           >
-            Continuar comprando
+            VOLVER A LA TIENDA
           </Link>
         </div>
       </div>

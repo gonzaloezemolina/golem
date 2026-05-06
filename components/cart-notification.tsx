@@ -96,7 +96,7 @@ export default function CartNotification({
           {/* Product Info */}
           <div className="flex gap-4 mb-4">
             {productImage && (
-              <div className="relative w-20 h-20 bg-gray-900 rounded flex-shrink-0 overflow-hidden">
+              <div className="relative w-20 h-20 bg-[#2a2a2a] rounded flex-shrink-0 overflow-hidden">
                 <Image
                   src={productImage}
                   alt={productName}

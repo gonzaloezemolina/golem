@@ -50,7 +50,7 @@ export default function PriceDisplay({ price, salePrice, onSale, size = "md" }: 
       <span className={`${cls.original} text-gray-400 line-through`}>
         ${numPrice.toLocaleString("es-AR")}
       </span>
-      <span className={`${cls.badge} bg-red-600 text-white font-bold rounded`}>
+      <span className={`${cls.badge} bg-[#74d4ff] text-white font-bold rounded-tr rounded-bl`}>
         -{discount}%
       </span>
     </div>

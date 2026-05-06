@@ -80,7 +80,7 @@ export default function CatalogGrid({ products }: CatalogGridProps) {
                   e.preventDefault(); // ← Evitar que el Link se active
                   toggleWishlist(product.id);
                 }}
-                className="absolute top-4 right-4 p-2 bg-black/60 hover:bg-highlight/80 rounded-full transition-all duration-300 z-10"
+                className="absolute top-4 right-4 p-2 bg-black/60 hover:bg-highlight/80 rounded-tr-full rounded-bl-full transition-all duration-300 z-10"
               >
                 <Heart
                   size={20}
@@ -91,7 +91,7 @@ export default function CatalogGrid({ products }: CatalogGridProps) {
               {/* Add to Cart Button */}
               <button
                 onClick={(e) => e.preventDefault()} // ← Evitar que el Link se active
-                className="absolute bottom-4 right-4 p-3 bg-highlight text-black rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 hover:bg-highlight/80"
+                className="absolute bottom-4 right-4 p-3 bg-highlight text-black rounded-tr-full rounded-bl-full opacity-0 group-hover:opacity-100 transition-all duration-300 hover:bg-highlight/80"
               >
                 <ShoppingCart size={20} />
               </button>

@@ -8,15 +8,18 @@
 
 @layer utilities {
   .bg-highlight {
-    background-color: #d3b05c;
+    background-color: #d29a4c;
+    /* background-color: #d3b05c; */
   }
 
   .text-highlight {
-    color: #d3b05c;
+    color: #d29a4c;
+    /* color: #d3b05c; */
   }
 
   .border-highlight {
-    border-color: #d3b05c;
+    border-color: #d29a4c;
+    /* border-color: #d3b05c; */
   }
 
   .title-georgia {
@@ -37,11 +40,12 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #d3b05c; /* Color de la barra */
+  /* background: #d3b05c; Color de la barra */
+  background: #d29a4c; /* Color de la barra */
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #a98739; /* Color cuando pasas el mouse */
+  background: #a4783a; /* Color cuando pasas el mouse */
 }
 
 ::selection {
@@ -84,27 +88,38 @@
 
 @font-face {
   font-family: 'Text';
-  src: url('/font/Gotham-Book.otf') format('otf');
+  src: url('/font/Gotham-Book.otf') format('opentype');
   font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
   font-family: 'Premium';
-  src: url('/font/GeorgiaPro-Regular.ttf') format('ttf');
+  src: url('/font/GeorgiaPro-Regular.ttf') format('truetype');
   font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
   font-family: 'Titles';
-  src: url('/font/GOTHAM-BOLD.TTF') format('ttf');
+  src: url('/font/gothamC.otf') format('opentype');
   font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Bold';
+  src: url('/font/GOTHAM-BOLD.TTF') format('truetype');
+  font-style: normal;
+  font-display: swap;
 }
 
 
 /* ========== Swiper Customization ========== */
 .product-swiper .swiper-button-next,
 .product-swiper .swiper-button-prev {
-  color: #d3b05c;
+  /* color: #d3b05c; */
+  color: #d29a4c;
   background: rgba(0, 0, 0, 0.7);
   width: 44px;
   height: 44px;
@@ -138,7 +153,8 @@
 
 .product-swiper .swiper-pagination-bullet-active {
   opacity: 1;
-  background: #d3b05c;
+  /* background: #d3b05c; */
+  background: #d29a4c;
   width: 24px;
   border-radius: 4px;
 }
@@ -187,13 +203,16 @@ select option {
 
 select option:hover,
 select option:focus {
-  background-color: #d3b05c !important;
+  /* background-color: #d3b05c !important; */
+  background-color: #d29a4c !important;
   color: #000 !important;
 }
 
 select option:checked {
-  background: linear-gradient(#d3b05c, #d3b05c);
-  background-color: #d3b05c !important;
+  /* background: linear-gradient(#d3b05c, #d3b05c); */
+  background: linear-gradient(#d29a4c, #d29a4c);
+  /* background-color: #d3b05c !important; */
+  background-color: #d29a4c !important;
   color: #000 !important;
 }
 
@@ -207,7 +226,8 @@ select {
   /* Custom color tokens for Golem brand */
   --color-main: #0b0b0b;
   --color-text: #ffffff;
-  --color-highlight: #d3b05c;
+  /* --color-highlight: #d3b05c; */
+  --color-highlight: #d29a4c;
   
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
@@ -247,8 +267,10 @@ select {
 .dark {
   --background: oklch(0.145 0 0);
   --fondo: #191919;
-  --golden: #d3b05c;
-  --strong: #bc9740;
+  /* --golden: #d3b05c; */
+  --golden: #d29a4c;
+  --strong: #ac7d3d;
+  /* --strong: #bc9740; */
   --foreground: oklch(0.985 0 0);
   --card: oklch(0.145 0 0);
   --card-foreground: oklch(0.985 0 0);
@@ -286,6 +308,7 @@ select {
   --font-family-golem: 'Titles', sans-serif;
   --font-family-text: 'Text', sans-serif;
   --font-family-premium: 'Premium', sans-serif;
+  --font-family-bold: 'Bold', sans-serif;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -331,7 +354,8 @@ select {
 }
 
 .Toastify__toast--success {
-  background-color: #d3b05c;
+  /* background-color: #d3b05c; */
+  background-color: #d29a4c;
   color: #000;
 }
 
@@ -341,7 +365,7 @@ select {
 }
 
 .Toastify__progress-bar--success {
-  background-color: #a98739;
+  background-color: #a77838;
 }
 
 .Toastify__progress-bar--error {
@@ -361,6 +385,23 @@ select {
 body {
   background-color: var(--color-main);
   color: var(--color-text);
+  font-family: 'Text', sans-serif;
+}
+
+@layer base {
+  p {
+    font-family: 'Text', sans-serif;
+    line-height: 1.2;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Titles', sans-serif;
+    line-height: 0.92;
+  }
+
+  button {
+    font-family: 'Bold', sans-serif;
+  }
 }
 
 /* Add scrollbar-hide utility for horizontal scroll containers */

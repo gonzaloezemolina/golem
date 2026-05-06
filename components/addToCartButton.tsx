@@ -122,7 +122,7 @@ export default function AddToCartButton({
         onClick={handleAddToCart}
         disabled={isDisabled}
         className={`
-          flex-1 px-6 py-3 font-bold transition-all
+          flex-1 px-6 py-3 font-bold transition-all rounded-tr-lg rounded-bl-lg
           ${!isDisabled
             ? "bg-highlight text-white hover:bg-[#bc9740] cursor-pointer"
             : "bg-gray-700 text-gray-400 cursor-not-allowed"

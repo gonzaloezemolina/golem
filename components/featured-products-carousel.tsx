@@ -48,7 +48,7 @@ export default function FeaturedProductsCarousel({ products }: { products: Produ
                   className="object-cover group-hover:scale-105 transition-transform duration-300"
                 />
                 {product.on_sale && (
-                  <div className="absolute top-2 left-2 bg-red-600 text-white px-3 py-1 text-xs font-bold rounded">
+                  <div className="absolute top-2 left-2 bg-[#74d4ff] text-white px-3 py-1 text-xs font-bold rounded-tr rounded-bl">
                     PRECIO ESPECIAL
                   </div>
                 )}
