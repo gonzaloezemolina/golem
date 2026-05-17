@@ -2,7 +2,7 @@
 
 import { useCartStore } from "@/lib/store/cart-store";
 import { useShippingStore } from "@/lib/store/shipping-store";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from 'next/navigation';
 
 export default function CheckoutPage() {
@@ -22,6 +22,20 @@ export default function CheckoutPage() {
   });
 
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (!shippingAddress || !shippingCostData || items.length === 0) return
+    const subtotal = getTotal()
+    const shippingCost = shippingCostData.costo || 0
+    const numItems = items.reduce((acc: number, item: any) => acc + item.quantity, 0)
+    if (typeof window !== 'undefined' && (window as any).fbq) {
+      ;(window as any).fbq('track', 'InitiateCheckout', {
+        value: subtotal + shippingCost,
+        currency: 'ARS',
+        num_items: numItems,
+      })
+    }
+  }, [])
 
   // VALIDAR QUE HAYA DATOS DE ENVÍO
   if (!shippingAddress || !shippingCostData) {

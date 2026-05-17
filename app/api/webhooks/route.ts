@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import sql from "@/lib/db";
 import { MercadoPagoConfig, Payment } from "mercadopago";
 import { sendOrderConfirmation, sendInternalNotification } from "@/lib/send-email";
+import crypto from "crypto";
 
 const client = new MercadoPagoConfig({
   accessToken: process.env.MP_ACCESS_TOKEN!,
@@ -173,6 +174,46 @@ export async function POST(request: Request) {
         console.log("✅ Emails enviados correctamente");
       } catch (emailError: any) {
         console.error("❌ Error al enviar emails:", emailError);
+      }
+
+      // 🎯 META PIXEL - Purchase via Conversions API
+      if (process.env.META_PIXEL_ID && process.env.META_ACCESS_TOKEN) {
+        try {
+          const numItems = itemsWithDetails.reduce((acc: number, item: any) => acc + item.quantity, 0)
+          const contentIds = itemsWithDetails.map((item: any) => item.product_id.toString())
+          const hashedEmail = order.buyer_email
+            ? crypto.createHash('sha256').update(order.buyer_email.trim().toLowerCase()).digest('hex')
+            : undefined
+
+          await fetch(
+            `https://graph.facebook.com/v18.0/${process.env.META_PIXEL_ID}/events?access_token=${process.env.META_ACCESS_TOKEN}`,
+            {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                data: [{
+                  event_name: 'Purchase',
+                  event_time: Math.floor(Date.now() / 1000),
+                  event_id: `order_${order.id}`,
+                  action_source: 'website',
+                  user_data: {
+                    ...(hashedEmail && { em: [hashedEmail] }),
+                  },
+                  custom_data: {
+                    currency: 'ARS',
+                    value: parseFloat(order.total),
+                    content_ids: contentIds,
+                    num_items: numItems,
+                    order_id: order.id.toString(),
+                  },
+                }],
+              }),
+            }
+          )
+          console.log('✅ Meta Pixel Purchase enviado via CAPI')
+        } catch (metaError) {
+          console.error('❌ Error enviando Purchase a Meta CAPI:', metaError)
+        }
       }
     }
 

@@ -7,6 +7,7 @@ import ProductDetailClient from "@/components/product-detail-client"
 import ProductImageGallery from "@/components/product-image-gallery"
 import Features from "@/components/features"
 import PriceDisplay from "@/components/price-display"
+import MetaViewContent from "@/components/meta-view-content"
 
 export default async function ProductPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
@@ -30,8 +31,19 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
     product.image_5
   ].filter(Boolean) as string[]
 
+  const effectivePrice = product.on_sale && product.sale_price
+    ? parseFloat(product.sale_price)
+    : parseFloat(product.price)
+
   return (
     <>
+      <MetaViewContent
+        productId={product.id}
+        name={product.name}
+        category={product.category}
+        value={effectivePrice}
+        currency="ARS"
+      />
        <script
       type="application/ld+json"
       dangerouslySetInnerHTML={{

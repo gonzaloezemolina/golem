@@ -15,7 +15,7 @@ export default async function Home() {
   return (
     <>
       {/* Hero Section with Video */}
-      <section className="bg-black bg-[url(/fondo-hero.png)] bg-no-repeat bg-cover text-white py-12 md:py-20 overflow-hidden">
+      <section className="min-h-[80vh] md:min-h-0 bg-black bg-[url(/hero-mobile.png)] md:bg-[url(/fondo-hero.png)] bg-no-repeat bg-cover bg-top text-white py-12 md:py-20 overflow-hidden">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center mb-12">
             <AnimateOnScroll animation="fade-right" duration={700}>

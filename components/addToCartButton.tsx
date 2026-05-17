@@ -59,6 +59,16 @@ export default function AddToCartButton({
         1
       )
 
+      if (typeof window !== 'undefined' && (window as any).fbq) {
+        ;(window as any).fbq('track', 'AddToCart', {
+          content_ids: [product.id.toString()],
+          content_name: product.name,
+          value: effectivePrice,
+          currency: 'ARS',
+          quantity: 1,
+        })
+      }
+
       setNotificationData({
         name: product.name,
         image: product.image_url,
@@ -94,6 +104,16 @@ export default function AddToCartButton({
       },
       1
     )
+
+    if (typeof window !== 'undefined' && (window as any).fbq) {
+      ;(window as any).fbq('track', 'AddToCart', {
+        content_ids: [product.id.toString()],
+        content_name: product.name,
+        value: effectivePrice,
+        currency: 'ARS',
+        quantity: 1,
+      })
+    }
 
     setNotificationData({
       name: product.name,

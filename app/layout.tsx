@@ -9,6 +9,7 @@ import 'react-toastify/dist/ReactToastify.css'
 import Link from "next/link";
 import Script from "next/script";
 import ConditionalLayout from "@/components/conditional-layout";
+import MetaPixelProvider from "@/components/meta-pixel-provider";
 
 const geistInter = Inter({
   variable: "--font-inter-sans",
@@ -26,7 +27,7 @@ export const metadata: Metadata = {
   authors: [{ name: "GOLEM" }],
   creator: "GOLEM",
   publisher: "GOLEM",
-  
+
   // Open Graph (Facebook, WhatsApp, LinkedIn)
   openGraph: {
     type: "website",
@@ -65,7 +66,7 @@ export const metadata: Metadata = {
       'max-snippet': -1,
     },
   },
-  
+
   verification: {
     // ⚠️ Agregá después cuando tengas Google Search Console
     // google: "tu-codigo-de-verificacion",
@@ -96,11 +97,30 @@ export default function RootLayout({
             `,
           }}
         />
+        <Script
+          id="meta-pixel"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              !function(f,b,e,v,n,t,s)
+              {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+              n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+              if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+              n.queue=[];t=b.createElement(e);t.async=!0;
+              t.src=v;s=b.getElementsByTagName(e)[0];
+              s.parentNode.insertBefore(t,s)}(window, document,'script',
+              'https://connect.facebook.net/en_US/fbevents.js');
+              fbq('init', '1183847950395328');
+              fbq('track', 'PageView');
+            `,
+          }}
+        />
       </head>
-      
+
       <body
         className={`${geistInter.variable} bg-red-300 bg-cover bg-center bg-no-repeat`}
       >
+        <MetaPixelProvider />
         <ConditionalLayout>
           {children}
         </ConditionalLayout>
