@@ -28,9 +28,8 @@ export default function FeaturedProductsCarousel({ products }: { products: Produ
       navigation
       pagination={{ clickable: true }}
       spaceBetween={24}
-      slidesPerView={1}
+      slidesPerView={2}
       breakpoints={{
-        640: { slidesPerView: 2 },
         1024: { slidesPerView: 3 },
         1280: { slidesPerView: 4 },
       }}
@@ -40,7 +39,7 @@ export default function FeaturedProductsCarousel({ products }: { products: Produ
         <SwiperSlide key={product.id}>
           <Link href={`/products/${product.slug}`}>
             <div className="group transition-all duration-300 overflow-hidden cursor-pointer">
-              <div className="relative aspect-[3/4] md:aspect-auto md:h-72 overflow-hidden">
+              <div className="relative h-64 md:h-72 overflow-hidden">
                 <Image
                   src={product.image_url || "/placeholder.svg"}
                   alt={product.name}
