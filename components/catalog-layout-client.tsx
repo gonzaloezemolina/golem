@@ -54,7 +54,7 @@ export default function CatalogLayoutClient({ children, categories }: CatalogLay
         <main className="flex-1 min-w-0">
       {/* Mobile Header - STICKY MEJORADO */}
 {!isProductDetail && (
-  <div className="lg:hidden sticky top-16 bg-black z-40">
+  <div className="lg:hidden sticky top-[96px] bg-black z-40">
     <div className="flex items-center justify-center p-1">
       <button
         onClick={() => setSidebarOpen(!sidebarOpen)}

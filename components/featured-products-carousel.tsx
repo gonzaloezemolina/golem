@@ -40,15 +40,18 @@ export default function FeaturedProductsCarousel({ products }: { products: Produ
         <SwiperSlide key={product.id}>
           <Link href={`/products/${product.slug}`}>
             <div className="group transition-all duration-300 overflow-hidden cursor-pointer">
-              <div className="relative h-64 md:h-72 overflow-hidden">
+              <div className="relative aspect-[3/4] md:aspect-auto md:h-72 overflow-hidden">
                 <Image
                   src={product.image_url || "/placeholder.svg"}
                   alt={product.name}
                   fill
                   className="object-cover group-hover:scale-105 transition-transform duration-300"
                 />
+                <div className="absolute top-2 right-2 bg-highlight text-white px-3 py-1 text-xs font-bold rounded-tr rounded-bl">
+                  DESTACADO
+                </div>
                 {product.on_sale && (
-                  <div className="absolute top-2 left-2 bg-[#74d4ff] text-white px-3 py-1 text-xs font-bold rounded-tr rounded-bl">
+                  <div className="absolute top-2 left-2 bg-red-600 text-white px-3 py-1 text-xs font-bold rounded-tr rounded-bl">
                     PRECIO ESPECIAL
                   </div>
                 )}
