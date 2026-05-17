@@ -4,8 +4,8 @@ import { useState, useEffect } from "react"
 
 const promotions = [
   "Envío sin costo en Rosario",
-  "Descuento camisetas Fútbol Argentino en $14900",
-  "Camisetas Argentina Mundial en $19900",
+  "Descuento Fútbol Argentino en $14900",
+  "Camisetas Argentina Mundial en $39900",
 ]
 
 export default function PreHeader() {
