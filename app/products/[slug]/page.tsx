@@ -32,8 +32,8 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
   ].filter(Boolean) as string[]
 
   const effectivePrice = product.on_sale && product.sale_price
-    ? parseFloat(product.sale_price)
-    : parseFloat(product.price)
+    ? parseFloat(String(product.sale_price))
+    : parseFloat(String(product.price))
 
   return (
     <>
