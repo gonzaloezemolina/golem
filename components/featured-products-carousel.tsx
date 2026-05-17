@@ -49,11 +49,11 @@ export default function FeaturedProductsCarousel({ products }: { products: Produ
                 <div className="absolute top-2 right-2 bg-highlight text-white px-3 py-1 text-xs font-bold rounded-tr rounded-bl">
                   DESTACADO
                 </div>
-                {product.on_sale && (
+                {/* {product.on_sale && (
                   <div className="absolute top-2 left-2 bg-red-600 text-white px-3 py-1 text-xs font-bold rounded-tr rounded-bl">
                     PRECIO ESPECIAL
                   </div>
-                )}
+                )} */}
               </div>
 
               <div className="p-4 md:p-6">
